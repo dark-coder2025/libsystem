@@ -73,10 +73,12 @@
                         <hr class="dropdown-divider" />
                     </li>
                     <li class="notification-item">
+                    <a href="hold_list.php" style="text-decoration:none;">
                         <div>
                             <h4><?=$name;?></h4>
                             <p>hold <span><?=$holdlist['num_hold_books'];?></span> book(s).</p>
                         </div>
+                    </a>
                     </li>
                     <li>
                         <hr class="dropdown-divider" />
