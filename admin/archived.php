@@ -76,7 +76,7 @@ include('./includes/sidebar.php');
 
                                                   <td class="justify-content-center">
                                                        <center>
-                                                       <form action="user_student_code.php" method="POST">
+                                                       <form action="archived_code.php" method="POST">
                                                             <input type="hidden" name="user_id" value="<?= $user['user_id']; ?>">
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#denyReasonModal" onclick="setUserId(<?= $user['user_id']; ?>)">Deny</button>
                                                        </form>
@@ -107,7 +107,7 @@ include('./includes/sidebar.php');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="denyForm" action="user_student_code.php" method="POST">
+                <form id="denyForm" action="archived_code.php" method="POST">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="mb-3">
                         <label for="deny_reason" class="form-label">Enter Reason for Denial</label>
