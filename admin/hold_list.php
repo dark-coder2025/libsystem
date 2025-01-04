@@ -111,7 +111,7 @@ include('./includes/sidebar.php');
                                             <div class="btn-group" style="background: #DFF6FF;">
                                                 <!-- View Hold Books Action -->
                                                 <a href="hold_view.php?id=<?= htmlspecialchars($id); ?>&type=<?= htmlspecialchars($holdlist['user_id'] ? 'user' : 'faculty'); ?>"
-                                                   class="viewBookBtn btn btn-primary border text-primary"
+                                                   class="viewBookBtn btn btn-primary border text-white"
                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                    title="View Hold Books">
                                                    <b>View</b>
