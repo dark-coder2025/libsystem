@@ -121,12 +121,12 @@ if (isset($_POST['deny'])) {
 
             $_SESSION['status'] = 'Student Denied';
             $_SESSION['status_code'] = "success";
-            header("Location: user_student_approval.php");
+            header("Location: archived.php");
             exit(0);
         } else {
             $_SESSION['status'] = 'Email Failed to Send';
             $_SESSION['status_code'] = "error";
-            header("Location: user_student_approval.php");
+            header("Location: archived.php");
             exit(0);
         }
 }
