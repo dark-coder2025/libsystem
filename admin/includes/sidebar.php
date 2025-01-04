@@ -50,5 +50,12 @@
                     <i class="bi bi-file-earmark"></i><span>Report</span>
                </a>
           </li>
+
+          <li class="nav-item">
+               <a class="nav-link collapsed<?=$page == 'archived.php' ? 'active': '' ?>"
+                    href="archived.php">
+                    <i class="bi bi-archived"></i><span>Archived</span>
+               </a>
+          </li>
      </ul>
 </aside>
