@@ -114,7 +114,7 @@ include('./includes/sidebar.php');
                                                    class="viewBookBtn btn btn-primary border text-white"
                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                    title="View Hold Books">
-                                                   <b>View</b>
+                                                   View
                                                 </a>
                                             </div>
                                         </td>
