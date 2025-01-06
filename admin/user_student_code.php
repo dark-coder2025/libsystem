@@ -499,8 +499,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
+        $stu_id = mysqli_real_escape_string($con, $_POST['edit_student_id']);
 
-        $sql = "UPDATE user SET firstname='$fName', lastname='$lName', middlename='$mName' WHERE user_id='$studentId'";
+        $sql = "UPDATE user SET firstname='$fName', lastname='$lName', middlename='$mName', student_id_no='$stu_id' WHERE user_id='$studentId'";
         if (mysqli_query($con, $sql)) {
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
