@@ -49,6 +49,7 @@ include('./includes/sidebar.php');
                                                                            <th>Firstname</th>
                                                                            <th>Lastname</th>
                                                                            <th>Email</th>
+                                                                           <th>Used</th>
                                                                       </tr>
                                                                  </thead>
                                                                  <tbody>
@@ -63,6 +64,7 @@ include('./includes/sidebar.php');
                                                                                      <td>{$row['firstname']}</td>
                                                                                      <td>{$row['lastname']}</td>
                                                                                      <td>{$row['username']}</td>
+                                                                                     <td{$row['used']}>/td>
                                                                                 </tr>";
                                                                            }
                                                                            $stmt->close();
