@@ -134,7 +134,7 @@ if (isset($_POST['registration_link'])) {
             exit(0);
         } catch (Exception $e) {
             error_log("Mailer Error: " . $mail->ErrorInfo);
-            $_SESSION['status'] = "Unable to send the registration link at this moment.";
+            $_SESSION['status'] = "Unable to send the registration link at this moment. Comeb back tomorrow.";
             $_SESSION['status_code'] = "error";
             header("Location: ms_verify.php");
             exit(0);
