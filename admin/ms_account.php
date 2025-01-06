@@ -50,6 +50,7 @@ include('./includes/sidebar.php');
                                                                            <th>Lastname</th>
                                                                            <th>Email</th>
                                                                            <th>Used</th>
+                                                                           <th>Action</th>
                                                                       </tr>
                                                                  </thead>
                                                                  <tbody>
