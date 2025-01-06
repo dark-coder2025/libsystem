@@ -30,11 +30,11 @@ include('./includes/sidebar.php');
                                                        </button>
                                                   </form>
                                              </div>
-                                             <!-- <div class="text-end">
+                                             <div class="text-end">
                                                   <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAccountModal">
                                                        <b>Add New Account</b>
                                                   </button>
-                                             </div> -->
+                                             </div>
                                         </div>
                                         <br>
                                         <div class="container">
