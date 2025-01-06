@@ -49,7 +49,6 @@ include('./includes/sidebar.php');
                                                                            <th>Firstname</th>
                                                                            <th>Lastname</th>
                                                                            <th>Email</th>
-                                                                           <th>Used</th>
                                                                       </tr>
                                                                  </thead>
                                                                  <tbody>
@@ -65,9 +64,6 @@ include('./includes/sidebar.php');
                                                                                      <td>{$row['lastname']}</td>
                                                                                      <td>{$row['username']}</td>
                                                                                      <td>{$row['used']}</td>
-                                                                                     <td><a href='#' class='dropdown-item text-success' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit Student' onclick='loadStudentData({$row['ms_id']})'>
-                                                                                     <i class='bi bi-pencil-fill'></i> Edit
-                                                                                     </a></td>
                                                                                 </tr>";
                                                                            }
                                                                            $stmt->close();
