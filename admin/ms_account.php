@@ -60,16 +60,22 @@ include('./includes/sidebar.php');
                                                                            $result = $stmt->get_result();
                                                                            while ($row = $result->fetch_assoc()) {
                                                                                 echo "<tr>
-                                                                                     <td class='d-none'>{$row['ms_id']}</td>
-                                                                                     <td>{$row['firstname']}</td>
-                                                                                     <td>{$row['lastname']}</td>
-                                                                                     <td>{$row['username']}</td>
-                                                                                     <td>{$row['used']}</td>
-                                                                                </tr>";
+                                                                                          <td class='d-none'>{$row['ms_id']}</td>
+                                                                                          <td>{$row['firstname']}</td>
+                                                                                          <td>{$row['lastname']}</td>
+                                                                                          <td>{$row['username']}</td>
+                                                                                          <td>{$row['used']}</td>
+                                                                                          <td>
+                                                                                          <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
+                                                                                                    data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
+                                                                                               Edit
+                                                                                          </button>
+                                                                                          </td>
+                                                                                     </tr>";
                                                                            }
                                                                            $stmt->close();
                                                                       } else {
-                                                                           echo "<tr><td colspan='4'>Error retrieving data</td></tr>";
+                                                                           echo "<tr><td colspan='6'>Error retrieving data</td></tr>";
                                                                       }
                                                                       ?>
                                                                  </tbody>
@@ -119,6 +125,32 @@ include('./includes/sidebar.php');
      </div>
 </div>
 
+<!-- Edit Account Modal -->
+<div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAccountModalLabel">Edit MS 365 Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="update_account.php" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="used" class="form-label">Used</label>
+                        <input type="text" class="form-control" id="used" name="used" required>
+                        <input type="hidden" id="ms_id" name="ms_id"> <!-- Hidden field to pass ms_id -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="update_account" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <?php 
 include('./includes/footer.php');
 include('./includes/script.php');
@@ -135,5 +167,18 @@ document.addEventListener('DOMContentLoaded', function () {
             selector: 'td:nth-child(2)'
         }
     });
+
+    // Event listener for the Edit button
+    const editButtons = document.querySelectorAll('.editBtn');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const msid = this.getAttribute('data-msid');
+                const used = this.getAttribute('data-used');
+                
+                // Populate the modal with the current data
+                document.getElementById('ms_id').value = msid;
+                document.getElementById('used').value = used;
+            });
+        });
 });
 </script>
