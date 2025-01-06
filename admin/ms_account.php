@@ -30,11 +30,11 @@ include('./includes/sidebar.php');
                                                        </button>
                                                   </form>
                                              </div>
-                                             <div class="text-end">
+                                             <!-- <div class="text-end">
                                                   <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAccountModal">
                                                        <b>Add New Account</b>
                                                   </button>
-                                             </div>
+                                             </div> -->
                                         </div>
                                         <br>
                                         <div class="container">
@@ -73,7 +73,6 @@ include('./includes/sidebar.php');
                                                                       }
                                                                       ?>
                                                                  </tbody>
-
                                                             </table>
                                                        </div>
                                                   </div>
@@ -118,39 +117,6 @@ include('./includes/sidebar.php');
                </form>
           </div>
      </div>
-</div>
-
-<!-- Edit Student Modal -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="editStudentForm" method="POST" action="user_student_code.php">
-          <input type="hidden" name="edit_student_id" id="editStudentId">
-          <div class="mb-3">
-            <label for="editLName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
-          </div>
-          <div class="mb-3">
-            <label for="editFName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="editFName" name="edit_first_name" style="text-transform:capitalize;" required>
-          </div>
-          <div class="mb-3">
-            <label for="editMName" class="form-label">Middle Name</label>
-            <input type="text" class="form-control" id="editMName" name="edit_middle_name" style="text-transform:capitalize;">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
 
 <?php 
