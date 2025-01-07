@@ -1,4 +1,4 @@
-yods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
+edpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
 ini_set('session.cookie_httponly', 1);
 session_start();
 include('./admin/config/dbcon.php');
