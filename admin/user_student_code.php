@@ -493,24 +493,37 @@ if (isset($_POST['delete_student_id'])) {
     }
 }
 
-// Edit Student
+// Check if the request is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['edit_student_id'])) {
+    // Check if the necessary data is provided
+    if (isset($_POST['edit_student_id'], $_POST['edit_last_name'], $_POST['edit_first_name'])) {
+        // Sanitize the input to prevent SQL injection
         $studentId = mysqli_real_escape_string($con, $_POST['edit_student_id']);
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
-        $stu_id = mysqli_real_escape_string($con, $_POST['edit_student_id']);
+        $stu_id = mysqli_real_escape_string($con, $_POST['edit_student_id']); // This is redundant; you may want to confirm if this is intentional.
 
-        $sql = "UPDATE user SET firstname='$fName', lastname='$lName', middlename='$mName', student_id_no='$stu_id' WHERE user_id='$studentId'";
+        // Prepare the SQL query for updating the record
+        $sql = "UPDATE user 
+                SET firstname = '$fName', lastname = '$lName', middlename = '$mName', student_id_no = '$stu_id' 
+                WHERE user_id = '$studentId'";
+
+        // Execute the query and handle success or failure
         if (mysqli_query($con, $sql)) {
+            // Use session to provide feedback
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
+            // Redirect to the appropriate page
             header('Location: user_student.php');
             exit();
         } else {
+            // Handle query failure
             echo "Error updating record: " . mysqli_error($con);
         }
+    } else {
+        // Handle missing data
+        echo "Error: Missing required fields.";
     }
 }
 
