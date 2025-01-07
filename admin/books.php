@@ -75,10 +75,7 @@ include('includes/sidebar.php');
                                                     book.isbn,
                                                     GROUP_CONCAT(book.accession_number ORDER BY book.accession_number SEPARATOR ', ') AS accession_numbers,
                                                     COUNT(book.accession_number) AS copy_count, 
-                                                    SUM(CASE 
-                                                        WHEN book.status IN ('available', 'missing', 'damage', 'storage room') THEN 1 
-                                                        ELSE 0 
-                                                    END) AS available_count,
+                                                    SUM(CASE WHEN book.status = 'available' THEN 1 ELSE 0 END) AS available_count,
                                                     MAX(book.book_image) AS book_image,
                                                     MAX(book.publisher) AS publisher,
                                                     MAX(book.call_number) AS call_number
