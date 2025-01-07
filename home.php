@@ -33,14 +33,16 @@ include('includes/navbar.php');
 
     <!-- Services -->
     <div class="container bg-white mt-3">
-        <h3 class="fs-3"><a href="services.php" class="text-black text-decoration-none">Services</a></h3>
-        <h4 class="text-center fs-2">MCCLRC OPENING DAY AND TIME</h4>
-        <div class="row">
-            <div class="col-md-6 p-5">
-                <h4 class="fs-1">Monday - Saturdays:</h4>
-                <h4 class="fs-3">8:00 AM 5:00 PM (No Noon Break)</h4>
+        <h3 class="fs-3 text-center text-md-start">
+            <a href="services.php" class="text-black text-decoration-none">Services</a>
+        </h3>
+        <h4 class="text-center fs-4 fs-md-2">MCCLRC OPENING DAY AND TIME</h4>
+        <div class="row align-items-center">
+            <div class="col-12 col-md-6 p-3 p-md-5 text-center text-md-start">
+                <h4 class="fs-5 fs-md-3">Monday - Saturdays:</h4>
+                <h4 class="fs-6 fs-md-4">8:00 AM - 5:00 PM (No Noon Break)</h4>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-md-6 text-center">
                 <img src="assets/img/A.gif" class="img-fluid" alt="Responsive GIF">
             </div>
         </div>
@@ -77,6 +79,34 @@ include('includes/navbar.php');
         <!-- Grid container -->
     </footer>
 </div>
+
+<!-- Chat Icon -->
+<a href="https://www.facebook.com/MCCLRC" class="chat-icon" target="_blank" title="Chat with us on Facebook">
+    <i class="bi bi-chat-dots-fill"></i>
+</a>
+
+<style>
+    .chat-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #0D4C92;
+        color: white;
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 24px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chat-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        background-color: #0A3A73;
+    }
+</style>
+
 <!-- End of .container -->
 <?php 
 include('includes/script.php');
