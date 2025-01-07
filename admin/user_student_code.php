@@ -1,4 +1,4 @@
-yods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
+<?php
 include('authentication.php');
 include('includes/url.php');
 header('Content-Type: application/json');
