@@ -94,7 +94,7 @@ include('includes/navbar.php');
         right: 20px;
         color: white; /* Icon color */
         font-size: 40px; /* Icon size */
-        text-shadow: 0px 0px 8px rgba(13, 76, 146, 0.5); /* Glowing text shadow */
+        text-shadow: 0px 0px 8px rgb(6, 106, 221); /* Glowing text shadow */
         z-index: 1000; /* Keeps it on top */
         transition: transform 0.3s ease, text-shadow 0.3s ease;
         text-decoration: none; /* Remove underline */
