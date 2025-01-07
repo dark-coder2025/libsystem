@@ -223,15 +223,21 @@ function confirmDelete(userId) {
 
 function loadStudentData(userId) {
     fetch('user_student_code.php?id=' + userId)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            // Sanitize data to remove any potential XSS tags
+            // Populate modal fields with sanitized data
             document.getElementById('editStudentId').value = sanitizeInput(data.user_id);
             document.getElementById('editLName').value = sanitizeInput(data.lastname);
             document.getElementById('editFName').value = sanitizeInput(data.firstname);
             document.getElementById('editMName').value = sanitizeInput(data.middlename);
             document.getElementById('editStuID').value = sanitizeInput(data.student_id_no);
 
+            // Show modal
             var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
             myModal.show();
         })
