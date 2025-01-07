@@ -154,7 +154,7 @@ if (isset($_POST['register_btn'])) {
                 mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $student_id_no);
                 
                 if (mysqli_stmt_execute($stmt_update)) {
-                    $update_verify = "UPDATE ms_account SET used = 1 WHERE username = ?";
+                    $update_verify = "UPDATE ms_account SET used = 1, created_at = NOW() WHERE username = ?";
                     $stmt_update_verify = mysqli_prepare($con, $update_verify);
                     mysqli_stmt_bind_param($stmt_update_verify, 's', $email);
                     mysqli_stmt_execute($stmt_update_verify);

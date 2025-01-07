@@ -64,7 +64,7 @@ if (isset($_POST['registration_link'])) {
 
     $code = encryptor('encrypt', $verification_code);
 
-    $stmt = $con->prepare("UPDATE ms_account SET verification_code = ?, created_at = NOW() WHERE username = ?");
+    $stmt = $con->prepare("UPDATE ms_account SET verification_code = ? WHERE username = ?");
     if (!$stmt) {
         error_log("MySQL prepare error: " . $con->error);
         $_SESSION['status'] = "Database error. Please try again later.";
