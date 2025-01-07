@@ -165,7 +165,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <label for="editStuID" class="form-label">Student ID No.</label>
-            <input type="text" class="form-control" id="editStuID" name="edit_student_id" style="text-transform:capitalize;">
+            <input type="text" class="form-control" id="editStuID" name="edit_student_id" style="text-transform:capitalize;" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -290,9 +290,7 @@ document.getElementById('editMName').addEventListener('input', function () {
      var alphabetPattern = /^[A-Za-zñÑ.\s]+$/; // Pattern for alphabet and spaces only
           
      // Check if input starts with a space
-     if (this.value !== editMName) {
-          this.setCustomValidity('Name cannot start with a space.');
-     } else if (alphabetPattern.test(editMName)) {
+     if (alphabetPattern.test(editMName)) {
           this.setCustomValidity(''); // If valid, clear any previous error message
      } else {
           this.setCustomValidity('Please enter a valid name with only letters and no leading/trailing spaces.');
