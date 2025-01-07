@@ -145,9 +145,6 @@ if (strpos($request, '.php') !== false) {
                             confirmButtonText: 'Submit',
                             timer: 1800000,  // 30 minutes timer (30 * 60 * 1000 ms)
                             timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            },
                             preConfirm: (token) => {
                                 if (!token) {
                                     Swal.showValidationMessage('OTP is required');
