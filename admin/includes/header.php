@@ -35,8 +35,6 @@ if (strpos($request, '.php') !== false) {
 
      <!-- Bootstrap Icon -->
      <link rel="stylesheet" href="assets/font/bootstrap-icons.css">
-     <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
      <!-- Alertify JS link -->
      <link rel="stylesheet" href="assets/css/alertify.min.css" />
