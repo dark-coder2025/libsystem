@@ -62,6 +62,8 @@ if (isset($_POST['registration_link'])) {
 
     $verification_code = sha1(rand());
 
+    $code = encryptor('encrypt', $verification_code);
+
     $stmt = $con->prepare("UPDATE ms_account SET verification_code = ?, created_at = NOW() WHERE username = ?");
     if (!$stmt) {
         error_log("MySQL prepare error: " . $con->error);
@@ -138,7 +140,7 @@ if (isset($_POST['registration_link'])) {
                     <div class='content'>
                         <p>Hello,</p>
                         <p>Please click the button below to create a MCC-LRC Account:</p>
-                        <p><a style='color: white;' href='http://mcc-lrc.com/signup.php?code=$verification_code' class='button'>Register</a></p>
+                        <p><a style='color: white;' href='http://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
                         <p>If you did not request this registration, please ignore this email.</p>
                     </div>
                 </div>
