@@ -92,7 +92,7 @@ include('includes/navbar.php');
         position: fixed;
         bottom: 20px;
         right: 20px;
-        color: #0D4C92; /* Icon color */
+        color: white; /* Icon color */
         font-size: 40px; /* Icon size */
         text-shadow: 0px 0px 8px rgba(13, 76, 146, 0.5); /* Glowing text shadow */
         z-index: 1000; /* Keeps it on top */
