@@ -39,7 +39,10 @@ if ($_SESSION['auth_role'] != "student" && $_SESSION['auth_role'] != "faculty" &
                                 $query = $con->prepare("SELECT 
                                                            book.*, 
                                                            COUNT(book.accession_number) AS copy_count, 
-                                                           SUM(CASE WHEN book.status = 'available' THEN 1 ELSE 0 END) AS available_count
+                                                           SUM(CASE 
+                                                                WHEN book.status IN ('available', 'missing', 'damage', 'storage room') THEN 1 
+                                                                ELSE 0 
+                                                            END) AS available_count
                                                       FROM book 
                                                       WHERE title = ? AND author = ? AND copyright_date = ? AND isbn = ?
                                                       GROUP BY title, author, copyright_date, isbn 
