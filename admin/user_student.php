@@ -165,7 +165,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <label for="editStuID" class="form-label">Student ID No.</label>
-            <input type="text" class="form-control" id="editStuID" name="edit_student_id" style="text-transform:capitalize;" required>
+            <input type="text" class="form-control" id="editStuID" name="edit_student_id_no" style="text-transform:capitalize;" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
