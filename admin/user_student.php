@@ -284,22 +284,7 @@ document.getElementById('editFName').addEventListener('input', function () {
      this.classList.toggle('is-invalid', !isValid);
 });
 
-document.getElementById('editMName').addEventListener('input', function () {
-     var editMName = this.value.trim(); // Remove any leading or trailing spaces
-          
-     var alphabetPattern = /^[A-Za-zñÑ.\s]+$/; // Pattern for alphabet and spaces only
-          
-     // Check if input starts with a space
-     if (alphabetPattern.test(editMName)) {
-          this.setCustomValidity(''); // If valid, clear any previous error message
-     } else {
-          this.setCustomValidity('Please enter a valid name with only letters and no leading/trailing spaces.');
-     }
-          
-     // Check validity and toggle the invalid class
-     var isValid = alphabetPattern.test(editMName) && this.value === editMName; // Ensure no leading spaces
-     this.classList.toggle('is-invalid', !isValid);
-});
+
 
 document.getElementById('deleteReason').addEventListener('input', function () {
         var deleteReason = this.value.trim();
