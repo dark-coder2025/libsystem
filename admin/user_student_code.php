@@ -514,27 +514,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Check if the 'id' parameter is set
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
 
-    // Validate the input to prevent SQL injection
     $userId = mysqli_real_escape_string($con, $userId);
 
-    // Prepare the SQL query
     $sql = "SELECT * FROM user WHERE user_id = '$userId'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        // Fetch the data and return it as JSON
         $row = mysqli_fetch_assoc($result);
         echo json_encode($row);
     } else {
-        // Return an error if no student is found
-        echo json_encode(['error' => 'Student not found']);
+        $_SESSION['status'] = "Student not found";
+        $_SESSION['status_code'] = "error";
+        header('Location: user_student.php');
+        exit();
     }
 } else {
-    // Return an error if 'id' is not provided
-    echo json_encode(['error' => 'Invalid request: No ID provided']);
+    $_SESSION['status'] = "Invalid request: No ID provided";
+    $_SESSION['status_code'] = "error";
+    header('Location: user_student.php');
+    exit();
 }
 ?>
