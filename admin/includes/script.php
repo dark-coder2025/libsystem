@@ -3,6 +3,8 @@
 
 <!-- Bootstrap JS -->
 <script src="assets/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JQuery Datatables -->
 <script src="assets/js/pdfmake.min.js"></script>
