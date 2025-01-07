@@ -92,21 +92,17 @@ include('includes/navbar.php');
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: #0D4C92; /* Background color */
-        color: white; /* Icon color */
-        border-radius: 50%; /* Makes the background circular */
-        padding: 15px; /* Adjust padding for size */
-        font-size: 34px; /* Icon size */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        color: #0D4C92; /* Icon color */
+        font-size: 40px; /* Icon size */
+        text-shadow: 0px 0px 8px rgba(13, 76, 146, 0.5); /* Glowing text shadow */
         z-index: 1000; /* Keeps it on top */
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
         text-decoration: none; /* Remove underline */
     }
 
     .chat-icon:hover {
-        transform: scale(1.1); /* Slightly enlarge on hover */
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-        background-color: #0A3A73; /* Darker background on hover */
+        transform: scale(1.2); /* Slightly enlarge on hover */
+        text-shadow: 0px 0px 15px rgba(13, 76, 146, 0.8); /* Stronger glow on hover */
     }
 </style>
 
