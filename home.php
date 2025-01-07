@@ -93,7 +93,7 @@ include('includes/navbar.php');
         bottom: 20px;
         right: 20px;
         color: white; /* Icon color */
-        font-size: 40px; /* Icon size */
+        font-size: 50px; /* Icon size */
         text-shadow: 0px 0px 10px rgb(6, 106, 221); /* Glowing text shadow */
         z-index: 1000; /* Keeps it on top */
         transition: transform 0.3s ease, text-shadow 0.3s ease;
