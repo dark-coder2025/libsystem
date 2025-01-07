@@ -493,36 +493,38 @@ if (isset($_POST['delete_student_id'])) {
     }
 }
 
-// Check if the request is POST
+// Edit Student
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the necessary data is provided
-    if (isset($_POST['edit_student_id'], $_POST['edit_last_name'], $_POST['edit_first_name'])) {
-        // Sanitize the input to prevent SQL injection
+    // Check if all required fields are set
+    if (isset($_POST['edit_student_id'], $_POST['edit_last_name'], $_POST['edit_first_name'], $_POST['edit_middle_name'])) {
+        // Sanitize and validate input to prevent SQL injection
         $studentId = mysqli_real_escape_string($con, $_POST['edit_student_id']);
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
-        $stu_id = mysqli_real_escape_string($con, $_POST['edit_student_id']); // This is redundant; you may want to confirm if this is intentional.
+        $stuIdNo = mysqli_real_escape_string($con, $_POST['edit_student_id_no']); // Corrected variable name for student ID no.
 
-        // Prepare the SQL query for updating the record
+        // Prepare the SQL UPDATE query
         $sql = "UPDATE user 
-                SET firstname = '$fName', lastname = '$lName', middlename = '$mName', student_id_no = '$stu_id' 
+                SET firstname = '$fName', 
+                    lastname = '$lName', 
+                    middlename = '$mName', 
+                    student_id_no = '$stuIdNo' 
                 WHERE user_id = '$studentId'";
 
-        // Execute the query and handle success or failure
+        // Execute the query
         if (mysqli_query($con, $sql)) {
-            // Use session to provide feedback
+            // Set success message in the session and redirect
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
-            // Redirect to the appropriate page
             header('Location: user_student.php');
             exit();
         } else {
-            // Handle query failure
+            // Handle SQL execution errors
             echo "Error updating record: " . mysqli_error($con);
         }
     } else {
-        // Handle missing data
+        // Handle missing form data
         echo "Error: Missing required fields.";
     }
 }
