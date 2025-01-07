@@ -36,12 +36,14 @@ include('includes/navbar.php');
         <h3 class="fs-3 text-center text-md-start">
             <a href="services.php" class="text-black text-decoration-none">Services</a>
         </h3>
-        <h4 class="text-center fs-4 fs-md-2">MCCLRC OPENING DAY AND TIME</h4>
+        <h4 class="text-center fs-4 fs-md-2 mb-4">MCCLRC OPENING DAY AND TIME</h4>
         <div class="row align-items-center">
+            <!-- Text Column -->
             <div class="col-12 col-md-6 p-3 p-md-5 text-center text-md-start">
                 <h4 class="fs-5 fs-md-3">Monday - Saturdays:</h4>
                 <h4 class="fs-6 fs-md-4">8:00 AM - 5:00 PM (No Noon Break)</h4>
             </div>
+            <!-- Image Column -->
             <div class="col-12 col-md-6 text-center">
                 <img src="assets/img/A.gif" class="img-fluid" alt="Responsive GIF">
             </div>
