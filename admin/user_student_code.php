@@ -496,7 +496,7 @@ if (isset($_POST['delete_student_id'])) {
 // Edit Student
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
-    if (isset($_POST['edit_student_id'], $_POST['edit_last_name'], $_POST['edit_first_name'], $_POST['edit_middle_name'])) {
+    if (isset($_POST['edit_student_id'], $_POST['edit_last_name'], $_POST['edit_first_name'])) {
         // Sanitize and validate input to prevent SQL injection
         $studentId = mysqli_real_escape_string($con, $_POST['edit_student_id']);
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
