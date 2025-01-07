@@ -95,9 +95,8 @@ include('includes/navbar.php');
         background-color: #0D4C92; /* Background color */
         color: white; /* Icon color */
         border-radius: 50%; /* Makes the background circular */
-        padding-top: -70px;
         padding: 15px; /* Adjust padding for size */
-        font-size: 24px; /* Icon size */
+        font-size: 34px; /* Icon size */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         z-index: 1000; /* Keeps it on top */
         transition: transform 0.3s ease, box-shadow 0.3s ease;
