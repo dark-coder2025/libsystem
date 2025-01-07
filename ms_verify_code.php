@@ -31,8 +31,7 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    // Check if email exists and get `used` status
-    $stmt = $con->prepare("SELECT used, verification_code, created_at FROM ms_account WHERE username = ?");
+    $stmt = $con->prepare("SELECT used FROM ms_account WHERE username = ?");
     if (!$stmt) {
         error_log("MySQL prepare error: " . $con->error);
         $_SESSION['status'] = "Database error. Please try again later.";
@@ -43,11 +42,10 @@ if (isset($_POST['registration_link'])) {
 
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($used, $current_code, $created_at);
+    $stmt->bind_result($used);
     $stmt->fetch();
     $stmt->close();
 
-    // Check if email is found
     if ($used === null) {
         $_SESSION['status'] = "Email not found. Please visit the BSIT office to get MS365 Account.";
         $_SESSION['status_code'] = "error";
@@ -55,7 +53,6 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    // Check if email is already used
     if ($used == 1) {
         $_SESSION['status'] = "This email has already been used.";
         $_SESSION['status_code'] = "error";
@@ -63,10 +60,7 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    // Generate a new verification code
-    $verification_code = md5(rand());
-
-    $code = encryptor('encrypt', $verification_code);
+    $verification_code = sha1(rand());
 
     $stmt = $con->prepare("UPDATE ms_account SET verification_code = ?, created_at = NOW() WHERE username = ?");
     if (!$stmt) {
@@ -86,12 +80,12 @@ if (isset($_POST['registration_link'])) {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Use environment variable
-            $mail->Password   = 'mspw rvkb xcwm czif'; // Use environment variable
+            $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com'; // Use environment variable
+            $mail->Password   = 'mbuq bvbh wtst tnsr'; // Use environment variable
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
-            $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
+            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
             $mail->addAddress($email);
 
             $mail->isHTML(true);
@@ -100,12 +94,40 @@ if (isset($_POST['registration_link'])) {
             <html>
             <head>
                 <style>
-                    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-                    .container { width: 80%; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-                    .header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
-                    .logo { max-width: 150px; height: auto; }
-                    .content { padding: 20px 0; }
-                    .button { display: inline-block; padding: 10px 20px; background-color: #007bff; text-decoration: none; color: white; border-radius: 4px; }
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        width: 80%;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background-color: #fff;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    .header {
+                        text-align: center;
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    .logo {
+                        max-width: 150px;
+                        height: auto;
+                    }
+                    .content {
+                        padding: 20px 0;
+                    }
+                    .button {
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #007bff;
+                        text-decoration: none;
+                        color: white;
+                        border-radius: 4px;
+                    }
                 </style>
             </head>
             <body>
@@ -115,11 +137,8 @@ if (isset($_POST['registration_link'])) {
                     </div>
                     <div class='content'>
                         <p>Hello,</p>
-                        <p><b>This registration will expire within 1 hour.</b></p>
                         <p>Please click the button below to create a MCC-LRC Account:</p>
-                        </br>
-                        <p><a style='color: white;' href='https://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
-                        </br>
+                        <p><a style='color: white;' href='http://mcc-lrc.com/signup.php?code=$verification_code' class='button'>Register</a></p>
                         <p>If you did not request this registration, please ignore this email.</p>
                     </div>
                 </div>
@@ -134,7 +153,7 @@ if (isset($_POST['registration_link'])) {
             exit(0);
         } catch (Exception $e) {
             error_log("Mailer Error: " . $mail->ErrorInfo);
-            $_SESSION['status'] = "Unable to send the registration link at this moment. Come back tomorrow.";
+            $_SESSION['status'] = "Unable to send the registration link at this moment. Comeback tomorrow.";
             $_SESSION['status_code'] = "error";
             header("Location: ms_verify.php");
             exit(0);
