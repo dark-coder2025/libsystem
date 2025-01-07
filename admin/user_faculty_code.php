@@ -17,13 +17,13 @@ function sendEmail($faculty_email, $subject, $message) {
         $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; // Outlook/Microsoft 365 SMTP server
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com'; // Your Outlook/Microsoft 365 email address
-            $mail->Password   = 'edpf kghw pylr zync'; // Your email account password or app password
+            $mail->Username   = 'resourcecentermcclearning@gmail.com'; // Your Outlook/Microsoft 365 email address
+            $mail->Password   = 'oenz pxyh ohro zevi'; // Your email account password or app password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
             $mail->Port       = 587; // Port for TLS
 
             //Recipients
-            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
+            $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
             $mail->addAddress($student_email); // Recipient's email address
 
         //Content
