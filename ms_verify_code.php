@@ -151,15 +151,12 @@ if (isset($_POST['registration_link'])) {
             $mail->send();
             $_SESSION['status'] = "Registration link sent. Please check your email on Outlook.";
             $_SESSION['status_code'] = "success";
-            header("Location: ms_verify.php");
-            exit(0);
         } catch (Exception $e) {
-            error_log("Mailer Error: " . $mail->ErrorInfo);
             $_SESSION['status'] = "Unable to send the registration link at this moment. Comeback tomorrow.";
             $_SESSION['status_code'] = "error";
-            header("Location: ms_verify.php");
-            exit(0);
         }
+        header("Location: ms_verify.php");
+            exit(0);
     } else {
         error_log("MySQL execute error: " . $stmt->error);
         $_SESSION['status'] = "Database error. Please try again later.";
