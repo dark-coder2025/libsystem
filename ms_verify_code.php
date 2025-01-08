@@ -86,17 +86,53 @@ if (isset($_POST['registration_link'])) {
         <html>
         <head>
             <style>
-                body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-                .container { width: 80%; margin: auto; background: #fff; padding: 20px; }
-                .button { padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-            </style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        width: 80%;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background-color: #fff;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    .header {
+                        text-align: center;
+                        padding-bottom: 20px;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    .logo {
+                        max-width: 150px;
+                        height: auto;
+                    }
+                    .content {
+                        padding: 20px 0;
+                    }
+                    .button {
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #007bff;
+                        text-decoration: none;
+                        color: white;
+                        border-radius: 4px;
+                    }
+                </style>
         </head>
         <body>
             <div class='container'>
-                <h2>MCC-LRC Account Registration</h2>
-                <p>Please click the link below to complete your registration:</p>
-                <p><a href='http://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
-                <p>If you did not request this registration, ignore this email.</p>
+                <div class='header'>
+                        <img src='https://mcc-lrc.com/images/mcc-lrc.png' alt='Logo'>
+                    </div>
+                    <div class='content'>
+                        <p>Hello,</p>
+                        <p>Please click the button below to create a MCC-LRC Account:</p>
+                        <p><a style='color: white;' href='http://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
+                        <p>If you did not request this registration, please ignore this email.</p>
+                    </div>
             </div>
         </body>
         </html>
