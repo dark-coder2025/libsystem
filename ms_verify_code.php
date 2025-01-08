@@ -55,7 +55,7 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    $email_query = "SELECT used, email FROM ms_account WHERE username = ?";
+    $email_query = "SELECT used, username FROM ms_account WHERE username = ?";
     $stmt = mysqli_prepare($con, $email_query);
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
