@@ -83,7 +83,7 @@ if (isset($_POST['registration_link'])) {
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com'; // Use environment variable
-            $mail->Password   = 'edpf kghw pylr zync'; // Use environment variable
+            $mail->Password   = 'qppl djvo gmom wvf'; // Use environment variable
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
