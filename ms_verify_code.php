@@ -6,10 +6,12 @@ include('./admin/config/dbcon.php');
 include('includes/url.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 
 function sendEmail($email, $subject, $message) {
     $mail = new PHPMailer(true);
@@ -77,6 +79,8 @@ if (isset($_POST['registration_link'])) {
 
     $verification_code = sha1(rand());
 
+    $code = encryptor('encrypt', $verification_code);
+
     $subject = "MCC-LRC Creating Account";
     $message = "
         <html>
@@ -91,7 +95,7 @@ if (isset($_POST['registration_link'])) {
             <div class='container'>
                 <h2>MCC-LRC Account Registration</h2>
                 <p>Please click the link below to complete your registration:</p>
-                <p><a href='http://mcc-lrc.com/signup.php?code=$verification_code' class='button'>Register</a></p>
+                <p><a href='http://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
                 <p>If you did not request this registration, ignore this email.</p>
             </div>
         </body>
