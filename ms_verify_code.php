@@ -113,6 +113,11 @@ if (isset($_POST['registration_link'])) {
     $_SESSION['status_code'] = "success";
     header("Location: ms_verify.php");
     exit(0);
+} else {
+    $_SESSION['status'] = 'Unable to send the registration link at this moment. Comeback tomorrow.';
+    $_SESSION['status_code'] = "error";
+    header("Location: ms_verify.php");
+    exit(0);
 }
 
 ob_end_flush();
