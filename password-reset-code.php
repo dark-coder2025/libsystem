@@ -126,6 +126,11 @@ if (isset($_POST['password_reset_link'])) {
     $_SESSION['status_code'] = "success";
     header("Location: password-reset.php");
     exit(0);
+} else {
+    $_SESSION['status'] = 'Unable to send a password reset link at .';
+    $_SESSION['status_code'] = "error";
+    header("Location: ms_verify.php");
+    exit(0);
 }
 
 ?>
