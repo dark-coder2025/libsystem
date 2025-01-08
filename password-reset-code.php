@@ -4,39 +4,65 @@ session_start();
 include('./admin/config/dbcon.php');
 include('includes/url.php');
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-    require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-    require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-    require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 
-function send_password_reset($get_name, $get_email, $token) {
-    $code = encryptor('encrypt', $token);
+function sendEmail($email, $subject, $message) {
     $mail = new PHPMailer(true);
-
     try {
-        // SMTP server configuration
         $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; // Outlook/Microsoft 365 SMTP server
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Your Outlook/Microsoft 365 email address
-            $mail->Password   = 'oidq tnsz oqyf cazx'; // Your email account password or app password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
-            $mail->Port       = 587; // Port for TLS
+        $mail->Host       = 'smtp.gmail.com'; 
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Use environment variable
+        $mail->Password   = 'oidq tnsz oqyf cazx'; // Use environment variable
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+        $mail->Port       = 587;
 
-            //Recipients
-            $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
-            $mail->addAddress($get_email, $get_name); // Recipient's email address
+        $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
+        $mail->addAddress($email);
 
-        // Email content settings
         $mail->isHTML(true);
-        $mail->Subject = 'Here is your link to Reset the password of your MCC-LRC Account';
-        $mail->Body = "
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+    }
+}
+
+if (isset($_POST['password_reset_link'])) {
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+
+    $email_query = "SELECT firstname, email FROM user WHERE email=?";
+    $stmt = mysqli_prepare($con, $email_query);
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $email_row = mysqli_fetch_assoc($result);
+
+    if (!$email_row) {
+        $_SESSION['status'] = "Email not found. Need to register first.";
+        $_SESSION['status_code'] = "error";
+        header("Location: ms_verify.php");
+        exit(0);
+    }
+
+    // Generate a more secure token
+    $token = md5(rand()); 
+
+    $code = encryptor('encrypt', $token);
+
+    $subject = "Here is your link to Reset the password of your MCC-LRC Account";
+    $message = "
         <html>
-            <head>
-                <style>
+        <head>
+            <style>
                     body {
                         font-family: Arial, sans-serif;
                         background-color: #f4f4f4;
@@ -72,10 +98,10 @@ function send_password_reset($get_name, $get_email, $token) {
                         border-radius: 4px;
                     }
                 </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <div class='header'>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
                         <img src='https://mcc-lrc.com/images/mcc-lrc.png' alt='Logo'>
                     </div>
                     <div class='content'>
@@ -84,157 +110,22 @@ function send_password_reset($get_name, $get_email, $token) {
                         <p><a style='color: white;' href='https://mcc-lrc.com/password-change.php?token=$code' class='button'>Reset Password</a></p>
                         <p>If you did not request a password reset, please ignore this email.</p>
                     </div>
-                </div>
-            </body>
+            </div>
+        </body>
         </html>
-        ";
+    ";
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
-        return false;
-    }
+    sendEmail($email, $subject, $message);
+
+    $update_query = "UPDATE user SET verify_token=?, token_used=0 WHERE email=?";
+    $update_stmt = mysqli_prepare($con, $update_query);
+    mysqli_stmt_bind_param($update_stmt, 'ss', $token, $email);
+    mysqli_stmt_execute($update_stmt);
+
+    $_SESSION['status'] = 'We e-mailed you a password reset link';
+    $_SESSION['status_code'] = "success";
+    header("Location: password-reset.php");
+    exit(0);
 }
 
-if (isset($_POST['password_reset_link'])) {
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $token = md5(rand());
-
-    // User table check
-    $check_email_user = "SELECT firstname, email FROM user WHERE email='$email'";
-    $check_email_run_user = mysqli_query($con, $check_email_user);
-
-    if (mysqli_num_rows($check_email_run_user) > 0) {
-        $row = mysqli_fetch_array($check_email_run_user);
-        $get_name = $row['firstname'];
-        $get_email = $row['email'];
-
-        $update_token_user = "UPDATE user SET verify_token='$token', token_used=0 WHERE email='$get_email'";
-        $update_token_run_user = mysqli_query($con, $update_token_user);
-
-        if ($update_token_run_user) {
-            if (send_password_reset($get_name, $get_email, $token)) {
-                $_SESSION['status'] = 'We e-mailed you a password reset link';
-                $_SESSION['status_code'] = 'success';
-                header('Location: password-reset.php');
-                exit(0);
-            } else {
-                $_SESSION['status'] = 'Email sending failed. Please try again.';
-                $_SESSION['status_code'] = 'error';
-                header('Location: password-reset.php');
-                exit(0);
-            }
-        }
-    }
-
-    // Faculty table check
-    $check_email_faculty = "SELECT firstname, email FROM faculty WHERE email='$email'";
-    $check_email_run_faculty = mysqli_query($con, $check_email_faculty);
-
-    if (mysqli_num_rows($check_email_run_faculty) > 0) {
-        $row = mysqli_fetch_array($check_email_run_faculty);
-        $get_name = $row['firstname'];
-        $get_email = $row['email'];
-
-        $update_token_faculty = "UPDATE faculty SET verify_token='$token', token_used=0 WHERE email='$get_email'";
-        $update_token_run_faculty = mysqli_query($con, $update_token_faculty);
-
-        if ($update_token_run_faculty) {
-            if (send_password_reset($get_name, $get_email, $token)) {
-                $_SESSION['status'] = "We e-mailed you a password reset link";
-                $_SESSION['status_code'] = "success";
-                header('Location: password-reset.php');
-                exit(0);
-            } else {
-                $_SESSION['status'] = "Email sending failed. Please try again.";
-                $_SESSION['status_code'] = "error";
-                header('Location: password-reset.php');
-                exit(0);
-            }
-        }
-    } else {
-        $_SESSION['status'] = "No email found";
-        $_SESSION['status_code'] = "error";
-        header('Location: password-reset.php');
-        exit(0);
-    }
-}
-
-if (isset($_POST['password-change'])) {
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $new_password = mysqli_real_escape_string($con, $_POST['new_password']);
-    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-    // User table check
-    $check_email_user = "SELECT email, token_used FROM user WHERE email='$email'";
-    $check_email_run_user = mysqli_query($con, $check_email_user);
-
-    if (mysqli_num_rows($check_email_run_user) > 0) {
-        $row = mysqli_fetch_array($check_email_run_user);
-        $get_email = $row['email'];
-        $token_used = $row['token_used'];
-
-        // Check if token is used
-        if ($token_used == 0) {
-            $update_password_user = "UPDATE user SET password='$hashed_password', token_used=1 WHERE email='$get_email'";
-            $update_password_run_user = mysqli_query($con, $update_password_user);
-
-            if ($update_password_run_user) {
-                $_SESSION['status'] = 'Password successfully changed.';
-                $_SESSION['status_code'] = 'success';
-                header('Location: login.php');
-                exit(0);
-            } else {
-                $_SESSION['status'] = 'Failed to update the password. Please try again.';
-                $_SESSION['status_code'] = 'error';
-                header('Location: password-change.php');
-                exit(0);
-            }
-        } else {
-            $_SESSION['status'] = 'Link already been used. Please request a new password reset link.';
-            $_SESSION['status_code'] = 'error';
-            header('Location: password-reset.php');
-            exit(0);
-        }
-    }
-
-    // Faculty table check
-    $check_email_faculty = "SELECT email, token_used FROM faculty WHERE email='$email'";
-    $check_email_run_faculty = mysqli_query($con, $check_email_faculty);
-
-    if (mysqli_num_rows($check_email_run_faculty) > 0) {
-        $row = mysqli_fetch_array($check_email_run_faculty);
-        $get_email = $row['email'];
-        $token_used = $row['token_used'];
-
-        // Check if token is used
-        if ($token_used == 0) {
-            $update_password_faculty = "UPDATE faculty SET password='$hashed_password', token_used=1 WHERE email='$get_email'";
-            $update_password_run_faculty = mysqli_query($con, $update_password_faculty);
-
-            if ($update_password_run_faculty) {
-                $_SESSION['status'] = 'Password successfully changed.';
-                $_SESSION['status_code'] = 'success';
-                header('Location: login');
-                exit(0);
-            } else {
-                $_SESSION['status'] = 'Failed to update the password. Please try again.';
-                $_SESSION['status_code'] = 'error';
-                header('Location: password-change');
-                exit(0);
-            }
-        } else {
-            $_SESSION['status'] = 'Link already been used. Please request a new password reset link.';
-            $_SESSION['status_code'] = 'error';
-            header('Location: password-reset.php');
-            exit(0);
-        }
-    } else {
-        $_SESSION['status'] = 'Something went wrong.';
-        $_SESSION['status_code'] = 'error';
-        header('Location: password-change');
-        exit(0);
-    }
-}
 ?>
