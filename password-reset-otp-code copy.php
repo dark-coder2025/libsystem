@@ -1,42 +1,39 @@
-<?php
+edpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
 ini_set('session.cookie_httponly', 1);
 session_start();
 include('./admin/config/dbcon.php');
 include('includes/url.php');
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
-require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
 
-function sendEmail($get_name, $get_email, $token)
-{
+function send_password_reset($get_name, $get_email, $token) {
     $mail = new PHPMailer(true);
-    
+
     try {
-        // SMTP settings
+        // SMTP server configuration
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-    
-        // Replace with environment-stored credentials
-        $mail->Username = 'mcclearningresourcecenterv2.0@gmail.com';
-        $mail->Password = 'oidq tnsz oqyf cazx';
-    
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-    
-        // Email details
-        $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($get_email, $get_name);
-    
+            $mail->Host       = 'smtp.gmail.com'; // Outlook/Microsoft 365 SMTP server
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Your Outlook/Microsoft 365 email address
+            $mail->Password   = 'oidq tnsz oqyf cazx'; // Your email account password or app password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
+            $mail->Port       = 587; // Port for TLS
+
+            //Recipients
+            $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
+            $mail->addAddress($get_email, $get_name); // Recipient's email address
+
+        // Email content settings
         $mail->isHTML(true);
-        $mail->Subject = 'Here is your OTP to Reset the password of your MCC-LRC Account';
+        $mail->Subject = 'Here is your link to Reset the password of your MCC-LRC Account';
         $mail->Body = "
-            <html>
+        <html>
             <head>
                 <style>
                     body {
@@ -97,87 +94,79 @@ function sendEmail($get_name, $get_email, $token)
                     </div>
                 </div>
             </body>
-            </html>
-            ";
-    
+        </html>
+        ";
+
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
         return false;
     }
 }
-    
-    if (isset($_POST['password_reset_link'])) {
-        $email = mysqli_real_escape_string($con, $_POST['email']);
-    
-        // Check if the email exists in the user table
-        $email_query = "SELECT firstname, email FROM user WHERE email=?";
-        $stmt = mysqli_prepare($con, $email_query);
-        mysqli_stmt_bind_param($stmt, 's', $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-    
-        if ($email_row = mysqli_fetch_assoc($result)) {
-            $get_name = $email_row['firstname'];
-            $get_email = $email_row['email'];
-            $token = rand(10000000, 99999999);
-    
-            // Send the email
-            if (sendEmail($get_name, $get_email, $token)) {
-                // Update token in user and faculty tables
-                $update_query = "UPDATE user SET verify_token=?, token_used=0 WHERE email=?";
-                $update_stmt = mysqli_prepare($con, $update_query);
-                mysqli_stmt_bind_param($update_stmt, 'ss', $token, $get_email);
-                mysqli_stmt_execute($update_stmt);
-    
+
+if (isset($_POST['password_reset_link'])) {
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $token = rand(10000000, 99999999);
+
+    // User table check
+    $check_email_user = "SELECT firstname, email FROM user WHERE email='$email'";
+    $check_email_run_user = mysqli_query($con, $check_email_user);
+
+    if (mysqli_num_rows($check_email_run_user) > 0) {
+        $row = mysqli_fetch_array($check_email_run_user);
+        $get_name = $row['firstname'];
+        $get_email = $row['email'];
+
+        $update_token_user = "UPDATE user SET verify_token='$token', token_used=0 WHERE email='$get_email'";
+        $update_token_run_user = mysqli_query($con, $update_token_user);
+
+        if ($update_token_run_user) {
+            if (send_password_reset($get_name, $get_email, $token)) {
                 $_SESSION['email_success'] = true;
                 header('Location: password-reset-otp.php');
                 exit(0);
             } else {
-                $_SESSION['status'] = "Failed to send email.";
-                $_SESSION['status_code'] = "error";
+                $_SESSION['status'] = 'Email sending failed. Please try again.';
+                $_SESSION['status_code'] = 'error';
                 header('Location: password-reset-otp.php');
-                exit(0);
-            }
-        } else {
-    
-                $email_query = "SELECT firstname, email FROM faculty WHERE email=?";
-                $stmt = mysqli_prepare($con, $email_query);
-                mysqli_stmt_bind_param($stmt, 's', $email);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-    
-                if ($email_row = mysqli_fetch_assoc($result)) {
-                    $get_name = $email_row['firstname'];
-                    $get_email = $email_row['email'];
-                    $token = rand(10000000, 99999999);
-            
-                    // Send the email
-                    if (sendEmail($get_name, $get_email, $token)) {
-                        // Update token in user and faculty tables
-                        $update_query = "UPDATE faculty SET verify_token=?, token_used=0 WHERE email=?";
-                        $update_stmt = mysqli_prepare($con, $update_query);
-                        mysqli_stmt_bind_param($update_stmt, 'ss', $token, $get_email);
-                        mysqli_stmt_execute($update_stmt);
-            
-                        $_SESSION['email_success'] = true;
-                        header('Location: password-reset-otp.php');
-                        exit(0);
-                    } else {
-                        $_SESSION['status'] = "Failed to send email.";
-                        $_SESSION['status_code'] = "error";
-                        header("Location: password-reset-otp.php");
-                        exit(0);
-                    }
-            } else {
-                $_SESSION['status'] = "Email not found. Need to register first.";
-                $_SESSION['status_code'] = "error";
-                header("Location: password-reset-otp.php");
                 exit(0);
             }
         }
     }
+
+    // Faculty table check
+    $check_email_faculty = "SELECT firstname, email FROM faculty WHERE email='$email'";
+    $check_email_run_faculty = mysqli_query($con, $check_email_faculty);
+
+    if (mysqli_num_rows($check_email_run_faculty) > 0) {
+        $row = mysqli_fetch_array($check_email_run_faculty);
+        $get_name = $row['firstname'];
+        $get_email = $row['email'];
+
+        $update_token_faculty = "UPDATE faculty SET verify_token='$token', token_used = 0 WHERE email='$get_email'";
+        $update_token_run_faculty = mysqli_query($con, $update_token_faculty);
+
+        if ($update_token_run_faculty) {
+            if (send_password_reset($get_name, $get_email, $token)) {
+                $_SESSION['status'] = "We e-mailed you a password reset link";
+                $_SESSION['status_code'] = "success";
+                header('Location: password-reset.php');
+                exit(0);
+            } else {
+                $_SESSION['status'] = "Email sending failed. Please try again.";
+                $_SESSION['status_code'] = "error";
+                header('Location: password-reset.php');
+                exit(0);
+            }
+        }
+    } else {
+        $_SESSION['status'] = "No email found";
+        $_SESSION['status_code'] = "error";
+        header('Location: password-reset.php');
+        exit(0);
+    }
+}
 
 
 
@@ -196,7 +185,7 @@ if (isset($_POST['password-change'])) {
     }
 
     // Password strength validation (at least 8 characters, one uppercase, one number)
-    if (strlen($new_password) < 8) {
+    if (strlen($new_password) < 10) {
         $_SESSION['status'] = "Password must be at least 8 characters long.";
         $_SESSION['status_code'] = "warning";
         header("Location: password-change-otp.php");  // Redirect back to the form
