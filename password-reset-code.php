@@ -172,4 +172,140 @@ if (isset($_POST['password_reset_link'])) {
         }
     }
 }
+
+
+if (isset($_POST['password-change'])) {
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $new_password = mysqli_real_escape_string($con, $_POST['new_password']);
+    $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
+    $hashed_password = password_hash($new_password, PASSWORD_ARGON2I);
+
+    // Validate if the passwords match
+    if ($new_password !== $cpassword) {
+        $_SESSION['status'] = "Passwords do not match. Please try again.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    // Password strength validation (at least 8 characters, one uppercase, one number)
+    if (strlen($new_password) < 8) {
+        $_SESSION['status'] = "Password must be at least 8 characters long.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    if (!preg_match('/[A-Z]/', $new_password)) {
+        $_SESSION['status'] = "Password must contain at least one uppercase letter.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    if (!preg_match('/[a-z]/', $new_password)) {
+        $_SESSION['status'] = "Password must contain at least one lowercase letter.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    if (!preg_match('/[0-9]/', $new_password)) {
+        $_SESSION['status'] = "Password must contain at least one number.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    // Check if the password contains at least one special character
+    if (!preg_match('/[\W_]/', $new_password)) {  // \W matches any non-word character (not a letter or number), _ includes the underscore
+        $_SESSION['status'] = "Password must contain at least one special character.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: password-change-otp.php");  // Redirect back to the form
+        exit(0);
+    }
+
+    // User table check
+    $check_email_user = "SELECT email, token_used, verify_token FROM user WHERE email=?";
+    $stmt_user = mysqli_prepare($con, $check_email_user);
+    mysqli_stmt_bind_param($stmt_user, 's', $email);
+    mysqli_stmt_execute($stmt_user);
+    $result_user = mysqli_stmt_get_result($stmt_user);
+
+    if (mysqli_num_rows($result_user) > 0) {
+        $row = mysqli_fetch_assoc($result_user);
+        $get_email = $row['email'];
+        $token_used = $row['token_used'];
+        $verify_token = $row['verify_token'];
+
+        // Check if token is used and matches
+        if ($token_used == 0 && $verify_token === $_GET['token']) {
+            $update_password_user = "UPDATE user SET password=?, token_used=1 WHERE email=?";
+            $stmt_update_user = mysqli_prepare($con, $update_password_user);
+            mysqli_stmt_bind_param($stmt_update_user, 'ss', $hashed_password, $get_email);
+            $update_password_run_user = mysqli_stmt_execute($stmt_update_user);
+
+            if ($update_password_run_user) {
+                $_SESSION['status'] = 'Password successfully changed.';
+                $_SESSION['status_code'] = 'success';
+                header('Location: login.php');
+                exit(0);
+            } else {
+                $_SESSION['status'] = 'Failed to update the password. Please try again.';
+                $_SESSION['status_code'] = 'error';
+                header('Location: password-change.php');
+                exit(0);
+            }
+        } else {
+            $_SESSION['status'] = 'Link already used or invalid. Please request a new password reset link.';
+            $_SESSION['status_code'] = 'error';
+            header('Location: password-reset.php');
+            exit(0);
+        }
+    } else {
+        // Faculty table check
+        $check_email_faculty = "SELECT email, token_used, verify_token FROM faculty WHERE email=?";
+        $stmt_faculty = mysqli_prepare($con, $check_email_faculty);
+        mysqli_stmt_bind_param($stmt_faculty, 's', $email);
+        mysqli_stmt_execute($stmt_faculty);
+        $result_faculty = mysqli_stmt_get_result($stmt_faculty);
+
+        if (mysqli_num_rows($result_faculty) > 0) {
+            $row = mysqli_fetch_assoc($result_faculty);
+            $get_email = $row['email'];
+            $token_used = $row['token_used'];
+            $verify_token = $row['verify_token'];
+
+            // Check if token is used and matches
+            if ($token_used == 0 && $verify_token === $_GET['token']) {
+                $update_password_faculty = "UPDATE faculty SET password=?, token_used=1 WHERE email=?";
+                $stmt_update_faculty = mysqli_prepare($con, $update_password_faculty);
+                mysqli_stmt_bind_param($stmt_update_faculty, 'ss', $hashed_password, $get_email);
+                $update_password_run_faculty = mysqli_stmt_execute($stmt_update_faculty);
+
+                if ($update_password_run_faculty) {
+                    $_SESSION['status'] = 'Password successfully changed.';
+                    $_SESSION['status_code'] = 'success';
+                    header('Location: login.php');
+                    exit(0);
+                } else {
+                    $_SESSION['status'] = 'Failed to update the password. Please try again.';
+                    $_SESSION['status_code'] = 'error';
+                    header('Location: password-change.php');
+                    exit(0);
+                }
+            } else {
+                $_SESSION['status'] = 'Link already used or invalid. Please request a new password reset link.';
+                $_SESSION['status_code'] = 'error';
+                header('Location: password-reset.php');
+                exit(0);
+            }
+        } else {
+            $_SESSION['status'] = 'Email not found in our records.';
+            $_SESSION['status_code'] = 'error';
+            header('Location: password-change.php');
+            exit(0);
+        }
+    }
+}
 ?>
