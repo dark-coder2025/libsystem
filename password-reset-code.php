@@ -13,7 +13,7 @@ require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
 
-function sendEmail($email, $code)
+function sendEmail($all_email, $code)
 {
     $mail = new PHPMailer(true);
 
@@ -32,7 +32,7 @@ function sendEmail($email, $code)
 
         // Email details
         $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($email);
+        $mail->addAddress($all_email);
 
         $mail->isHTML(true);
         $mail->Subject = 'Here is your link to Reset the password of your MCC-LRC Account';
@@ -103,29 +103,24 @@ function sendEmail($email, $code)
 if (isset($_POST['password_reset_link'])) {
     $email = mysqli_real_escape_string($con, $_POST['email']);
 
-    // Search in both user and faculty tables for the email
-    $email_query = "SELECT firstname, email FROM user WHERE email=? UNION SELECT firstname, email FROM faculty WHERE email=?";
+    // Check if the email exists in the user table
+    $email_query = "SELECT email FROM user WHERE email=?";
     $stmt = mysqli_prepare($con, $email_query);
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
     if ($email_row = mysqli_fetch_assoc($result)) {
-        $email = $email_row['email'];
+        $all_email = $email_row['email'];
         $token = bin2hex(random_bytes(32));
         $code = encryptor('encrypt', $token);
 
         // Send the email
-        if (sendEmail($email, $code)) {
+        if (sendEmail($all_email, $code)) {
             // Update token in user and faculty tables
             $update_query = "UPDATE user SET verify_token=?, token_used=0 WHERE email=?";
             $update_stmt = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'ss', $token, $email);
-            mysqli_stmt_execute($update_stmt);
-
-            $update_query = "UPDATE faculty SET verify_token=?, token_used=0 WHERE email=?";
-            $update_stmt = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'ss', $token, $email);
+            mysqli_stmt_bind_param($update_stmt, 'ss', $token, $all_email);
             mysqli_stmt_execute($update_stmt);
 
             $_SESSION['status'] = 'We e-mailed you a password reset link';
@@ -139,10 +134,42 @@ if (isset($_POST['password_reset_link'])) {
             exit(0);
         }
     } else {
-        $_SESSION['status'] = 'Email not found.';
-        $_SESSION['status_code'] = "error";
-        header("Location: password-reset.php");
-        exit(0);
+
+            $email_query = "SELECT email FROM faculty WHERE email=?";
+            $stmt = mysqli_prepare($con, $email_query);
+            mysqli_stmt_bind_param($stmt, 's', $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($email_row = mysqli_fetch_assoc($result)) {
+                $all_email = $email_row['email'];
+                $token = bin2hex(random_bytes(32));
+                $code = encryptor('encrypt', $token);
+        
+                // Send the email
+                if (sendEmail($all_email, $code)) {
+                    // Update token in user and faculty tables
+                    $update_query = "UPDATE faculty SET verify_token=?, token_used=0 WHERE email=?";
+                    $update_stmt = mysqli_prepare($con, $update_query);
+                    mysqli_stmt_bind_param($update_stmt, 'ss', $token, $all_email);
+                    mysqli_stmt_execute($update_stmt);
+        
+                    $_SESSION['status'] = 'We e-mailed you a password reset link';
+                    $_SESSION['status_code'] = "success";
+                    header("Location: password-reset.php");
+                    exit(0);
+                } else {
+                    $_SESSION['status'] = "Failed to send email.";
+                    $_SESSION['status_code'] = "error";
+                    header("Location: password-reset.php");
+                    exit(0);
+                }
+        } else {
+            $_SESSION['status'] = "Email not found. Need to register first.";
+            $_SESSION['status_code'] = "error";
+            header("Location: password-reset.php");
+            exit(0);
+        }
     }
 }
 ?>
