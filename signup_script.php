@@ -24,11 +24,11 @@ if ($code_result->num_rows > 0) {
     $created_at = new DateTime($code_row['created_at']); // Creation time of the verification code
     $current_time = new DateTime(); // Current time
 
-    // Check if the difference is greater than 1 hour
+    // Check if the difference is greater than 1 Day
     $created_at_timestamp = $created_at->getTimestamp();
     $current_time_timestamp = $current_time->getTimestamp();
 
-    if (($current_time_timestamp - $created_at_timestamp) > 3600) { // 3600 seconds = 1 hour
+    if (($current_time_timestamp - $created_at_timestamp) > 86400) { // 86400 seconds = 1 Day
         header("Location: expire.php");
         exit;
     }
