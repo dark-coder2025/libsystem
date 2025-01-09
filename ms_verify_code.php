@@ -115,7 +115,7 @@ if (isset($_POST['registration_link'])) {
                     </div>
                     <div class='content'>
                         <p>Hello,</p>
-                        <p><b>This registration will expire within 1 hour.</b></p>
+                        <p><b>This registration will expire within 1 day.</b></p>
                         <p>Please click the button below to create a MCC-LRC Account:</p>
                         <p><a style='color: white;' href='https://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
                         <p>If you did not request this registration, please ignore this email.</p>
