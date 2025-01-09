@@ -9,33 +9,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
 require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-
-function sendEmail($email, $subject, $message) {
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; 
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com'; // Use environment variable
-        $mail->Password   = 'eqin ygpp kyem mcul'; // Use environment variable
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
-        $mail->Port       = 587;
-
-        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($email);
-
-        $mail->isHTML(true);
-        $mail->Subject = $subject;
-        $mail->Body    = $message;
-
-        $mail->send();
-    } catch (Exception $e) {
-        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
-    }
-}
 
 if (isset($_POST['registration_link'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -55,21 +31,31 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    $email_query = "SELECT used, username FROM ms_account WHERE username = ?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 's', $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $email_row = mysqli_fetch_assoc($result);
+    // Check if email exists and get `used` status
+    $stmt = $con->prepare("SELECT used, verification_code, created_at FROM ms_account WHERE username = ?");
+    if (!$stmt) {
+        error_log("MySQL prepare error: " . $con->error);
+        $_SESSION['status'] = "Database error. Please try again later.";
+        $_SESSION['status_code'] = "error";
+        header("Location: ms_verify.php");
+        exit(0);
+    }
 
-    if (!$email_row) {
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($used, $current_code, $created_at);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Check if email is found
+    if ($used === null) {
         $_SESSION['status'] = "Email not found. Please visit the BSIT office to get MS365 Account.";
         $_SESSION['status_code'] = "error";
         header("Location: ms_verify.php");
         exit(0);
     }
 
-    $used = $email_row['used'];
+    // Check if email is already used
     if ($used == 1) {
         $_SESSION['status'] = "This email has already been used.";
         $_SESSION['status_code'] = "error";
@@ -77,80 +63,92 @@ if (isset($_POST['registration_link'])) {
         exit(0);
     }
 
-    $verification_code = sha1(rand());
+    // Generate a new verification code
+    $verification_code = md5(rand());
 
     $code = encryptor('encrypt', $verification_code);
 
-    $subject = "MCC-LRC Creating Account";
-    $message = "
-        <html>
-        <head>
-            <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f4;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .container {
-                        width: 80%;
-                        margin: 20px auto;
-                        padding: 20px;
-                        background-color: #fff;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    }
-                    .header {
-                        text-align: center;
-                        padding-bottom: 20px;
-                        border-bottom: 1px solid #ddd;
-                    }
-                    .logo {
-                        max-width: 150px;
-                        height: auto;
-                    }
-                    .content {
-                        padding: 20px 0;
-                    }
-                    .button {
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #007bff;
-                        text-decoration: none;
-                        color: white;
-                        border-radius: 4px;
-                    }
+    $stmt = $con->prepare("UPDATE ms_account SET verification_code = ?, created_at = NOW() WHERE username = ?");
+    if (!$stmt) {
+        error_log("MySQL prepare error: " . $con->error);
+        $_SESSION['status'] = "Database error. Please try again later.";
+        $_SESSION['status_code'] = "error";
+        header("Location: ms_verify.php");
+        exit(0);
+    }
+
+    $stmt->bind_param("ss", $verification_code, $email);
+
+    if ($stmt->execute()) {
+        $mail = new PHPMailer(true);
+        $mail->SMTPDebug = 2; // Set to 2 for detailed debug output
+        try {
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com'; // Use environment variable
+            $mail->Password   = 'eqin ygpp kyem mcul'; // Use environment variable
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
+            $mail->addAddress($email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'MCC-LRC Creating Account';
+            $mail->Body = "
+            <html>
+            <head>
+                <style>
+                    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+                    .container { width: 80%; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                    .header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
+                    .logo { max-width: 150px; height: auto; }
+                    .content { padding: 20px 0; }
+                    .button { display: inline-block; padding: 10px 20px; background-color: #007bff; text-decoration: none; color: white; border-radius: 4px; }
                 </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='header'>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
                         <img src='https://mcc-lrc.com/images/mcc-lrc.png' alt='Logo'>
                     </div>
                     <div class='content'>
                         <p>Hello,</p>
+                        <p><b>This registration will expire within 1 hour.</b></p>
                         <p>Please click the button below to create a MCC-LRC Account:</p>
-                        <p><a style='color: white;' href='http://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
+                        <p><a style='color: white;' href='https://mcc-lrc.com/signup.php?code=$code' class='button'>Register</a></p>
                         <p>If you did not request this registration, please ignore this email.</p>
                     </div>
-            </div>
-        </body>
+                </div>
+            </body>
         </html>
-    ";
+        ";
 
-    sendEmail($email, $subject, $message);
+            $mail->send();
+            $_SESSION['status'] = "Registration link sent. Please check your email on Outlook.";
+            $_SESSION['status_code'] = "success";
+            header("Location: ms_verify.php");
+            exit(0);
+        } catch (Exception $e) {
+            error_log("Mailer Error: " . $mail->ErrorInfo);
+            $_SESSION['status'] = "Sending registration link limit exceed. Comeback tomorrow.";
+            $_SESSION['status_code'] = "error";
+            header("Location: ms_verify.php");
+            exit(0);
+        }
+    } else {
+        error_log("MySQL execute error: " . $stmt->error);
+        $_SESSION['status'] = "Database error. Please try again later.";
+        $_SESSION['status_code'] = "error";
+        header("Location: ms_verify.php");
+        exit(0);
+    }
 
-    $update_query = "UPDATE ms_account SET verification_code = ? WHERE username = ?";
-    $update_stmt = mysqli_prepare($con, $update_query);
-    mysqli_stmt_bind_param($update_stmt, 'ss', $verification_code, $email);
-    mysqli_stmt_execute($update_stmt);
-
-    $_SESSION['status'] = 'Registration link sent. Please check your email on Outlook.';
-    $_SESSION['status_code'] = "success";
-    header("Location: ms_verify.php");
-    exit(0);
+    $stmt->close();
+    $con->close();
 } else {
-    $_SESSION['status'] = 'Unable to send the registration link at this moment. Comeback tomorrow.';
+    $_SESSION['status'] = "Invalid request.";
     $_SESSION['status_code'] = "error";
     header("Location: ms_verify.php");
     exit(0);
