@@ -27,7 +27,17 @@ $total_volumes = $row_volumes['total_volumes'];
      padding: 5px 10px;
      margin: 10px 3px 10px 0;
 }
+
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px; /* Add some space between cards */
+    }
+    .info-box {
+        text-align: center; /* Center text for smaller screens */
+    }
+}
 </style>
+
 <main id="main" class="main">
      <div class="pagetitle" data-aos="fade-down">
           <h1>Dashboard</h1>
@@ -43,7 +53,7 @@ $total_volumes = $row_volumes['total_volumes'];
           <div class="row">
                <div class="col-lg-12">
                     <div class="row">
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
                               <div class="card info-card books-card border-3 border-top border-warning">
                                    <div class="card-body">
                                         <h5 class="card-title">Books</h5>
@@ -65,7 +75,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                    </div>
                               </div>
                          </div>
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
                               <div class="card info-card students-card border-3 border-top border-primary">
                                    <div class="card-body">
                                         <h5 class="card-title">Students</h5>
@@ -86,7 +96,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                    </div>
                               </div>
                          </div>
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
                               <div class="card info-card students-card border-3 border-top border-info">
                                    <div class="card-body">
                                         <h5 class="card-title">Faculty/Staff</h5>
@@ -107,8 +117,8 @@ $total_volumes = $row_volumes['total_volumes'];
                                    </div>
                               </div>
                          </div>
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
-                              <div class="card info-card borrowed-card  border-3 border-top border-dark">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
+                              <div class="card info-card borrowed-card border-3 border-top border-dark">
                                    <div class="card-body">
                                         <h5 class="card-title">Book Borrowed</h5>
                                         <div class="d-flex align-items-center">
@@ -128,7 +138,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                    </div>
                               </div>
                          </div>
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
                               <div class="card info-card unreturned-card border-3 border-top border-danger">
                                    <div class="card-body">
                                         <h5 class="card-title">Unreturned Book</h5>
@@ -152,7 +162,6 @@ $total_volumes = $row_volumes['total_volumes'];
                          </div>
 
                          <?php
-                              
                               $currentMonth = date('Y-m');
                               $query = "SELECT SUM(book_penalty) AS total_penalty 
                                         FROM return_book 
@@ -170,7 +179,7 @@ $total_volumes = $row_volumes['total_volumes'];
                               }
                          ?>
 
-                         <div class="col-xxl-4 col-md-4" data-aos="fade-down">
+                         <div class="col-12 col-md-6 col-lg-4" data-aos="fade-down">
                               <div class="card info-card fines-card border-3 border-top border-success">
                                    <div class="card-body">
                                         <h5 class="card-title">Fines</h5>
@@ -203,7 +212,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                              }
                                              ?>
                                              <h5 class="card-title">TOP STUDENTS LIBRARY USER</h5>
-                                             <canvas id="pieChartStudents" style="max-height: 220px;"></canvas>
+                                             <canvas id="pieChartStudents" style="max-height: 220px; width: 100%;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#pieChartStudents'), {
@@ -245,7 +254,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                              }
                                              ?>
                                              <h5 class="card-title">TOP FACULTY/STAFF LIBRARY USER</h5>
-                                             <canvas id="pieChartFaculty" style="max-height: 220px;"></canvas>
+                                             <canvas id="pieChartFaculty" style="max-height: 220px; width: 100%;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#pieChartFaculty'), {
@@ -287,7 +296,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                              }
                                              ?>
                                              <h5 class="card-title">MOST PROGRAM VISITED</h5>
-                                             <canvas id="barChart" style="max-height: 400px;"></canvas>
+                                             <canvas id="barChart" style="max-height: 400px; width: 100%;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#barChart'), {
@@ -301,7 +310,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                                                       'rgba(255, 99, 132, 0.2)',
                                                                       'rgba(255, 159, 64, 0.2)',
                                                                       'rgba(255, 205, 86, 0.2)',
-                                                                      'rgba(75, 192, 192, 0.2)',
+                                                                      'rgba(75, 192, 192, 0. 2)',
                                                                       'rgba(54, 162, 235, 0.2)',
                                                                       'rgba(153, 102, 255, 0.2)',
                                                                       'rgba(201, 203, 207, 0.2)'
@@ -350,7 +359,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                              }
                                              ?>
                                              <h5 class="card-title">MONTHLY ATTENDANCE</h5>
-                                             <canvas id="lineChart" style="max-height: 300px;"></canvas>
+                                             <canvas id="lineChart" style="max-height: 300px; width: 100%;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#lineChart'), {
