@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#example').DataTable({
             responsive: true,
             rowReorder: {
-                selector: 'td:nth-child(2)'
+                selector: 'td:nth-child(3)'
             }
         });
     }
