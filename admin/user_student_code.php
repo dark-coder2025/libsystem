@@ -1,45 +1,57 @@
 <?php
-
-session_start();
-
 include('authentication.php');
 include('includes/url.php');
 header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
-require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
 
-# ======================================== Deny Code ==============================
-// Function to send email using PHPMailer
-function sendDenyEmail($student_email, $deny_reason, $stu_email)
-{
+function sendEmail($student_email, $subject, $message) {
     $mail = new PHPMailer(true);
-
     try {
-        // SMTP settings
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
+            $mail->Host       = 'smtp.gmail.com'; 
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'resourcecentermcclearning@gmail.com';
+            $mail->Password   = 'oenz pxyh ohro zevi'; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+            $mail->Port       = 587;
 
-        // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
-        $mail->Password = 'oenz pxyh ohro zevi';
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($student_email);
+            $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+            $mail->addAddress($student_email); 
 
         $mail->isHTML(true);
-        $mail->Subject = 'Account Denied Notification';
-        $mail->Body = "
-            <html>
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+    }
+}
+
+if (isset($_POST['deny'])) {
+
+    $student_id = mysqli_real_escape_string($con, $_POST['user_id']);
+    $deny_reason = mysqli_real_escape_string($con, $_POST['deny_reason']);
+
+    $email_query = "SELECT email FROM user WHERE user_id=?";
+    $stmt = mysqli_prepare($con, $email_query);
+    mysqli_stmt_bind_param($stmt, 'i', $student_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $email_row = mysqli_fetch_assoc($result);
+
+        if ($email_row) {
+            $student_email = $email_row['email'];
+            $stu_email = encryptor('encrypt', $student_email);
+            
+            $subject = "Account Denied Notification";
+            $message = " <html>
                 <head>
                     <style>
                         body {
@@ -87,9 +99,9 @@ function sendDenyEmail($student_email, $deny_reason, $stu_email)
                             <h1 style='color:#dc3545;text-align:center;'>Your Account has been Denied!!!</h1>
                             <p>Dear Student,</p>
                             <p>Your MCC-LRC account registration has been denied. Below is the reason for denial:</p>
-                            <p><strong>Reason:</strong> <b>" . htmlspecialchars($deny_reason) . "</b></p>
+                            <p><strong>Reason:</strong> <b>{$deny_reason}</b></p>
                             <p>Click this button to update the reason why you deny:</p>
-                            <p><a style='color: white;' href='https://mcc-lrc.com/signup_update.php?a=" . htmlspecialchars($stu_email) . "' class='button'>Update</a></p>
+                            <p><a style='color: white;' href='https://mcc-lrc.com/signup_update.php?a=$stu_email' class='button'>Update</a></p>
                             <div class='header'>
                                 <img src='https://mcc-lrc.com/images/valid.jpg' alt='Valid ID'>
                             </div>
@@ -99,35 +111,10 @@ function sendDenyEmail($student_email, $deny_reason, $stu_email)
                     </div>
                 </body>
             </html>
-        ";
+            ";
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        return false;
-    }
-}
+            sendEmail($student_email, $subject, $message);
 
-// Handle the denial process
-if (isset($_POST['deny'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['user_id']);
-    $deny_reason = mysqli_real_escape_string($con, $_POST['deny_reason']);
-
-    // Fetch the student's email
-    $email_query = "SELECT email FROM user WHERE user_id = ?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($email_row = mysqli_fetch_assoc($result)) {
-        $student_email = $email_row['email'];
-        $stu_email = encryptor('encrypt', $student_email);
-
-        // Send the email
-        if (sendDenyEmail($student_email, $deny_reason, $stu_email)) {
-            // Update the user's status
             $update_query = "UPDATE user SET status = 'archived', user_added = NULL WHERE user_id = ?";
             $update_stmt = mysqli_prepare($con, $update_query);
             mysqli_stmt_bind_param($update_stmt, 'i', $student_id);
@@ -138,47 +125,30 @@ if (isset($_POST['deny'])) {
             header("Location: user_student_approval.php");
             exit(0);
         } else {
-            $_SESSION['status'] = "Failed to send email.";
+            $_SESSION['status'] = 'Email Failed to Send';
             $_SESSION['status_code'] = "error";
             header("Location: user_student_approval.php");
             exit(0);
         }
-    } else {
-        $_SESSION['status'] = 'Email not found.';
-        $_SESSION['status_code'] = "error";
-        header("Location: user_student_approval.php");
-        exit(0);
-    }
 }
-# ======================================== End Deny Code ==============================
 
+// Student Approval
+if(isset($_POST['approved'])) {
+    $student_id = $_POST['user_id'];
 
-# ======================================== Approve Code ==============================
-// Function to send email using PHPMailer
-function sendApproveEmail($student_email)
-{
-    $mail = new PHPMailer(true);
+    // Fetch student email
+    $email_query = "SELECT email FROM user WHERE user_id='$student_id'";
+    $email_result = mysqli_query($con, $email_query);
+    $email_row = mysqli_fetch_assoc($email_result);
+    $student_email = $email_row['email'];
 
-    try {
-        // SMTP settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
+    $query = "UPDATE user SET status = 'approved' WHERE user_id = '$student_id'";
+    $query_run = mysqli_query($con, $query);
 
-        // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
-        $mail->Password = 'oenz pxyh ohro zevi';
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($student_email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Account Approved Notification';
-        $mail->Body = " <html>
+    if($query_run) {
+        // Send email notification
+        $subject = "Account Approved Notification";
+        $message = " <html>
             <head>
                 <style>
                     body {
@@ -233,83 +203,36 @@ function sendApproveEmail($student_email)
             </body>
         </html>
         ";
+        sendEmail($student_email, $subject, $message);
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        return false;
-    }
-}
-
-// Handle the denial process
-if (isset($_POST['approved'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['user_id']);
-
-    // Fetch the student's email
-    $email_query = "SELECT email FROM user WHERE user_id=?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($email_row = mysqli_fetch_assoc($result)) {
-        $student_email = $email_row['email'];
-
-        // Send the email
-        if (sendApproveEmail($student_email)) {
-            // Update the user's status
-            $update_query = "UPDATE user SET status = 'approved' WHERE user_id = ?";
-            $update_stmt = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'i', $student_id);
-            mysqli_stmt_execute($update_stmt);
-
-            $_SESSION['status'] = 'Student approved successfully';
-            $_SESSION['status_code'] = "success";
-            header("Location: user_student_approval.php");
-            exit(0);
-        } else {
-            $_SESSION['status'] = "Failed to send email.";
-            $_SESSION['status_code'] = "error";
-            header("Location: user_student_approval.php");
-            exit(0);
-        }
+        $_SESSION['status'] = 'Student approved successfully';
+        $_SESSION['status_code'] = "success";
+        header("Location: user_student_approval.php");
+        exit(0);
     } else {
-        $_SESSION['status'] = 'Email not found.';
+        $_SESSION['status'] = 'Student not approved';
         $_SESSION['status_code'] = "error";
         header("Location: user_student_approval.php");
         exit(0);
     }
 }
-# ======================================== End Approve Code ==============================
 
+// Block student
+if(isset($_POST['block_student'])) {
+    $user_id = $_POST['block_student'];
+    $query = "UPDATE user SET status='blocked' WHERE user_id='$user_id'";
+    $query_run = mysqli_query($con, $query);
 
-# ======================================== Block Code ==============================
-// Function to send email using PHPMailer
-function sendBlockEmail($student_email)
-{
-    $mail = new PHPMailer(true);
+    if($query_run) {
+        // Fetch student email
+        $email_query = "SELECT email FROM user WHERE user_id='$user_id'";
+        $email_result = mysqli_query($con, $email_query);
+        $email_row = mysqli_fetch_assoc($email_result);
+        $student_email = $email_row['email'];
 
-    try {
-        // SMTP settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-
-        // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
-        $mail->Password = 'oenz pxyh ohro zevi';
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($student_email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Account Blocked Notification';
-        $mail->Body = " <html>
+        // Send email notification
+        $subject = "Account Blocked Notification";
+        $message = " <html>
             <head>
                 <style>
                     body {
@@ -364,84 +287,36 @@ function sendBlockEmail($student_email)
             </body>
         </html>
         ";
+        sendEmail($student_email, $subject, $message);
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        return false;
-    }
-}
-
-// Handle the denial process
-if (isset($_POST['block_student'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['block_student']);
-
-    // Fetch the student's email
-    $email_query = "SELECT email FROM user WHERE user_id=?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($email_row = mysqli_fetch_assoc($result)) {
-        $student_email = $email_row['email'];
-
-        // Send the email
-        if (sendBlockEmail($student_email)) {
-            // Update the user's status
-            $update_query = "UPDATE user SET status = 'blocked' WHERE user_id = ?";
-            $update_stmt = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'i', $student_id);
-            mysqli_stmt_execute($update_stmt);
-
-            $_SESSION['status'] = 'Student has been blocked successfully.';
-            $_SESSION['status_code'] = "success";
-            header("Location: user_student.php");
-            exit(0);
-        } else {
-            $_SESSION['status'] = "Failed to send email.";
-            $_SESSION['status_code'] = "error";
-            header("Location: user_student.php");
-            exit(0);
-        }
+        $_SESSION['status'] = "Student has been blocked successfully.";
+        $_SESSION['status_code'] = "success";
+        header("Location: user_student.php");
+        exit(0);
     } else {
-        $_SESSION['status'] = 'Email not found.';
+        $_SESSION['status'] = "Something went wrong.";
         $_SESSION['status_code'] = "error";
         header("Location: user_student.php");
         exit(0);
     }
 }
-# ======================================== End Block Code ==============================
 
+// Unblock student
+if(isset($_POST['unblock_student'])) {
+    $user_id = $_POST['unblock_student'];
+    $query = "UPDATE user SET status='approved' WHERE user_id='$user_id'";
+    $query_run = mysqli_query($con, $query);
 
+    if($query_run) {
+        // Fetch student email
+        $email_query = "SELECT email FROM user WHERE user_id='$user_id'";
+        $email_result = mysqli_query($con, $email_query);
+        $email_row = mysqli_fetch_assoc($email_result);
+        $student_email = $email_row['email'];
 
-# ======================================== Unblock Code ==============================
-// Function to send email using PHPMailer
-function sendUnblockEmail($student_email)
-{
-    $mail = new PHPMailer(true);
-
-    try {
-        // SMTP settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-
-        // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
-        $mail->Password = 'oenz pxyh ohro zevi';
-
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($student_email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Account Unblocked Notification';
-        $mail->Body = " <html>
+        // Send email notification
+        $subject = "Account Unblocked Notification";
+        $message = " <html>
             <head>
                 <style>
                     body {
@@ -496,84 +371,53 @@ function sendUnblockEmail($student_email)
         </html>
         ";
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        return false;
-    }
-}
+        sendEmail($student_email, $subject, $message);
 
-// Handle the denial process
-if (isset($_POST['unblock_student'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['unblock_student']);
-
-    // Fetch the student's email
-    $email_query = "SELECT email FROM user WHERE user_id=?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($email_row = mysqli_fetch_assoc($result)) {
-        $student_email = $email_row['email'];
-
-        // Send the email
-        if (sendUnblockEmail($student_email)) {
-            // Update the user's status
-            $update_query = "UPDATE user SET status = 'approved' WHERE user_id = ?";
-            $update_stmt = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'i', $student_id);
-            mysqli_stmt_execute($update_stmt);
-
-            $_SESSION['status'] = 'Student has been unblocked successfully.';
-            $_SESSION['status_code'] = "success";
-            header("Location: user_student.php");
-            exit(0);
-        } else {
-            $_SESSION['status'] = "Failed to send email.";
-            $_SESSION['status_code'] = "error";
-            header("Location: user_student.php");
-            exit(0);
-        }
+        $_SESSION['status'] = "Student has been unblocked successfully.";
+        $_SESSION['status_code'] = "success";
+        header("Location: user_student.php");
+        exit(0);
     } else {
-        $_SESSION['status'] = 'Email not found.';
+        $_SESSION['status'] = "Something went wrong.";
         $_SESSION['status_code'] = "error";
         header("Location: user_student.php");
         exit(0);
     }
 }
-# ======================================== End Unblock Code ==============================
 
+// Delete Action
+if (isset($_POST['delete_student_id'])) {
 
-# ======================================== Delete Code ==============================
-// Function to send email using PHPMailer
-function sendDeleteEmail($student_email, $delete_reason)
-{
-    $mail = new PHPMailer(true);
+    $student_id = mysqli_real_escape_string($con, $_POST['delete_student_id']);
+    $delete_reason = mysqli_real_escape_string($con, $_POST['delete_reason']);
 
-    try {
-        // SMTP settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
+    // Fetch the user's email
+    $email_query = "SELECT email FROM user WHERE user_id=?";
+    $stmt = mysqli_prepare($con, $email_query);
+    mysqli_stmt_bind_param($stmt, 'i', $student_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $email_row = mysqli_fetch_assoc($result);
 
-        // Use environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com'; // Replace with environment variable
-        $mail->Password = 'oenz pxyh ohro zevi'; // Replace with environment variable
+    if ($email_row) {
+        $student_email = $email_row['email'];
 
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        // Update the MS account status
+        $used_query = "UPDATE ms_account SET used=0 WHERE username=?";
+        $stmt = mysqli_prepare($con, $used_query);
+        mysqli_stmt_bind_param($stmt, 's', $student_email);
+        mysqli_stmt_execute($stmt);
 
-        // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-        $mail->addAddress($student_email);
+        // Delete the user
+        $query = "DELETE FROM user WHERE user_id=?";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $student_id);
+        $query_run = mysqli_stmt_execute($stmt);
 
-        $safe_reason = htmlspecialchars($delete_reason, ENT_QUOTES, 'UTF-8');
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Account Delete Notification';
-        $mail->Body = "<html>
+        if ($query_run) {
+            // Prepare and send email notification
+            $subject = "Account Delete Notification";
+            $message = "<html>
                 <head>
                     <style>
                         body {
@@ -621,7 +465,7 @@ function sendDeleteEmail($student_email, $delete_reason)
                             <h1 style='color:#dc3545;text-align:center;'>Your Account has been Deleted!!!</h1>
                             <p>Dear Student,</p>
                             <p>Your MCC-LRC account has been deleted. Below is the reason for deletion:</p>
-                            <p><strong>Reason:</strong> <b>{$safe_reason}</b></p>
+                            <p><strong>Reason:</strong> <b>{$delete_reason}</b></p>
                             <p>Please contact the library for more details.</p>
                             <p>You can also contact us on our Facebook page <a href='https://www.facebook.com/MCCLRC' target='_blank'>Madridejos Community College - Learning Resource Center</a>.</p>
                             <p>Thank you.</p>
@@ -630,65 +474,25 @@ function sendDeleteEmail($student_email, $delete_reason)
                 </body>
             </html>";
 
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        return false;
-    }
-}
-
-// Handle the denial process
-if (isset($_POST['delete_student_id'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['delete_student_id']);
-    $delete_reason = mysqli_real_escape_string($con, $_POST['delete_reason']);
-
-    // Fetch the student's email
-    $email_query = "SELECT email FROM user WHERE user_id=?";
-    $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($email_row = mysqli_fetch_assoc($result)) {
-        $student_email = $email_row['email'];
-
-        // Send the email
-        if (sendDeleteEmail($student_email, $delete_reason)) {
-            // Update the MS account status
-            $used_query = "UPDATE ms_account SET used=0 WHERE username=?";
-            $stmt = mysqli_prepare($con, $used_query);
-            mysqli_stmt_bind_param($stmt, 's', $student_email);
-            mysqli_stmt_execute($stmt);
-
-            // Delete the user
-            $query = "DELETE FROM user WHERE user_id=?";
-            $stmt = mysqli_prepare($con, $query);
-            mysqli_stmt_bind_param($stmt, 'i', $student_id);
-            mysqli_stmt_execute($stmt);
-
-            $_SESSION['status'] = 'Student Deleted Successfully';
-            $_SESSION['status_code'] = "success";
-            header("Location: user_student.php");
-            exit(0);
-        } else {
-            $_SESSION['status'] = "Failed to send email.";
-            $_SESSION['status_code'] = "error";
-            header("Location: user_student.php");
-            exit(0);
-        }
+            sendEmail($student_email, $subject, $message);
+                $_SESSION['status'] = 'Student Deleted Successfully';
+                $_SESSION['status_code'] = "success";
+                header("Location: user_student.php");
+                exit(0);
+            } else {
+                $_SESSION['status'] = 'Failed to delete student';
+                $_SESSION['status_code'] = "error";
+                header("Location: user_student.php");
+                exit(0);
+            }
     } else {
-        $_SESSION['status'] = 'Email not found.';
+        $_SESSION['status'] = 'Student Not Found';
         $_SESSION['status_code'] = "error";
         header("Location: user_student.php");
         exit(0);
     }
 }
-# ======================================== End Delete Code ==============================
 
-
-
-# ======================================== Edit Student Code =============================
 // Edit Student
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
@@ -724,9 +528,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error: Missing required fields.";
     }
 }
-
-# ======================================== End Edit Student Code =============================
-
 
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
