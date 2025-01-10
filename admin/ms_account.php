@@ -62,12 +62,12 @@ include('./includes/sidebar.php');
                                                     <td>{$row['firstname']}</td>
                                                     <td>{$row['lastname']}</td>
                                                     <td>{$row['username']}</td>
-                                                    <td>{$row['used']}</td>
-                                                    <td>
+                                                    <td><center>{$row['used']}</center></td>
+                                                    <td><center>
                                                         <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
                                                                 data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
                                                             Edit
-                                                        </button>
+                                                        </button></center>
                                                     </td>
                                                 </tr>";
                                         }
