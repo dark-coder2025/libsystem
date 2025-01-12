@@ -127,8 +127,9 @@ include('./includes/sidebar.php');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="update_account.php" method="post">
-                <input type="text" id="ms_id" name="ms_id">
                 <div class="modal-body">
+                    <!-- Hidden input for ms_id -->
+                    <input type="hidden" id="ms_id" name="ms_id">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">Firstname</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" required>
@@ -139,7 +140,7 @@ include('./includes/sidebar.php');
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <input type="email" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
@@ -165,6 +166,7 @@ include('../message.php');
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize DataTable (if necessary)
     new DataTable('#example', {
         responsive: true,
         rowReorder: {
@@ -172,17 +174,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-     // Event listener for the Edit button
-     const editButtons = document.querySelectorAll('.editBtn');
+    // Event listener for the Edit button
+    const editButtons = document.querySelectorAll('.editBtn');
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
+            // Get the data attributes from the button
             const msid = this.getAttribute('data-msid');
             const firstname = this.getAttribute('data-firstname');
             const lastname = this.getAttribute('data-lastname');
             const username = this.getAttribute('data-username');
             const used = this.getAttribute('data-used');
             
-            // Populate the modal fields with the retrieved values
+            // Set the values into the modal's input fields
             document.getElementById('ms_id').value = msid;
             document.getElementById('firstname').value = firstname;
             document.getElementById('lastname').value = lastname;
