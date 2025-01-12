@@ -209,7 +209,7 @@ if ($row) {
                 <?php      
                     if ($profile != "") {
                         //echo "<img src='../uploads/$profile' height='175px' width='200px' alt='' style='border: 2px solid black; border-radius: 60%;'>";
-                        echo "<img src='../uploads/profile_images/$profile' alt='' style='border: 4px solid #1076c1; width: 1.0in; height: 1.0in;overflow:hidden;position:absolute;left:0;right:0;top:70px;display:block;margin:0 auto;'>";
+                        echo "<img src='../uploads/profile_images/$profile' alt='' style='border: 4px solid #1076c1; width: 1.1in; height: 1.1in;overflow:hidden;position:absolute;left:0;right:0;top:70px;display:block;margin:0 auto;'>";
                         } else {
                         echo "<img src='assets/img/image.png' height='150px' width='150px' alt='' style='border: 4px solid #1176c2;'>";
                         }
