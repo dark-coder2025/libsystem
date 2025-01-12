@@ -128,7 +128,7 @@ include('./includes/sidebar.php');
             </div>
             <form action="update_account.php" method="post">
                 <div class="modal-body">
-                    <input type="hidden" id="ms_id" name="ms_id">
+                    <input type="text" id="ms_id" name="ms_id">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">Firstname</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" required>
