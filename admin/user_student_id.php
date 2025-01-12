@@ -140,20 +140,6 @@ if ($row) {
     transition: 0.4s;
 }
 
-  #id::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('images/bg-front.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.2;
-    z-index: -1;
-    text-align: center;
-  }
-
   .container {
     font-size: 12px;
     font-family: sans-serif;
