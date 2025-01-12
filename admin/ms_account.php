@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Event listener for the Edit button
-    const editButtons = document.querySelectorAll('.editBtn');
+     // Event listener for the Edit button
+     const editButtons = document.querySelectorAll('.editBtn');
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const msid = this.getAttribute('data-msid');
@@ -181,6 +181,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const lastname = this.getAttribute('data-lastname');
             const username = this.getAttribute('data-username');
             const used = this.getAttribute('data-used');
+            
+            // Populate the modal fields with the retrieved values
             document.getElementById('ms_id').value = msid;
             document.getElementById('firstname').value = firstname;
             document.getElementById('lastname').value = lastname;
