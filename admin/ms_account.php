@@ -127,8 +127,8 @@ include('./includes/sidebar.php');
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="update_account.php" method="post">
+                <input type="text" id="ms_id" name="ms_id">
                 <div class="modal-body">
-                    <input type="text" id="ms_id" name="ms_id">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">Firstname</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" required>
