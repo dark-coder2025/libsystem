@@ -128,10 +128,22 @@ include('./includes/sidebar.php');
             </div>
             <form action="update_account.php" method="post">
                 <div class="modal-body">
+                    <input type="hidden" id="ms_id" name="ms_id">
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">Firstname</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Lastname</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
                         <input type="text" class="form-control" id="used" name="used" required>
-                        <input type="hidden" id="ms_id" name="ms_id">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -165,8 +177,14 @@ document.addEventListener('DOMContentLoaded', function () {
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const msid = this.getAttribute('data-msid');
+            const firstname = this.getAttribute('data-firstname');
+            const lastname = this.getAttribute('data-lastname');
+            const username = this.getAttribute('data-username');
             const used = this.getAttribute('data-used');
             document.getElementById('ms_id').value = msid;
+            document.getElementById('firstname').value = firstname;
+            document.getElementById('lastname').value = lastname;
+            document.getElementById('username').value = username;
             document.getElementById('used').value = used;
         });
     });
