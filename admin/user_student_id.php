@@ -168,12 +168,12 @@ if ($row) {
   }
 </style>
 
-<!-- <script type="text/javascript">	
+<script type="text/javascript">	
   window.print();
   setTimeout(function(){
   window.close()
   },5000)
- </script> -->
+ </script>
 
 <div id="bg">
     <div id="id">
