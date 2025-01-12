@@ -178,7 +178,7 @@ if ($row) {
 <div id="bg">
     <div id="id">
             <center>
-                <table>
+                <table style="margin-top: -10px;">
                     <tr class="d-flex align-items justify-content-between"> 
                         <td>
                         <img src="assets/img/mcc-logo.png" alt="Avatar"  width='30px' height='30px' alt=''>
