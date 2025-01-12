@@ -177,7 +177,6 @@ if ($row) {
 
 <div id="bg">
     <div id="id">
-        <br>
             <center>
                 <table>
                     <tr class="d-flex align-items justify-content-between"> 
