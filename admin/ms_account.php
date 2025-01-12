@@ -193,5 +193,13 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('used').value = used;
         });
     });
+
+    // Apply event listener to edit buttons after DataTable initializes
+    applyEditButtonListener();
+
+    // Reapply event listener after DataTable pagination (if needed)
+    dataTable.on('draw', function() {
+        applyEditButtonListener();
+    });
 });
 </script>
