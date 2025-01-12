@@ -221,7 +221,7 @@ if ($row) {
                 <br>
             </div>
             <div>
-            <p style="font-weight:bold;color:black;text-align:center;position:absolute;left:0;right:0;bottom:50px;font-size:11px;"><?php echo "STUDENT NO.".' '.$stu_id; ?></p>
+            <p style="font-weight:bold;color:black;text-align:center;position:absolute;left:0;right:0;bottom:50px;font-size:8px;"><?php echo "STUDENT NO.".' '.$stu_id; ?></p>
             </div>
             <div>
                 <p style="font-size:30px;font-weight:bold;color:black;text-align:center;font-family:Georgia,serif;position:absolute;left:0;right:0;bottom:0;letter-spacing:2px;"><?php echo $course; ?></p>
