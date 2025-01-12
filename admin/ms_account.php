@@ -65,7 +65,7 @@ include('./includes/sidebar.php');
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
                                                         <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
-                                                                data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
+                                                                data-msid='{$row['ms_id']}' data-firstname='{$row['firstname']}' data-lastname='{$row['lastname']}' data-username='{$row['username']}' data-used='{$row['used']}'>
                                                             Edit
                                                         </button></center>
                                                     </td>
