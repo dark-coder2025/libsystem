@@ -170,7 +170,7 @@ if ($row) {
     font-family: sans-serif;
     float: left;
     margin: auto;
-    margin-left: 270px;
+    margin-left: 250px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
     transition: 0.4s;
 }
