@@ -13,7 +13,7 @@ if (strpos($request, '.php') !== false) {
 
 // Ensure database connection
 if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
+  die("Connection failed: " . mysqli_connect_error());
 }
 
 // Fetch and sanitize GET parameter
@@ -42,7 +42,7 @@ if ($row) {
     $bdate = htmlspecialchars($row['birthdate']);
     $type = htmlspecialchars($row['role_as']);
 } else {
-    die("No record found.");
+  die("No record found.");
 }
 ?>
 <!DOCTYPE html>
@@ -137,8 +137,8 @@ if ($row) {
   }
 
   #id {
-    width: 250px;
-    height: 450px;
+    width: 2.125in;  /* Set width to 2.125 inches (credit card height) */
+    height: 3.375in;  /* Set height to 3.375 inches (credit card width) */
     position: absolute;
     opacity: 0.88;
     font-family: sans-serif;
@@ -149,20 +149,7 @@ if ($row) {
     background-repeat: no-repeat;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
     transition: 0.4s;
-  }
-
-  #id::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('images/bg-front.png');
-    background-repeat: repeat-x;
-    background-size: 250px 450px;
-    opacity: 0.2;
-    z-index: -1;
-    text-align: center;
-  }
+}
 
   .container {
     font-size: 12px;
@@ -170,22 +157,21 @@ if ($row) {
   }
 
   .id-1 {
-    transition: 0.4s;
-    width: 250px;
-    height: 450px;
+    width: 2.125in;  /* Set width to 2.125 inches (credit card height) */
+    height: 3.375in;  /* Set height to 3.375 inches (credit card width) */
     background: url('images/bg-back.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
     font-family: sans-serif;
     float: left;
     margin: auto;
-    margin-left: 270px;
+    margin-left: 250px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
     transition: 0.4s;
-  }
+}
 
   .img-very-small {
     width: 30px;
@@ -202,16 +188,15 @@ if ($row) {
 
 <div id="bg">
     <div id="id">
-        <br>
             <center>
-                <table>
+                <table style="margin-top: 10px;">
                     <tr class="d-flex align-items justify-content-between"> 
                         <td>
-                        <img src="assets/img/mcc-logo.png" alt="Avatar"  width='40px' height='40px' alt=''>
+                        <img src="assets/img/mcc-logo.png" alt="Avatar"  width='30px' height='30px' alt=''>
                         </td>
-                        <td><p style="font-size:8px;text-align:center;"><b>MADRIDEJOS COMMUNITY COLLEGE<br>LEARNING RESOURCE CENTER</b><br><small><b>BUNAKAN, MADRIDEJOS, CEBU</b></small></p></td>
+                        <td><p style="font-size:7px;text-align:center;"><b>MADRIDEJOS COMMUNITY COLLEGE<br>LEARNING RESOURCE CENTER</b><br><small><b>BUNAKAN, MADRIDEJOS, CEBU</b></small></p></td>
                         <td>
-                        <img src="images/mcc-lrc.png" alt="Avatar"  width='40px' height='40px' alt=''>
+                        <img src="images/mcc-lrc.png" alt="Avatar"  width='30px' height='30px' alt=''>
                         </td>
                     </tr>        
                 </table>     
@@ -221,7 +206,7 @@ if ($row) {
                 <?php      
                     if ($profile != "") {
                         //echo "<img src='../uploads/$profile' height='175px' width='200px' alt='' style='border: 2px solid black; border-radius: 60%;'>";
-                        echo "<img src='../uploads/profile_images/$profile' alt='' style='border: 4px solid #1076c1; width: 1.6in; height: 1.6in;overflow:hidden;position:absolute;left:0;right:0;top:90px;display:block;margin:0 auto;'>";
+                        echo "<img src='../uploads/profile_images/$profile' alt='' style='border: 2px solid #1076c1; width: 1.3in; height: 1.3in;overflow:hidden;position:absolute;left:0;right:0;top:60px;display:block;margin:0 auto;'>";
                         } else {
                         echo "<img src='assets/img/image.png' height='150px' width='150px' alt='' style='border: 4px solid #1176c2;'>";
                         }
@@ -229,30 +214,30 @@ if ($row) {
             </center> 
             <br>
             <div class="container" align="center">
-                <p style="font-size:13px;font-weight:bold;text-transform:uppercase;color:black;position:absolute;left:0;right:0;bottom:110px;"><?php if(isset($names)){ $namez=$names;echo$namez;} ?></p>
+                <p style="font-size:10px;font-weight:bold;text-transform:uppercase;color:black;position:absolute;left:0;right:0;bottom:68px;"><?php if(isset($names)){ $namez=$names;echo$namez;} ?></p>
                 <br>
             </div>
             <div>
-            <p style="font-weight:bold;color:black;text-align:center;position:absolute;left:0;right:0;bottom:70px;font-size:17px;text-transform:uppercase;"><?php echo $type; ?></p>
+            <p style="font-weight:bold;color:black;text-align:center;position:absolute;left:0;right:0;bottom:40px;font-size:10px;text-transform:uppercase;"><?php echo $type; ?></p>
             </div>
             <div>
-                <p style="font-size:20px;font-weight:bold;color:black;text-align:center;font-family:Georgia,serif;position:absolute;left:0;right:0;bottom:0;letter-spacing:2px;"><?php echo $course; ?></p>
+                <p style="font-size:27px;font-weight:bold;color:black;text-align:center;font-family:Georgia,serif;position:absolute;left:0;right:0;bottom:-15px;letter-spacing:2px;"><?php echo $course; ?></p>
             </div>
     </div>
 
     <div class="id-1">
-        <p class="text-end" style="font-size:10px;margin-top:10px;margin-right:7px;font-weight:bold;">Birthdate: <?php echo date('F j, Y', strtotime($bdate)); ?></p>
+        <p class="text-end" style="font-size:8px;margin-top:2px;margin-right:3px;font-weight:bold;">Birthdate: <?php echo date('F j, Y', strtotime($bdate)); ?></p>
         <br>
         <br>
         <center>
-            <img src="../qrcodes/<?php echo htmlspecialchars($qrcode); ?>" alt="Avatar" width="220px" height="200px" style="background-color:transparent;mix-blend-mode: multiply;margin-top:-48px;">
+            <img src="../qrcodes/<?php echo htmlspecialchars($qrcode); ?>" alt="Avatar" width="200px" height="180px" style="background-color:transparent;mix-blend-mode: multiply;margin-top:-58px;">
             <br>
             <br>
             <br>
                 <div class="container" align="center">
-                    <p style="color:black;margin-top:-20px;">In case of emergency, please notify:</p>
-                    <p class="text-center" style="color:black;margin-top:-5px;margin-bottom:-2px;font-size:14px;font-weight:bold;"><?php echo $contact_person; ?></p>
-                    <p class="text-center" style="color:black;font-size:14px;font-weight:bold;"><?php echo $person_cell_no; ?></p>
+                    <p style="color:black;margin-top:-28px;font-size:10px;">In case of emergency, please notify:</p>
+                    <p class="text-center" style="color:black;margin-top:-10px;margin-bottom:-4px;font-size:12px;font-weight:bold;"><?php echo $contact_person; ?></p>
+                    <p class="text-center" style="color:black;font-size:12px;font-weight:bold;"><?php echo $person_cell_no; ?></p>
         </center>
                 </div>
     </div>
