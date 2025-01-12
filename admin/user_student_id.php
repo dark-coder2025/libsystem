@@ -197,7 +197,7 @@ if ($row) {
                         <td>
                         <img src="assets/img/mcc-logo.png" alt="Avatar"  width='30px' height='30px' alt=''>
                         </td>
-                        <td><p style="font-size:8px;text-align:center;"><b>MADRIDEJOS COMMUNITY COLLEGE<br>LEARNING RESOURCE CENTER</b><br><small><b>BUNAKAN, MADRIDEJOS, CEBU</b></small></p></td>
+                        <td><p style="font-size:6px;text-align:center;"><b>MADRIDEJOS COMMUNITY COLLEGE<br>LEARNING RESOURCE CENTER</b><br><small><b>BUNAKAN, MADRIDEJOS, CEBU</b></small></p></td>
                         <td>
                         <img src="images/mcc-lrc.png" alt="Avatar"  width='30px' height='30px' alt=''>
                         </td>
