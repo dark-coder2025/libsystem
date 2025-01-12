@@ -42,7 +42,6 @@ include('./includes/sidebar.php');
                             <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>MS ID</th>
                                         <th>Firstname</th>
                                         <th>Lastname</th>
                                         <th>Email</th>
@@ -58,7 +57,6 @@ include('./includes/sidebar.php');
                                         $result = $stmt->get_result();
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>
-                                                    <td><center>{$row['ms_id']}</center></td>
                                                     <td>{$row['firstname']}</td>
                                                     <td>{$row['lastname']}</td>
                                                     <td>{$row['username']}</td>
