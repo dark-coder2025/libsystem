@@ -42,6 +42,7 @@ include('./includes/sidebar.php');
                             <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>MS ID</th>
                                         <th>Firstname</th>
                                         <th>Lastname</th>
                                         <th>Email</th>
@@ -57,13 +58,14 @@ include('./includes/sidebar.php');
                                         $result = $stmt->get_result();
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>
+                                                    <td><center>{$row['ms_id']}</center></td>
                                                     <td>{$row['firstname']}</td>
                                                     <td>{$row['lastname']}</td>
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
                                                         <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
-                                                                data-msid='{$row['ms_id']}' data-firstname='{$row['firstname']}' data-lastname='{$row['lastname']}' data-username='{$row['username']}' data-used='{$row['used']}'>
+                                                                data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
                                                             Edit
                                                         </button></center>
                                                     </td>
@@ -126,23 +128,10 @@ include('./includes/sidebar.php');
             </div>
             <form action="update_account.php" method="post">
                 <div class="modal-body">
-                    <!-- Hidden input for ms_id -->
-                    <input type="hidden" id="ms_id" name="ms_id">
-                    <div class="mb-3">
-                        <label for="fname" class="form-label">Firstname</label>
-                        <input type="text" class="form-control" id="fname" name="fname" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="lname" class="form-label">Lastname</label>
-                        <input type="text" class="form-control" id="lname" name="lname" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
                         <input type="text" class="form-control" id="used" name="used" required>
+                        <input type="hidden" id="ms_id" name="ms_id">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -164,7 +153,6 @@ include('../message.php');
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize DataTable (if necessary)
     new DataTable('#example', {
         responsive: true,
         rowReorder: {
@@ -176,28 +164,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('.editBtn');
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Get the data attributes from the button
             const msid = this.getAttribute('data-msid');
-            const firstname = this.getAttribute('data-firstname');
-            const lastname = this.getAttribute('data-lastname');
-            const username = this.getAttribute('data-username');
             const used = this.getAttribute('data-used');
-            
-            // Set the values into the modal's input fields
             document.getElementById('ms_id').value = msid;
-            document.getElementById('fname').value = firstname;
-            document.getElementById('lname').value = lastname;
-            document.getElementById('email').value = username;
             document.getElementById('used').value = used;
         });
-    });
-
-    // Apply event listener to edit buttons after DataTable initializes
-    applyEditButtonListener();
-
-    // Reapply event listener after DataTable pagination (if needed)
-    dataTable.on('draw', function() {
-        applyEditButtonListener();
     });
 });
 </script>
