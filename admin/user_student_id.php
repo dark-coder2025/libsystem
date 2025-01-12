@@ -126,8 +126,8 @@ if ($row) {
   }
 
   #id {
-    width: 250px;
-    height: 450px;
+    width: 3.375in;  /* Set width to 3.375 inches (credit card width) */
+    height: 2.125in;  /* Set height to 2.125 inches (credit card height) */
     position: absolute;
     opacity: 0.88;
     font-family: sans-serif;
@@ -138,7 +138,7 @@ if ($row) {
     background-repeat: no-repeat;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
     transition: 0.4s;
-  }
+}
 
   #id::before {
     content: "";
@@ -159,22 +159,21 @@ if ($row) {
   }
 
   .id-1 {
-    transition: 0.4s;
-    width: 250px;
-    height: 450px;
+    width: 3.375in;  /* Set width to 3.375 inches (credit card width) */
+    height: 2.125in;  /* Set height to 2.125 inches (credit card height) */
     background: url('images/bg-back.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
     font-family: sans-serif;
     float: left;
     margin: auto;
-    margin-left: 270px;
+    margin-left: 3.375in;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
     transition: 0.4s;
-  }
+}
 
   .img-very-small {
     width: 30px;
