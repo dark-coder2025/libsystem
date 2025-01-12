@@ -131,16 +131,16 @@ include('./includes/sidebar.php');
                     <!-- Hidden input for ms_id -->
                     <input type="hidden" id="ms_id" name="ms_id">
                     <div class="mb-3">
-                        <label for="firstname" class="form-label">Firstname</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                        <label for="fname" class="form-label">Firstname</label>
+                        <input type="text" class="form-control" id="fname" name="fname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="lastname" class="form-label">Lastname</label>
-                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                        <label for="lname" class="form-label">Lastname</label>
+                        <input type="text" class="form-control" id="lname" name="lname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="username" name="username" required>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
@@ -187,9 +187,9 @@ document.addEventListener('DOMContentLoaded', function () {
             
             // Set the values into the modal's input fields
             document.getElementById('ms_id').value = msid;
-            document.getElementById('firstname').value = firstname;
-            document.getElementById('lastname').value = lastname;
-            document.getElementById('username').value = username;
+            document.getElementById('fname').value = firstname;
+            document.getElementById('lname').value = lastname;
+            document.getElementById('email').value = username;
             document.getElementById('used').value = used;
         });
     });
