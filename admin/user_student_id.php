@@ -239,7 +239,7 @@ if ($row) {
             <br>
                 <div class="container" align="center">
                     <p style="color:black;margin-top:-28px;font-size:10px;">In case of emergency, please notify:</p>
-                    <p class="text-center" style="color:black;margin-top:-10px;margin-bottom:-2px;font-size:12px;font-weight:bold;"><?php echo $contact_person; ?></p>
+                    <p class="text-center" style="color:black;margin-top:-10px;margin-bottom:-4px;font-size:12px;font-weight:bold;"><?php echo $contact_person; ?></p>
                     <p class="text-center" style="color:black;font-size:12px;font-weight:bold;"><?php echo $person_cell_no; ?></p>
         </center>
                 </div>
