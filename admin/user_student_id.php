@@ -147,7 +147,7 @@ if ($row) {
     height: 100%;
     background: url('images/bg-front.png');
     background-repeat: repeat-x;
-    background-size: 240px 350px;
+    background-size: 240px 320px;
     opacity: 0.2;
     z-index: -1;
     text-align: center;
