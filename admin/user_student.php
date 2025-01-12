@@ -53,7 +53,7 @@ include('./includes/sidebar.php');
                                         <thead>
                                              <tr>
                                                   <th><center>Full Name</center></th>
-                                                  <!-- <th><center>Student Profile</center></th> -->
+                                                  <th><center>Student Profile</center></th>
                                                   <th><center>Student No</center></th>
                                                   <th><center>Gender</center></th>
                                                   <th><center>Course</center></th>
@@ -71,17 +71,17 @@ include('./includes/sidebar.php');
                                                        ?>
                                                        <tr>
                                                             <td style="text-transform:capitalize;"><center><?=$user['lastname'].',  '.$user['firstname'].' '.$user['middlename'];?></center></td>
-                                                            <!-- <td>
+                                                            <td>
                                                                  <center>
                                                                       <?php if($user['profile_image'] != ""): ?>
                                                                       <img src="../uploads/profile_images/<?php echo $user['profile_image']; ?>"
-                                                                           alt="image" width="120px" height="100px">
+                                                                           alt="image" width="90px" height="70px">
                                                                       <?php else: ?>
                                                                       <img src="uploads/books_img/book_image.jpg" alt=""
                                                                            width="120px" height="100px">
                                                                       <?php endif; ?>
                                                                  </center>
-                                                            </td> -->
+                                                            </td>
                                                             <td><center><?=$user['student_id_no'];?></center></td>
                                                             <td><center><?=$user['gender'];?></center></td>
                                                             <td><center><?=$user['course'];?></center></td>
