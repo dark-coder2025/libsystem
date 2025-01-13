@@ -249,21 +249,23 @@ function validateNameInput(inputField) {
     });
 
     document.getElementById('author').addEventListener('input', function () {
-          var authorInput = this.value.trim();
-          
-          var alphabetPattern = /^[A-Za-z\s]+$/;
-          
-          if (this.value !== authorInput) {
-               this.setCustomValidity('Name cannot start with a space.');
-          } else if (alphabetPattern.test(authorInput)) {
-               this.setCustomValidity('');
-          } else {
-               this.setCustomValidity('Please enter a valid name with only letters and no leading/trailing spaces.');
-          }
-          
-          var isValid = alphabetPattern.test(authorInput) && this.value === authorInput;
-          this.classList.toggle('is-invalid', !isValid);
-     });
+        var authorInput = this.value.trim();
+        
+        // Regex to match any character except '<' and '>'
+        var validPattern = /^[^<>]+$/;
+        
+        if (this.value !== authorInput) {
+            this.setCustomValidity('Name cannot start with a space.');
+        } else if (validPattern.test(authorInput)) {
+            this.setCustomValidity('');
+        } else {
+            this.setCustomValidity('Please enter a valid name without "<" or ">" characters and no leading/trailing spaces.');
+        }
+        
+        var isValid = validPattern.test(authorInput) && this.value === authorInput;
+        this.classList.toggle('is-invalid', !isValid);
+    });
+
 
     document.getElementById('publisher').addEventListener('input', function () {
         var publisherInput = this.value.trim();
