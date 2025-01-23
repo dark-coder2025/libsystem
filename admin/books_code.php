@@ -55,7 +55,10 @@ if (isset($_POST['delete_book'])) {
             mysqli_rollback($con);
             $_SESSION['status'] = "Failed to delete related borrow records.";
             $_SESSION['status_code'] = "error";
-            header("Location: book_views.php?tab=copies");
+            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+               "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+               "&author=" . urlencode(encryptor('encrypt', $author)) . 
+               "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
             exit(0);
         }
 
@@ -69,7 +72,10 @@ if (isset($_POST['delete_book'])) {
             mysqli_rollback($con);
             $_SESSION['status'] = "Failed to delete related return records.";
             $_SESSION['status_code'] = "error";
-            header("Location: book_views.php?tab=copies");
+            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+               "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+               "&author=" . urlencode(encryptor('encrypt', $author)) . 
+               "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
             exit(0);
         }
 
@@ -83,7 +89,10 @@ if (isset($_POST['delete_book'])) {
             mysqli_rollback($con);
             $_SESSION['status'] = "Failed to delete the book.";
             $_SESSION['status_code'] = "error";
-            header("Location: book_views.php?tab=copies");
+            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+               "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+               "&author=" . urlencode(encryptor('encrypt', $author)) . 
+               "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
             exit(0);
         }
 
@@ -100,7 +109,10 @@ if (isset($_POST['delete_book'])) {
         // No book found
         $_SESSION['status'] = "No book found with accession number '$accession_number'.";
         $_SESSION['status_code'] = "warning";
-        header("Location: book_views.php?tab=copies");
+        header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+               "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+               "&author=" . urlencode(encryptor('encrypt', $author)) . 
+               "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
         exit(0);
     }
 }
