@@ -24,42 +24,63 @@ include('authentication.php');
 // Existing code for handling delete, update, and add operations
 
 // Delete Book
-if(isset($_POST['delete_book']))
-{
-     $accession_number = mysqli_real_escape_string($con, $_POST['accession_number']);
+if (isset($_POST['delete_book'])) {
+    $accession_number = $_POST['accession_number']; // Get input
 
-     $select_query = "SELECT book_id, title, copyright_date, author, isbn FROM book WHERE accession_number = $accession_number";
-     $select_result = mysqli_query($con, $select_query);
-     $result_data = mysqli_fetch_array($select_result);
+    // Prepare the select query to find the book
+    $select_query = "SELECT * FROM book WHERE accession_number = ?";
+    $stmt = mysqli_prepare($con, $select_query);
+    mysqli_stmt_bind_param($stmt, "s", $accession_number);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-     $title = $result_data['title'];
-        $copyright_date = $result_data['copyright_date'];
-        $author = $result_data['author'];
-        $isbn = $result_data['isbn'];
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $title = $row['title'];
+        $copyright_date = $row['copyright_date'];
+        $author = $row['author'];
+        $isbn = $row['isbn'];
 
-     $query = "DELETE FROM book WHERE accession_number = $accession_number";
-     $query_run = mysqli_query($con, $query);
+        // Begin transaction
+        mysqli_begin_transaction($con);
 
-     if($query_run)
-     {
-          $_SESSION['status'] = 'Book accession number '$accession_number' deleted successfully.';
-          $_SESSION['status_code'] = "success";
-          header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+        // Delete the book
+        $delete_book_query = "DELETE FROM book WHERE accession_number = ?";
+        $stmt_book = mysqli_prepare($con, $delete_book_query);
+        mysqli_stmt_bind_param($stmt_book, "s", $accession_number);
+        $book_result = mysqli_stmt_execute($stmt_book);
+
+        if ($book_result && mysqli_stmt_affected_rows($stmt_book) > 0) {
+            // Commit transaction
+            mysqli_commit($con);
+            $_SESSION['status'] = "Book accession number '$accession_number' deleted successfully.";
+            $_SESSION['status_code'] = "success";
+            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
                    "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
                    "&author=" . urlencode(encryptor('encrypt', $author)) . 
                    "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
-          exit(0);
-     }
-     else
-     {
-          $_SESSION['status'] = 'No book found with accession number '$accession_number'.';
-          $_SESSION['status_code'] = "error";
-          header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+            exit(0);
+        } else {
+            // Rollback transaction
+            mysqli_rollback($con);
+            $_SESSION['status'] = "Failed to delete the book.";
+            $_SESSION['status_code'] = "error";
+            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
                    "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
                    "&author=" . urlencode(encryptor('encrypt', $author)) . 
                    "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
-          exit(0);
-     }
+            exit(0);
+        }
+    } else {
+        // No book found
+        $_SESSION['status'] = "No book found with accession number '$accession_number'.";
+        $_SESSION['status_code'] = "warning";
+        header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+                   "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+                   "&author=" . urlencode(encryptor('encrypt', $author)) . 
+                   "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
+        exit(0);
+    }
 }
 
 // Update Book
