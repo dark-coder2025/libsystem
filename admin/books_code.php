@@ -25,7 +25,7 @@ include('authentication.php');
 
 // Delete Book
 if (isset($_POST['delete_book'])) {
-    $accession_number = $_POST['accession_number']; // Get input directly (we'll use parameters)
+    $accession_number = $_POST['accession_number']; // Get input
 
     // Prepare the select query to find the book
     $select_query = "SELECT book_id, title, copyright_date, author, isbn FROM book WHERE accession_number = ?";
@@ -45,55 +45,60 @@ if (isset($_POST['delete_book'])) {
         // Begin transaction
         mysqli_begin_transaction($con);
 
-        try {
-            // Prepare and execute delete queries for related tables
-            $delete_borrow_query = "DELETE FROM borrow_book WHERE book_id = ?";
-            $delete_return_query = "DELETE FROM return_book WHERE book_id = ?";
-            $delete_book_query = "DELETE FROM book WHERE accession_number = ?";
+        // Delete related records in borrow_book
+        $delete_borrow_query = "DELETE FROM borrow_book WHERE book_id = ?";
+        $stmt_borrow = mysqli_prepare($con, $delete_borrow_query);
+        mysqli_stmt_bind_param($stmt_borrow, "i", $book_id);
+        $borrow_result = mysqli_stmt_execute($stmt_borrow);
 
-            // Borrow book deletion
-            $stmt_borrow = mysqli_prepare($con, $delete_borrow_query);
-            mysqli_stmt_bind_param($stmt_borrow, "i", $book_id);
-            mysqli_stmt_execute($stmt_borrow);
-
-            // Return book deletion
-            $stmt_return = mysqli_prepare($con, $delete_return_query);
-            mysqli_stmt_bind_param($stmt_return, "i", $book_id);
-            mysqli_stmt_execute($stmt_return);
-
-            // Book deletion
-            $stmt_book = mysqli_prepare($con, $delete_book_query);
-            mysqli_stmt_bind_param($stmt_book, "s", $accession_number);
-            mysqli_stmt_execute($stmt_book);
-
-            // Check if the book deletion was successful
-            if (mysqli_stmt_affected_rows($stmt_book) > 0) {
-                // Commit the transaction
-                mysqli_commit($con);
-                $_SESSION['status'] = "Book accession number '$accession_number' deleted successfully";
-                $_SESSION['status_code'] = "success";
-                header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
-                       "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
-                       "&author=" . urlencode(encryptor('encrypt', $author)) . 
-                       "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
-                exit(0);
-            } else {
-                throw new Exception("Failed to delete book accession number '$accession_number'");
-            }
-        } catch (Exception $e) {
-            // Rollback transaction in case of an error
+        if (!$borrow_result) {
             mysqli_rollback($con);
-            $_SESSION['status'] = "Error: " . $e->getMessage();
+            $_SESSION['status'] = "Failed to delete related borrow records.";
             $_SESSION['status_code'] = "error";
-            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
-                   "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
-                   "&author=" . urlencode(encryptor('encrypt', $author)) . 
-                   "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
+            header("Location: book_views.php?tab=copies");
             exit(0);
         }
+
+        // Delete related records in return_book
+        $delete_return_query = "DELETE FROM return_book WHERE book_id = ?";
+        $stmt_return = mysqli_prepare($con, $delete_return_query);
+        mysqli_stmt_bind_param($stmt_return, "i", $book_id);
+        $return_result = mysqli_stmt_execute($stmt_return);
+
+        if (!$return_result) {
+            mysqli_rollback($con);
+            $_SESSION['status'] = "Failed to delete related return records.";
+            $_SESSION['status_code'] = "error";
+            header("Location: book_views.php?tab=copies");
+            exit(0);
+        }
+
+        // Delete the book
+        $delete_book_query = "DELETE FROM book WHERE accession_number = ?";
+        $stmt_book = mysqli_prepare($con, $delete_book_query);
+        mysqli_stmt_bind_param($stmt_book, "s", $accession_number);
+        $book_result = mysqli_stmt_execute($stmt_book);
+
+        if (!$book_result || mysqli_stmt_affected_rows($stmt_book) <= 0) {
+            mysqli_rollback($con);
+            $_SESSION['status'] = "Failed to delete the book.";
+            $_SESSION['status_code'] = "error";
+            header("Location: book_views.php?tab=copies");
+            exit(0);
+        }
+
+        // Commit transaction
+        mysqli_commit($con);
+        $_SESSION['status'] = "Book accession number '$accession_number' deleted successfully.";
+        $_SESSION['status_code'] = "success";
+        header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
+               "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
+               "&author=" . urlencode(encryptor('encrypt', $author)) . 
+               "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
+        exit(0);
     } else {
-        // No book found with the provided accession number
-        $_SESSION['status'] = "No book found with accession number '$accession_number'";
+        // No book found
+        $_SESSION['status'] = "No book found with accession number '$accession_number'.";
         $_SESSION['status_code'] = "warning";
         header("Location: book_views.php?tab=copies");
         exit(0);
