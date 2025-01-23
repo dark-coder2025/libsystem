@@ -1,5 +1,6 @@
 <?php
 include('authentication.php');
+include('includes/url.php');
 
 // Include the barcode generator
 // require_once('barcode/vendor/autoload.php'); 
