@@ -290,15 +290,17 @@ $activeTabPane = isset($_GET['tab']) && $_GET['tab'] == 'copies' ? 'copies-tab-p
     </section>
 </main>
 
+<!-- Your HTML content -->
 <script>
-     document.addEventListener('DOMContentLoaded', function () {
-          new DataTable('#example', {
-          responsive: true,
-          rowReorder: {
-               selector: 'td:nth-child(2)'
-          }
-});
-});
+    // Initialize DataTable once the DOM content is loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        new DataTable('#example', {
+            responsive: true,
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            }
+        });
+    });
 </script>
 
 <?php 
@@ -308,89 +310,81 @@ include('../message.php');
 ?>
 
 <script>
-
-function validateNumberInput(input) {
-    // Filter out non-numeric characters
-    input.value = input.value.replace(/[^0-9]/g, '');
-}
-
-function validateForm(form) {
-    var accessionNumber = form.accession_number.value.trim();
-    var errorElement = document.getElementById('accession_number_error');
-    var saveButton = form.querySelector('button[type="submit"]');
-    
-    // Clear previous error
-    errorElement.textContent = '';
-    errorElement.style.display = 'none';
-    saveButton.disabled = false;
-    
-    // Check if accession number exists
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "books_code.php", false); // Synchronous request
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("accession_number=" + encodeURIComponent(accessionNumber) + "&accession_number_check=true");
-    
-    if (xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        if (response.exists) {
-            errorElement.textContent = "This accession number already exists.";
-            errorElement.style.display = 'block';
-            saveButton.disabled = true;
-            return false;
-        }
+    // Function to allow only numeric input
+    function validateNumberInput(input) {
+        input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     }
-    return true;
-}
 
-// function updateStatus(accessionNumber, newStatus) {
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", "books_code.php", true);
-//     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-//     xhr.send("accession_number=" + encodeURIComponent(accessionNumber) + "&status=" + encodeURIComponent(newStatus) + "&update_status=true");
-    
-//     xhr.onload = function() {
-//         if (xhr.status === 200) {
-//             var response = JSON.parse(xhr.responseText);
-//             if (response.success) {
-//                 Swal.fire('Success', 'Status updated successfully.', 'success');
-//             } else {
-//                 Swal.fire('Error', 'Failed to update status.', 'error');
-//             }
-//         }
-//     };
-// }
+    // Form validation using AJAX
+    function validateForm(form) {
+        var accessionNumber = form.accession_number.value.trim();
+        var errorElement = document.getElementById('accession_number_error');
+        var saveButton = form.querySelector('button[type="submit"]');
+        
+        // Clear previous error
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+        saveButton.disabled = false;
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "books_code.php", true); // Set to true for asynchronous request
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        // Handle response when AJAX request is completed
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.exists) {
+                        errorElement.textContent = "This accession number already exists.";
+                        errorElement.style.display = 'block';
+                        saveButton.disabled = true;
+                    }
+                } else {
+                    console.error('Error during AJAX request', xhr.status, xhr.statusText);
+                }
+            }
+        };
+        
+        // Send AJAX request to check if the accession number exists
+        xhr.send("accession_number=" + encodeURIComponent(accessionNumber) + "&accession_number_check=true");
 
-function confirmDelete(accessionNumber) {
-    Swal.fire({
-        title: 'Are you sure to delete this?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Proceed with the deletion
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'books_code.php';
+        // Return true to submit the form if no errors
+        return true;
+    }
 
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'accession_number';
-            input.value = accessionNumber;
+    // Function to confirm and delete a book record
+    function confirmDelete(accessionNumber) {
+        Swal.fire({
+            title: 'Are you sure to delete this?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Create a form to send the deletion request
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'books_code.php';
 
-            var submit = document.createElement('input');
-            submit.type = 'hidden';
-            submit.name = 'delete_book';
-            submit.value = 'true';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'accession_number';
+                input.value = accessionNumber;
 
-            form.appendChild(input);
-            form.appendChild(submit);
+                var submit = document.createElement('input');
+                submit.type = 'hidden';
+                submit.name = 'delete_book';
+                submit.value = 'true';
 
-            document.body.appendChild(form);
-            form.submit();
-        }
-    });
-}
+                form.appendChild(input);
+                form.appendChild(submit);
+
+                document.body.appendChild(form);
+                form.submit(); // Submit the form to delete the record
+            }
+        });
+    }
 </script>
