@@ -28,7 +28,7 @@ if (isset($_POST['delete_book'])) {
     $accession_number = $_POST['accession_number']; // Get input
 
     // Prepare the select query to find the book
-    $select_query = "SELECT * FROM book WHERE accession_number = ?";
+    $select_query = "SELECT title, copyright_date, author, isbn FROM book WHERE accession_number = ?";
     $stmt = mysqli_prepare($con, $select_query);
     mysqli_stmt_bind_param($stmt, "s", $accession_number);
     mysqli_stmt_execute($stmt);
@@ -55,10 +55,7 @@ if (isset($_POST['delete_book'])) {
             mysqli_commit($con);
             $_SESSION['status'] = "Book accession number '$accession_number' deleted successfully.";
             $_SESSION['status_code'] = "success";
-            header("Location: book_views.php?title=" . urlencode(encryptor('encrypt', $title)) . 
-                   "&copyright_date=" . urlencode(encryptor('encrypt', $copyright_date)) . 
-                   "&author=" . urlencode(encryptor('encrypt', $author)) . 
-                   "&isbn=" . urlencode(encryptor('encrypt', $isbn)) . "&tab=copies");
+            header("Location: books.php");
             exit(0);
         } else {
             // Rollback transaction
