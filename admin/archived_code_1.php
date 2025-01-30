@@ -1,4 +1,4 @@
-gaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
+mcclearningresourcecenter2.0@gmail.comeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculgaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
 // Start the session at the beginning
 session_start();
 
@@ -27,14 +27,14 @@ function sendDenyEmail($student_email, $deny_reason, $stu_email)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
         $mail->Password = 'oenz pxyh ohro zevi';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($student_email);
 
         $mail->isHTML(true);

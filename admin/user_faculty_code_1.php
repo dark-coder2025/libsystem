@@ -1,4 +1,4 @@
-gaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
+mcclearningresourcecenter2.0@gmail.comeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculgaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
 
 session_start();
 
@@ -26,14 +26,14 @@ function sendDenyEmail($faculty_email, $deny_reason, $fac_email)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
         $mail->Password = 'oenz pxyh ohro zevi';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($faculty_email);
 
         $mail->isHTML(true);
@@ -166,14 +166,14 @@ function sendApproveEmail($faculty_email)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
         $mail->Password = 'oenz pxyh ohro zevi';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($faculty_email);
 
         $mail->isHTML(true);
@@ -297,14 +297,14 @@ function sendBlockEmail($faculty_email)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
         $mail->Password = 'oenz pxyh ohro zevi';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($faculty_email);
 
         $mail->isHTML(true);
@@ -429,14 +429,14 @@ function sendUnblockEmail($faculty_email)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
         $mail->Password = 'oenz pxyh ohro zevi';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($faculty_email);
 
         $mail->isHTML(true);
@@ -560,14 +560,14 @@ function sendDeleteEmail($faculty_email, $delete_reason)
         $mail->SMTPAuth = true;
 
         // Use environment-stored credentials
-        $mail->Username = 'resourcecentermcclearning@gmail.com'; // Replace with environment variable
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com'; // Replace with environment variable
         $mail->Password = 'oenz pxyh ohro zevi'; // Replace with environment variable
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($faculty_email);
 
         $safe_reason = htmlspecialchars($delete_reason, ENT_QUOTES, 'UTF-8');

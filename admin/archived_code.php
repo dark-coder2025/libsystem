@@ -15,12 +15,12 @@ function sendEmail($student_email, $subject, $message) {
         $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; 
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'resourcecentermcclearning@gmail.com';
-            $mail->Password   = 'oenz pxyh ohro zevi'; 
+            $mail->Username   = 'mcclearningresourcecenter2.0@gmail.com';
+            $mail->Password   = 'eqin ygpp kyem mcul'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
             $mail->Port       = 587;
 
-            $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
             $mail->addAddress($student_email); 
 
         $mail->isHTML(true);

@@ -1,4 +1,4 @@
-<?php
+mcclearningresourcecenter2.0@gmail.com<?php
 include('authentication.php');
 include('includes/url.php');
 header('Content-Type: application/json');

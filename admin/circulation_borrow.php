@@ -1,4 +1,4 @@
-gaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php 
+mcclearningresourcecenter2.0@gmail.comeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculgaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php 
 include('authentication.php');
 include('includes/header.php'); 
 include('./includes/sidebar.php'); 
@@ -142,12 +142,12 @@ include('./includes/sidebar.php');
                                                             $mail->isSMTP();
                                                             $mail->Host = 'smtp.gmail.com';
                                                             $mail->SMTPAuth = true;
-                                                            $mail->Username = 'resourcecentermcclearning@gmail.com';
+                                                            $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
                                                             $mail->Password = 'oenz pxyh ohro zevi';
                                                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                                                             $mail->Port = 587;
 
-                                                            $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+                                                            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
                                                             $mail->addAddress($borrow_row['email']);
 
                                                             $mail->isHTML(true);
@@ -207,12 +207,12 @@ include('./includes/sidebar.php');
                                                             $mail->isSMTP();
                                                             $mail->Host = 'smtp.gmail.com';
                                                             $mail->SMTPAuth = true;
-                                                            $mail->Username = 'resourcecentermcclearning@gmail.com';
+                                                            $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
                                                             $mail->Password = 'oenz pxyh ohro zevi';
                                                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                                                             $mail->Port = 587;
 
-                                                            $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
+                                                            $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
                                                             $mail->addAddress($borrow_row['email']);
 
                                                             $mail->isHTML(true);

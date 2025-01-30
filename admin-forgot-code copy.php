@@ -1,4 +1,4 @@
-edpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
+mcclearningresourcecenter2.0@gmail.comedpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncedpf kghw pylr zyncyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfcyods rsbo slja qgfc<?php
 ini_set('session.cookie_httponly', 1);
 session_start();
 include('./admin/config/dbcon.php');
@@ -22,7 +22,7 @@ function send_password_reset($get_email, $token) {
             $mail->Host       = 'smtp.gmail.com'; // Outlook/Microsoft 365 SMTP server
             $mail->SMTPAuth   = true;
             $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Your Outlook/Microsoft 365 email address
-            $mail->Password   = 'oidq tnsz oqyf cazx'; // Your email account password or app password
+            $mail->Password   = 'eqin ygpp kyem mcul'; // Your email account password or app password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
             $mail->Port       = 587; // Port for TLS
 

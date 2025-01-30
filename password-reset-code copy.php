@@ -1,4 +1,4 @@
-<?php
+mcclearningresourcecenter2.0@gmail.com<?php
 ini_set('session.cookie_httponly', 1);
 session_start();
 include('./admin/config/dbcon.php');
@@ -19,7 +19,7 @@ function sendEmail($email, $subject, $message) {
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
         $mail->Username   = 'mcclearningresourcecenterv2.0@gmail.com'; // Use environment variable
-        $mail->Password   = 'oidq tnsz oqyf cazx'; // Use environment variable
+        $mail->Password   = 'eqin ygpp kyem mcul'; // Use environment variable
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
         $mail->Port       = 587;
 

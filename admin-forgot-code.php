@@ -24,14 +24,14 @@ function send_password_reset($get_email, $code)
         $mail->SMTPAuth = true;
 
         // Replace with environment-stored credentials
-        $mail->Username = 'mcclearningresourcecenterv2.0@gmail.com';
-        $mail->Password = 'oidq tnsz oqyf cazx';
+        $mail->Username = 'mcclearningresourcecenter2.0@gmail.com';
+        $mail->Password = 'eqin ygpp kyem mcul';
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email details
-        $mail->setFrom('mcclearningresourcecenterv2.0@gmail.com', 'MCC Learning Resource Center');
+        $mail->setFrom('mcclearningresourcecenter2.0@gmail.com', 'MCC Learning Resource Center');
         $mail->addAddress($get_email); // Corrected this line
 
         $mail->isHTML(true);
