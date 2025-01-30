@@ -17,13 +17,13 @@ if (isset($_POST['borrow_id'])) {
     // Execute the delete query
     if (mysqli_query($con, $delete_query)) {
         // If the deletion is successful, redirect back to the previous page or display a success message
-        echo "<script>alert('Record deleted successfully.'); window.location.href = 'borrowed_books.php';</script>";
+        echo "<script>alert('Record deleted successfully.'); window.location.href = 'circulation_borrow.php';</script>";
     } else {
         // If the deletion fails, display an error message
-        echo "<script>alert('Error deleting record: " . mysqli_error($con) . "'); window.location.href = 'borrowed_books.php';</script>";
+        echo "<script>alert('Error deleting record: " . mysqli_error($con) . "'); window.location.href = 'circulation_borrow.php';</script>";
     }
 } else {
     // If the borrow_id is not set, display an error message
-    echo "<script>alert('Invalid request.'); window.location.href = 'borrowed_books.php';</script>";
+    echo "<script>alert('Invalid request.'); window.location.href = 'circulation_borrow.php';</script>";
 }
 ?>
