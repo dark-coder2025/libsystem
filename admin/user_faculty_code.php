@@ -1,32 +1,29 @@
 <?php
 include('authentication.php');
 include('includes/url.php');
+header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
-require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require 'phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
 
-// Function to send email notification
-function sendEmail($faculty_email, $subject, $message) {
+function sendEmail($student_email, $subject, $message) {
     $mail = new PHPMailer(true);
     try {
-        //Server settings
         $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; // Outlook/Microsoft 365 SMTP server
+            $mail->Host       = 'smtp.gmail.com'; 
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'resourcecentermcclearning@gmail.com'; // Your Outlook/Microsoft 365 email address
-            $mail->Password   = 'oenz pxyh ohro zevi'; // Your email account password or app password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Use TLS encryption
-            $mail->Port       = 587; // Port for TLS
+            $mail->Username   = 'resourcecentermcclearning@gmail.com';
+            $mail->Password   = 'oenz pxyh ohro zevi'; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+            $mail->Port       = 587;
 
-            //Recipients
             $mail->setFrom('resourcecentermcclearning@gmail.com', 'MCC Learning Resource Center');
-            $mail->addAddress($student_email); // Recipient's email address
+            $mail->addAddress($student_email); 
 
-        //Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = $message;
