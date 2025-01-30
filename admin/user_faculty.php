@@ -32,7 +32,7 @@ include('./includes/sidebar.php');
                                    Faculty Approval
                                    <?php
                                    // Example query to count pending faculty approvals
-                                   $sql = "SELECT COUNT(*) AS pending_faculty_count FROM faculty WHERE (role_as = 'faculty' OR role_as = 'staff') AND status = 'pending'";
+                                   $sql = "SELECT COUNT(*) AS pending_faculty_count FROM faculty WHERE (role_as = 'faculty' OR role_as = 'staff') AND status = 'archived'";
                                    $result = mysqli_query($con, $sql);
                                    $row = mysqli_fetch_assoc($result);
                                    $pendingfacultyCount = $row['pending_faculty_count'];
