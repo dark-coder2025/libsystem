@@ -17,7 +17,7 @@ function sendEmail($student_email, $subject, $message) {
             $mail->Host       = 'smtp.gmail.com'; 
             $mail->SMTPAuth   = true;
             $mail->Username   = 'resourcecentermcclearning@gmail.com';
-            $mail->Password   = 'oenz pxyh ohro zevi'; 
+            $mail->Password   = 'gaai wmiv oqql rhvu'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
             $mail->Port       = 587;
 

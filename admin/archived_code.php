@@ -1,4 +1,4 @@
-<?php
+gaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
 include('authentication.php');
 include('includes/url.php');
 use PHPMailer\PHPMailer\PHPMailer;

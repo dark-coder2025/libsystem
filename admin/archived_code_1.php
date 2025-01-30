@@ -1,4 +1,4 @@
-<?php
+gaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php
 // Start the session at the beginning
 session_start();
 
