@@ -38,7 +38,7 @@ if (isset($_POST['deny'])) {
     $student_id = mysqli_real_escape_string($con, $_POST['user_id']);
     $deny_reason = mysqli_real_escape_string($con, $_POST['deny_reason']);
 
-    $email_query = "SELECT email FROM faculty WHERE faculty_id=?";
+    $email_query = "SELECT email FROM user WHERE user_id=?";
     $stmt = mysqli_prepare($con, $email_query);
     mysqli_stmt_bind_param($stmt, 'i', $student_id);
     mysqli_stmt_execute($stmt);
@@ -114,7 +114,7 @@ if (isset($_POST['deny'])) {
 
             sendEmail($student_email, $subject, $message);
 
-            $update_query = "UPDATE faculty SET status = 'archived', faculty_added = NULL WHERE faculty_id = ?";
+            $update_query = "UPDATE user SET status = 'archived', user_added = NULL WHERE user_id = ?";
             $update_stmt = mysqli_prepare($con, $update_query);
             mysqli_stmt_bind_param($update_stmt, 'i', $student_id);
             mysqli_stmt_execute($update_stmt);
@@ -133,7 +133,7 @@ if (isset($_POST['deny'])) {
 
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
-    $sql = "SELECT * FROM faculty WHERE faculty_id = '$userId'";
+    $sql = "SELECT * FROM user WHERE user_id = '$userId'";
     $result = mysqli_query($con, $sql);
 
     if ($row = mysqli_fetch_assoc($result)) {
