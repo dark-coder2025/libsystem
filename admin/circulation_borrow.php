@@ -114,6 +114,7 @@ include('./includes/sidebar.php');
                                                   <th>Due Date</th>
                                                   <th>Date Returned</th>
                                                   <th>Status</th>
+                                                  <th>Action</th>
                                              </tr>
                                         </thead>
                                         <tbody>
@@ -290,6 +291,12 @@ include('./includes/sidebar.php');
                                                   <td><?php echo ($borrow_row['date_returned'] == "0000-00-00 00:00:00") ? "Pending" : date("M d, Y h:i:s a", strtotime($borrow_row['date_returned'])); ?></td>
                                                   <td class="<?php echo $borrow_row['borrowed_status'] != 'borrowed' ? 'alert alert-success' : 'alert alert-danger'; ?>" style="text-transform: capitalize">
                                                        <?php echo $borrow_row['borrowed_status']; ?>
+                                                  </td>
+                                                  <td>
+                                                       <form action="delete_borrow.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                                            <input type="hidden" name="borrow_id" value="<?php echo $borrow_row['borrow_book_id']; ?>">
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                       </form>
                                                   </td>
                                              </tr>
                                              <?php } // End of while loop 
