@@ -98,7 +98,7 @@ $user_row = mysqli_fetch_array($user_query);
                                             } else {
                                         ?>
                                         <tr>
-                                            <input type="hidden" name="user_id" value="<?php echo $user_row['user_id']; ?>">
+                                            <input type="text" name="user_id" value="<?php echo $user_row['user_id']; ?>">
                                             <input type="hidden" name="book_id" value="<?php echo $book_row['book_id']; ?>">
                                             <td class="auto-id" style="text-align: center;"></td>
                                             <td>
