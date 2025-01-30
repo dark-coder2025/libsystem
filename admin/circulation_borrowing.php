@@ -145,7 +145,7 @@ $user_row = mysqli_fetch_array($user_query);
                                                         text: 'Books from this section cannot be borrowed!',
                                                         confirmButtonText: 'OK'
                                                     }).then(() => {
-                                                        window.location = 'circulation_borrowing.php?student_id=" . $studentID . "';
+                                                        window.location = 'circulation_borrowing.php?a=" . $studentID . "';
                                                     });
                                                 </script>";
                                             } else {
@@ -160,7 +160,7 @@ $user_row = mysqli_fetch_array($user_query);
                                                             text: 'You have already borrowed a book with the same title!',
                                                             confirmButtonText: 'OK'
                                                         }).then(() => {
-                                                            window.location = 'circulation_borrowing.php?student_id=" . $studentID . "';
+                                                            window.location = 'circulation_borrowing.php?a=" . $studentID . "';
                                                         });
                                                     </script>";
                                                 } else {
@@ -186,7 +186,7 @@ $user_row = mysqli_fetch_array($user_query);
                                                                 text: 'You are allowed up to " . $allowed['qntty_books'] . " books!',
                                                                 confirmButtonText: 'OK'
                                                             }).then(() => {
-                                                                window.location = 'circulation_borrowing.php?student_id=" . $studentID . "';
+                                                                window.location = 'circulation_borrowing.php?a=" . $studentID . "';
                                                             });
                                                         </script>";
                                                     } elseif ($bookCount['book_count'] == 1) {
@@ -197,7 +197,7 @@ $user_row = mysqli_fetch_array($user_query);
                                                                 text: 'This book has already been borrowed!',
                                                                 confirmButtonText: 'OK'
                                                             }).then(() => {
-                                                                window.location = 'circulation_borrowing.php?student_id=" . $studentID . "';
+                                                                window.location = 'circulation_borrowing.php?a=" . $studentID . "';
                                                             });
                                                         </script>";
                                                     } else {
@@ -220,7 +220,7 @@ $user_row = mysqli_fetch_array($user_query);
                                                                 text: 'Book Borrowed Successfully',
                                                                 confirmButtonText: 'OK'
                                                             }).then(() => {
-                                                                window.location = 'circulation_borrowing.php?student_id=" . $studentID . "';
+                                                                window.location = 'circulation_borrowing.php?a=" . $studentID . "';
                                                             });
                                                         </script>";
                                                     }
