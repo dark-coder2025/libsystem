@@ -208,7 +208,7 @@ if(isset($_POST['approved'])) {
         ";
         sendEmail($faculty_email, $subject, $message);
 
-        $_SESSION['status'] = ' approved successfully';
+        $_SESSION['status'] = ' Approved successfully';
         $_SESSION['status_code'] = "success";
         header("Location: user_faculty_approval.php");
         exit(0);
