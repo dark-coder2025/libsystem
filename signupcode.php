@@ -132,7 +132,12 @@ if (isset($_POST['register_btn'])) {
             }
 
             $stmt_insert = mysqli_prepare($con, $insert_query);
+
+            if ($role_as == 'student') {
             mysqli_stmt_bind_param($stmt_insert, 'ssssssssssssssss', $lastname, $firstname, $middlename, $gender, $course, $address, $cell_no, $birthdate, $email, $year_level, $student_id_no, $hashed_password, $role_as, $image_path, $contact_person, $person_cell_no);
+            } else {
+                mysqli_stmt_bind_param($stmt_insert, 'sssssssssssssss', $lastname, $firstname, $middlename, $gender, $course, $address, $cell_no, $birthdate, $email, $student_id_no, $hashed_password, $role_as, $image_path, $contact_person, $person_cell_no);
+            }
             
             if (mysqli_stmt_execute($stmt_insert)) {
                 // Generate QR Code
