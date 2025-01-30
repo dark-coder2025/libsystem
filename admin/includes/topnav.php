@@ -22,8 +22,8 @@
                     <i class="bi bi-bell"></i>
                     <?php
                     $query = "SELECT COUNT(DISTINCT CONCAT(h.user_id, '-', h.faculty_id)) AS total_borrowers
-                    FROM holds h
-                    WHERE h.hold_status = 'Hold'";
+                            FROM holds h
+                            WHERE h.hold_status = 'Hold'";
                     $query_run = mysqli_query($con, $query);
                     $total_borrowers = $query_run ? mysqli_fetch_assoc($query_run)['total_borrowers'] : 0;
 
@@ -34,13 +34,10 @@
                     $user_result = mysqli_query($con, $user_sql);
                     $faculty_result = mysqli_query($con, $faculty_sql);
 
-                    $user_row = mysqli_fetch_assoc($user_result);
-                    $faculty_row = mysqli_fetch_assoc($faculty_result);
+                    $userCount = $user_result ? mysqli_fetch_assoc($user_result)['pending_count'] : 0;
+                    $facultyCount = $faculty_result ? mysqli_fetch_assoc($faculty_result)['pending_count'] : 0;
 
-                    $userCount = $user_row['pending_count'];
-                    $facultyCount = $faculty_row['pending_count'];
-
-                    $pendingCount = $user_row['pending_count'] + $faculty_row['pending_count'];
+                    $pendingCount = $userCount + $facultyCount;
 
                     echo '<span class="badge bg-danger badge-number">'.($total_borrowers + $pendingCount).'</span>';
                     ?>
@@ -50,40 +47,45 @@
                     <li class="dropdown-header">
                         You have <?= ($total_borrowers + $pendingCount) ?> notifications
                     </li>
+
                     <?php 
                     // Notifications for holds
                     $query_notif = "SELECT 
-                                        u.user_id, u.firstname AS user_firstname, u.lastname AS user_lastname, 
-                                        f.faculty_id, f.firstname AS faculty_firstname, f.lastname AS faculty_lastname,
+                                        h.user_id, 
+                                        u.firstname AS user_firstname, 
+                                        u.lastname AS user_lastname, 
+                                        h.faculty_id, 
+                                        f.firstname AS faculty_firstname, 
+                                        f.lastname AS faculty_lastname,
                                         COUNT(h.hold_id) AS num_hold_books
                                     FROM holds h
                                     LEFT JOIN user u ON u.user_id = h.user_id
                                     LEFT JOIN faculty f ON f.faculty_id = h.faculty_id
                                     WHERE h.hold_status = 'Hold'
-                                    GROUP BY u.user_id, f.faculty_id
+                                    GROUP BY h.user_id, h.faculty_id
                                     ORDER BY h.hold_id DESC LIMIT 3";
+
                     $query_run = mysqli_query($con, $query_notif);
 
                     if (mysqli_num_rows($query_run) > 0) {
                         while ($holdlist = mysqli_fetch_assoc($query_run)) {
-                            $name = $holdlist['user_id'] ? $holdlist['user_firstname'].' '.$holdlist['user_lastname'] : $holdlist['faculty_firstname'].' '.$holdlist['faculty_lastname'];
-                            $id = $holdlist['user_id'] ? $holdlist['user_id'] : $holdlist['faculty_id'];
-                    ?>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li class="notification-item">
-                    <a href="hold_list.php" style="text-decoration:none;">
-                        <div>
-                            <h4><?=$name;?></h4>
-                            <p>hold <span><?=$holdlist['num_hold_books'];?></span> book(s).</p>
-                        </div>
-                    </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <?php
+                            $name = !empty($holdlist['user_id']) ? $holdlist['user_firstname'].' '.$holdlist['user_lastname'] : $holdlist['faculty_firstname'].' '.$holdlist['faculty_lastname'];
+                            ?>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li class="notification-item">
+                                <a href="hold_list.php" style="text-decoration:none;">
+                                    <div>
+                                        <h4><?= htmlspecialchars($name); ?></h4>
+                                        <p>hold <span><?= htmlspecialchars($holdlist['num_hold_books']); ?></span> book(s).</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <?php
                         }
                     }
 
@@ -94,12 +96,12 @@
                         <hr class="dropdown-divider" />
                     </li>
                     <li class="notification-item">
-                    <a href="user_student_approval.php" style="text-decoration:none;font-size:13px;margin-left:10px;">
-                        <div>
-                            <h4>Pending Approvals</h4>
-                            <p>You have <span><?=$userCount;?></span> pending student approval(s).</p>
-                        </div>
-                    </a>
+                        <a href="user_student_approval.php" style="text-decoration:none;font-size:13px;margin-left:10px;">
+                            <div>
+                                <h4>Pending Approvals</h4>
+                                <p>You have <span><?= htmlspecialchars($userCount); ?></span> pending student approval(s).</p>
+                            </div>
+                        </a>
                     </li>
                     <?php
                     }
@@ -110,12 +112,12 @@
                         <hr class="dropdown-divider" />
                     </li>
                     <li class="notification-item">
-                    <a href="user_faculty_approval.php" style="text-decoration:none;font-size:13px;margin-left:10px;">
-                        <div>
-                            <h4>Pending Approvals</h4>
-                            <p>You have <span><?=$facultyCount;?></span> pending faculty approval(s).</p>
-                        </div>
-                    </a>
+                        <a href="user_faculty_approval.php" style="text-decoration:none;font-size:13px;margin-left:10px;">
+                            <div>
+                                <h4>Pending Faculty Approvals</h4>
+                                <p>You have <span><?= htmlspecialchars($facultyCount); ?></span> pending faculty approval(s).</p>
+                            </div>
+                        </a>
                     </li>
                     <?php
                     }
