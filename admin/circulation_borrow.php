@@ -1,4 +1,4 @@
-mcclearningresourcecenter2.0@gmail.comeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculeqin ygpp kyem mculgaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvugaai wmiv oqql rhvu<?php 
+<?php 
 include('authentication.php');
 include('includes/header.php'); 
 include('./includes/sidebar.php'); 
