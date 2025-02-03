@@ -100,6 +100,10 @@ if ($_SESSION['auth_role'] != "student" && $_SESSION['auth_role'] != "faculty" &
                                                             <div class="col-lg-3 col-md-4 label fw-semibold">Call Number</div>
                                                             <div class="col-lg-9 col-md-8"><?= htmlspecialchars($book['call_number']) ?></div>
                                                         </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-lg-3 col-md-4 label fw-semibold">Page</div>
+                                                            <div class="col-lg-9 col-md-8"><?= htmlspecialchars($book['page']) ?></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
