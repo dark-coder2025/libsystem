@@ -105,6 +105,20 @@ include('./includes/sidebar.php');
                                    <div class="row d-flex justify-content-center">
                                         <div class="col-12 col-md-5">
                                              <div class="mb-2 input-group-sm">
+                                                  <label for="">Page</label>
+                                                  <input type="text" id="page" name="page" value="<?=$book['page'];?>" class="form-control">
+                                             </div>
+                                        </div>
+                                        <div class="col-12 col-md-5">
+                                             <div class="mb-2 input-group-sm">
+                                                  <label for="">Price</label>
+                                                  <input type="text" id="price" name="price" value="<?=$book['price'];?>" class="form-control">
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="row d-flex justify-content-center">
+                                        <div class="col-12 col-md-5">
+                                             <div class="mb-2 input-group-sm">
                                                   <label for="subject">Subject/s</label>
                                                   <input type="text" id="subject" name="subject" value="<?=$book['subject'];?>" class="form-control mb-2">
                                                   <input type="text" id="subject1" name="subject1" value="<?=$book['subject1'];?>" class="form-control mb-2">
