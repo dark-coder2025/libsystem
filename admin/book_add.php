@@ -136,9 +136,10 @@ include('./includes/sidebar.php');
                                         <!-- Hidden input to hold the existing image filename -->
                                         <input type="hidden" name="existing_image" id="existing_image">
                                     </div>
-                                    <br>
+                                    <div class="mb-2 input-group-sm">
                                         <label for="page">Page</label>
                                         <input type="text" id="page" name="page" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
