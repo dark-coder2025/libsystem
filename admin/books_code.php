@@ -88,6 +88,8 @@ if (isset($_POST['update_book'])) {
     $isbn = mysqli_real_escape_string($con, $_POST['isbn']);
     $place_publication = mysqli_real_escape_string($con, $_POST['place_publication']);
     $call_number = mysqli_real_escape_string($con, $_POST['call_number']);
+    $page = mysqli_real_escape_string($con, $_POST['page']);
+    $price = mysqli_real_escape_string($con, $_POST['price']);
     $subject = mysqli_real_escape_string($con, $_POST['subject']);
     $subject1 = mysqli_real_escape_string($con, $_POST['subject1']);
     $subject2 = mysqli_real_escape_string($con, $_POST['subject2']);
@@ -109,7 +111,8 @@ if (isset($_POST['update_book'])) {
     $query = "UPDATE book SET title='$title', author='$author', copyright_date='$copyright_date', 
               publisher='$publisher', isbn='$isbn', place_publication='$place_publication', 
               call_number='$call_number', book_image='$update_book_filename',
-              subject='$subject', subject1='$subject1', subject2='$subject2'
+              subject='$subject', subject1='$subject1', subject2='$subject2',
+              page='$page', price='$price'
               WHERE title = '$old_book_title' AND copyright_date='$old_copyright_date'"; // Update based on old title
 
     $query_run = mysqli_query($con, $query);
