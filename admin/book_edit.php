@@ -237,6 +237,12 @@ function validateNameInput(inputField) {
     document.getElementById('call_number').addEventListener('input', function() {
         validateNameInput(this);
     });
+    document.getElementById('page').addEventListener('input', function() {
+        validateNameInput(this);
+    });
+    document.getElementById('price').addEventListener('input', function() {
+        validateNameInput(this);
+    });
     document.getElementById('subject').addEventListener('input', function() {
         validateNameInput(this);
     });
