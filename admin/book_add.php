@@ -126,7 +126,7 @@ include('./includes/sidebar.php');
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-5">
-                                    <div class="mb-3 input-group-sm">
+                                    <div class="mb-4 input-group-sm">
                                         <div class="d-flex justify-content-between">
                                             <label for="book_image">Book Image</label>
                                             <span class="text-muted"><small>(Optional)</small></span>
