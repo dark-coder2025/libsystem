@@ -140,6 +140,10 @@ include('./includes/sidebar.php');
                                         <label for="page">Page</label>
                                         <input type="text" id="page" name="page" class="form-control">
                                     </div>
+                                    <div class="mb-2 input-group-sm">
+                                        <label for="price">Price</label>
+                                        <input type="text" id="price" name="price" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
