@@ -193,6 +193,8 @@ if (isset($_POST['add_book'])) {
     $subject = $_POST['subject'];
     $subject1 = $_POST['subject1'];
     $subject2 = $_POST['subject2'];
+    $page = $_POST['page'];
+    $price = $_POST['price'];
 
     // Validate the copyright_date
     $currentYear = date('Y');
@@ -279,7 +281,7 @@ if (isset($_POST['add_book'])) {
     }
 
     // Prepare the SQL query to insert new books
-    $insert_query = "INSERT INTO book (title, author, isbn, publisher, copyright_date, place_publication, call_number, category_id, book_image, accession_number, barcode, subject, subject1, subject2, date_added, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'Available')";
+    $insert_query = "INSERT INTO book (title, author, isbn, publisher, copyright_date, place_publication, call_number, category_id, book_image, accession_number, barcode, subject, subject1, subject2, date_added, status, page, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 'Available', ?, ?)";
     $insert_stmt = mysqli_prepare($con, $insert_query);
 
     if ($insert_stmt) {
@@ -293,7 +295,7 @@ if (isset($_POST['add_book'])) {
             // file_put_contents($barcodeImagePath, $generator->getBarcode($barcode, $generator::TYPE_CODE_128));
             
             // Bind parameters and execute the statement
-            mysqli_stmt_bind_param($insert_stmt, "ssssssssssssss", $title, $author, $isbn, $publisher, $copyright_date, $place_publication, $call_number, $category_id, $book_image, $accession_number, $barcode, $subject, $subject1, $subject2);
+            mysqli_stmt_bind_param($insert_stmt, "ssssssssssssssss", $title, $author, $isbn, $publisher, $copyright_date, $place_publication, $call_number, $category_id, $book_image, $accession_number, $barcode, $subject, $subject1, $subject2, $page, $price);
             mysqli_stmt_execute($insert_stmt);
         }
 

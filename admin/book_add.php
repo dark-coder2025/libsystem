@@ -569,4 +569,42 @@ function checkAccessionNumberExists(accessionNumber) {
         var isValid = numberPattern.test(accessionNumberInput);
         this.classList.toggle('is-invalid', !isValid);
     });
+
+    document.getElementById('page').addEventListener('input', function () {
+        var pageInput = this.value.trim();
+        
+        var dangerousCharsPattern = /[<>\"\']/;
+        
+        if (pageInput === "") {
+            this.setCustomValidity('Page cannot be empty or just spaces.');
+        } else if (this.value !== pageInput) {
+            this.setCustomValidity('Page cannot start with a space.');
+        } else if (dangerousCharsPattern.test(pageInput)) {
+            this.setCustomValidity('Page cannot contain HTML special characters like <, >, ", \'.');
+        } else {
+            this.setCustomValidity('');
+        }
+        
+        var isValid = pageInput !== "" && this.value === pageInput && !dangerousCharsPattern.test(pageInput);
+        this.classList.toggle('is-invalid', !isValid);
+    });
+
+    document.getElementById('price').addEventListener('input', function () {
+        var priceInput = this.value.trim();
+        
+        var dangerousCharsPattern = /[<>\"\']/;
+        
+        if (priceInput === "") {
+            this.setCustomValidity('Price cannot be empty or just spaces.');
+        } else if (this.value !== priceInput) {
+            this.setCustomValidity('Price cannot start with a space.');
+        } else if (dangerousCharsPattern.test(priceInput)) {
+            this.setCustomValidity('Price cannot contain HTML special characters like <, >, ", \'.');
+        } else {
+            this.setCustomValidity('');
+        }
+        
+        var isValid = priceInput !== "" && this.value === priceInput && !dangerousCharsPattern.test(priceInput);
+        this.classList.toggle('is-invalid', !isValid);
+    });
 </script>
