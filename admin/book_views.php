@@ -144,6 +144,10 @@ $activeTabPane = isset($_GET['tab']) && $_GET['tab'] == 'copies' ? 'copies-tab-p
                                                         <span class="fw-semibold">Call Number</span>
                                                         <p class="d-inline">: <?= $book['call_number']; ?></p>
                                                     </div>
+                                                    <div class="mb-3 mt-2">
+                                                        <span class="fw-semibold">Page</span>
+                                                        <p class="d-inline">: <?= $book['page']; ?></p>
+                                                    </div>
                                                     <div class="divider">
                                                         <span>Explore!</span>
                                                     </div>                                  
