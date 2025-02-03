@@ -137,7 +137,7 @@ include('./includes/sidebar.php');
                                         <input type="hidden" name="existing_image" id="existing_image">
                                     </div>
                                 </div>
-                                <div class="col-10 col-md-5">
+                                <div class="col-12 col-md-4">
                                     <div class="mb-2 input-group-sm">
                                         <label for="page">Page</label>
                                         <input type="text" id="page" name="page" class="form-control">
