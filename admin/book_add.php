@@ -136,6 +136,16 @@ include('./includes/sidebar.php');
                                         <!-- Hidden input to hold the existing image filename -->
                                         <input type="hidden" name="existing_image" id="existing_image">
                                     </div>
+                                    <div class="mb-2 input-group-sm">
+                                        <div class="d-flex justify-content-between">
+                                            <label for="book_image">Book Image</label>
+                                            <span class="text-muted"><small>(Optional)</small></span>
+                                        </div>
+                                        <input type="file" name="book_image" id="book_image_input" class="form-control" accept=".jpg,.jpeg,.png">
+                                        <input type="hidden" id="book_image_name" class="form-control mt-2" readonly>
+                                        <!-- Hidden input to hold the existing image filename -->
+                                        <input type="hidden" name="existing_image" id="existing_image">
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
