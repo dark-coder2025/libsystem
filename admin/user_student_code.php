@@ -528,9 +528,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_bind_param($stmt_qr_update, 'si', $qrimage, $studentId);
             mysqli_stmt_execute($stmt_qr_update);
 
-            $stmt_update = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $studentId);
-
             // Set success message in the session and redirect
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
