@@ -1,6 +1,7 @@
-mcclearningresourcecenter2.0@gmail.com<?php
+<?php
 include('authentication.php');
 include('includes/url.php');
+require_once('../qrcode/qrlib.php');
 header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -514,6 +515,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Execute the query
         if (mysqli_query($con, $sql)) {
+            // Generate QR Code
+            $identifier = $stuIdNo; // Adjust username if needed for faculty
+            $qrdata = "$identifier"; // Example data to encode in QR code
+            $qrfile = "../qrcodes/$identifier.png"; // Path to save QR code image
+            $qrimage = "$identifier.png";
+            QRcode::png($qrdata, $qrfile); // Generate QR code
+
+            // Insert QR code path into database
+            $update_query = "";
+            if ($role_as == 'student') {
+                $update_query = "UPDATE user SET qr_code = ? WHERE student_id_no = ?";
+            } elseif ($role_as == 'faculty' || $role_as == 'staff') {
+                $update_query = "UPDATE faculty SET qr_code = ? WHERE username = ?";
+            }
+
+            $stmt_update = mysqli_prepare($con, $update_query);
+            mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $stuIdNo);
+
             // Set success message in the session and redirect
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
