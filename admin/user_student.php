@@ -98,9 +98,9 @@ include('./includes/sidebar.php');
                                                                                 <i class="bi bi-eye-fill"></i> View
                                                                            </a></li>
                                                                            <!-- Edit Student Action -->
-                                                                           <li><button class="dropdown-item text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Student" onclick="loadStudentData('<?=$user['user_id'];?>')">
+                                                                           <li><button class="dropdown-item text-success editBtn" data-bs-toggle="modal" data-bs-target="#editAccountModal" data-userid="<?php echo $user['user_id']; ?>">
                                                                                 <i class="bi bi-pencil-fill"></i> Edit
-                                                                      </button></li>
+                                                                           </button></li>
                                                                            <!-- Block/Unblock Student Action -->
                                                                            <?php if($user['status'] == 'approved'): ?>
                                                                                 <li><a href="#" class="dropdown-item text-warning" onclick="confirmBlock('<?=$user['user_id'];?>')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Block Student">
@@ -140,41 +140,35 @@ include('./includes/sidebar.php');
           </div>
      </section>
 </main>
-<!-- Edit Student Modal -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="editStudentForm" method="POST" action="user_student_code.php">
-          <input type="hidden" name="edit_student_id" id="editStudentId">
-          <div class="mb-3">
-            <label for="editLName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
-          </div>
-          <div class="mb-3">
-            <label for="editFName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="editFName" name="edit_first_name" style="text-transform:capitalize;" required>
-          </div>
-          <div class="mb-3">
-            <label for="editMName" class="form-label">Middle Name</label>
-            <input type="text" class="form-control" id="editMName" name="edit_middle_name" style="text-transform:capitalize;">
-          </div>
-          <div class="mb-3">
-            <label for="editStuID" class="form-label">Student ID No.</label>
-            <input type="text" class="form-control" id="editStuID" name="edit_student_id_no" style="text-transform:capitalize;" required>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
+<!-- Edit Account Modal -->
+<div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAccountModalLabel">Edit Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="user_student_code.php" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editLName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editLName" name="editLName" required>
+                        <label for="editFName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editFName" name="editFName" required>
+                        <label for="editMName" class="form-label">Middle Name</label>
+                        <input type="text" class="form-control" id="editMName" name="editMName">
+                        <label for="editStuID" class="form-label">Student ID No.</label>
+                        <input type="text" class="form-control" id="editStuID" name="editStuID">
+                        <input type="hidden" id="user_id" name="user_id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="update_account" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Delete Student Modal -->
@@ -406,5 +400,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Event listener for the Edit button
+    const editButtons = document.querySelectorAll('.editBtn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const user_id = this.getAttribute('data-userid');
+            document.getElementById('user_id').value = user_id;
+            document.getElementById('editLName').value = lastname;
+            document.getElementById('editFName').value = firstname;
+            document.getElementById('editMName').value = middlename;
+            document.getElementById('editStuID').value = student_id_no;
+        });
+    });
 });
 </script>
