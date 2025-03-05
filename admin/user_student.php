@@ -98,7 +98,9 @@ include('./includes/sidebar.php');
                                                                                 <i class="bi bi-eye-fill"></i> View
                                                                            </a></li>
                                                                            <!-- Edit Student Action -->
-                                                                           <li><button class="dropdown-item text-success editBtn" data-bs-toggle="modal" data-bs-target="#editAccountModal" data-userid="<?php echo $user['user_id']; ?>">
+                                                                           <li><button class="dropdown-item text-success editBtn" data-bs-toggle="modal" data-bs-target="#editAccountModal" data-userid="<?php echo $user['user_id']; ?>"
+                                                                           data-lname="<?php echo $user['lastname']; ?>" data-fname="<?php echo $user['firstname']; ?>"
+                                                                           data-mname="<?php echo $user['middlename']; ?>" data-stuid="<?php echo $user['student_id_no']; ?>">
                                                                                 <i class="bi bi-pencil-fill"></i> Edit
                                                                            </button></li>
                                                                            <!-- Block/Unblock Student Action -->
@@ -406,6 +408,10 @@ document.addEventListener('DOMContentLoaded', function () {
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const user_id = this.getAttribute('data-userid');
+            const lastname = this.getAttribute('data-lname');
+            const firstname = this.getAttribute('data-fname');
+            const middlename = this.getAttribute('data-mname');
+            const student_id_no = this.getAttribute('data-stuid');
             document.getElementById('user_id').value = user_id;
             document.getElementById('editLName').value = lastname;
             document.getElementById('editFName').value = firstname;
