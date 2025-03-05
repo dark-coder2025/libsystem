@@ -161,7 +161,7 @@ include('./includes/sidebar.php');
                         <input type="text" class="form-control" id="editMName" name="editMName">
                         <label for="editStuID" class="form-label">Student ID No.</label>
                         <input type="text" class="form-control" id="editStuID" name="editStuID">
-                        <input type="hidden" id="user_id" name="user_id">
+                        <input type="text" id="user_id" name="user_id">
                     </div>
                 </div>
                 <div class="modal-footer">
