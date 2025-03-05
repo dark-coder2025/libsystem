@@ -505,6 +505,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mName = mysqli_real_escape_string($con, $_POST['editMName']);
         $stuIdNo = mysqli_real_escape_string($con, $_POST['editStuID']); // Corrected variable name for student ID no.
 
+        // Validate user_id to be numeric (if required)
+        if (!is_numeric($studentId)) {
+            echo "Invalid user ID.";
+            exit();
+        }
+
         // Prepare the SQL UPDATE query
         $sql = "UPDATE user 
                 SET firstname = '$fName', 
@@ -520,7 +526,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $qrdata = "$identifier"; // Example data to encode in QR code
             $qrfile = "../qrcodes/$identifier.png"; // Path to save QR code image
             $qrimage = "$identifier.png";
-            QRcode::png($qrdata, $qrfile); // Generate QR code
+
+            // Ensure the qrcodes directory exists
+            if (!is_dir('../qrcodes/')) {
+                mkdir('../qrcodes/', 0777, true); // Creates the directory if it doesn't exist
+            }
+
+            // Generate QR code
+            QRcode::png($qrdata, $qrfile); 
 
             // Insert QR code path into database
             $update_query = "";
@@ -540,7 +553,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             // Handle SQL execution errors
-            echo "Error updating record: " . mysqli_error($con);
+            error_log("Error updating record: " . mysqli_error($con));
+            echo "There was an error updating the student record. Please try again.";
         }
     } else {
         // Handle missing form data
