@@ -523,10 +523,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             QRcode::png($qrdata, $qrfile); // Generate QR code
 
             // Insert QR code path into database
-            $update_query = "";
-            if ($role_as == 'student') {
-                $update_query = "UPDATE user SET qr_code = ? WHERE user_id = ?";
-            }
+            $qr_update_query = "UPDATE user SET qr_code = ? WHERE user_id = ?";
+            $stmt_qr_update = mysqli_prepare($con, $qr_update_query);
+            mysqli_stmt_bind_param($stmt_qr_update, 'ss', $qrimage, $studentId);
+            mysqli_stmt_execute($stmt_qr_update);
 
             $stmt_update = mysqli_prepare($con, $update_query);
             mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $studentId);
