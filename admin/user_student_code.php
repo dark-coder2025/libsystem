@@ -525,11 +525,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insert QR code path into database
             $update_query = "";
             if ($role_as == 'student') {
-                $update_query = "UPDATE user SET qr_code = ? WHERE student_id_no = ?";
+                $update_query = "UPDATE user SET qr_code = ? WHERE user_id = ?";
             }
 
             $stmt_update = mysqli_prepare($con, $update_query);
-            mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $stuIdNo);
+            mysqli_stmt_bind_param($stmt_update, 'ss', $qrimage, $studentId);
 
             // Set success message in the session and redirect
             $_SESSION['status'] = "Updated successfully.";
