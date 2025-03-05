@@ -63,7 +63,7 @@ include('./includes/sidebar.php');
                                         </thead>
                                         <tbody>
                                              <?php
-                                             $query = "SELECT * FROM user WHERE status IN ('approved', 'blocked') AND role_as = 'student' AND middlename='Aropo' ORDER BY user_id ASC";
+                                             $query = "SELECT * FROM user WHERE status IN ('approved', 'blocked') AND role_as = 'student' ORDER BY user_id ASC";
                                              $query_run = mysqli_query($con, $query);
 
                                              if(mysqli_num_rows($query_run)) {
@@ -161,7 +161,7 @@ include('./includes/sidebar.php');
                         <input type="text" class="form-control" id="editMName" name="editMName">
                         <label for="editStuID" class="form-label">Student ID No.</label>
                         <input type="text" class="form-control" id="editStuID" name="editStuID">
-                        <input type="text" id="user_id" name="user_id">
+                        <input type="hidden" id="user_id" name="user_id">
                     </div>
                 </div>
                 <div class="modal-footer">
