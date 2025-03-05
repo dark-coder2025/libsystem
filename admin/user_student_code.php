@@ -525,7 +525,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insert QR code path into database
             $qr_update_query = "UPDATE user SET qr_code = ? WHERE user_id = ?";
             $stmt_qr_update = mysqli_prepare($con, $qr_update_query);
-            mysqli_stmt_bind_param($stmt_qr_update, 'ss', $qrimage, $studentId);
+            mysqli_stmt_bind_param($stmt_qr_update, 'si', $qrimage, $studentId);
             mysqli_stmt_execute($stmt_qr_update);
 
             $stmt_update = mysqli_prepare($con, $update_query);
