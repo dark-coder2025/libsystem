@@ -98,9 +98,9 @@ include('./includes/sidebar.php');
                                                                                 <i class="bi bi-eye-fill"></i> View
                                                                            </a></li>
                                                                            <!-- Edit Student Action -->
-                                                                           <li><a href="#" class="dropdown-item text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Student" onclick="loadStudentData('<?=$user['user_id'];?>')">
+                                                                           <li><button class="dropdown-item text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Student" onclick="loadStudentData('<?=$user['user_id'];?>')">
                                                                                 <i class="bi bi-pencil-fill"></i> Edit
-                                                                           </a></li>
+                                                                      </button></li>
                                                                            <!-- Block/Unblock Student Action -->
                                                                            <?php if($user['status'] == 'approved'): ?>
                                                                                 <li><a href="#" class="dropdown-item text-warning" onclick="confirmBlock('<?=$user['user_id'];?>')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Block Student">
