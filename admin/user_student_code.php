@@ -497,13 +497,13 @@ if (isset($_POST['delete_student_id'])) {
 // Edit Student
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
-    if (isset($_POST['editLName'], $_POST['editStuID'], $_POST['editFName'])) {
+    if (isset($_POST['editLName'], $_POST['editStudId'], $_POST['editFName'])) {
         // Sanitize and validate input to prevent SQL injection
         $studentId = mysqli_real_escape_string($con, $_POST['user_id']);
         $lName = mysqli_real_escape_string($con, $_POST['editLName']);
         $fName = mysqli_real_escape_string($con, $_POST['editFName']);
         $mName = mysqli_real_escape_string($con, $_POST['editMName']);
-        $stuIdNo = mysqli_real_escape_string($con, $_POST['editStuID']); // Corrected variable name for student ID no.
+        $stuIdNo = mysqli_real_escape_string($con, $_POST['editStudId']); // Corrected variable name for student ID no.
 
         // Prepare the SQL UPDATE query
         $sql = "UPDATE user 
@@ -543,8 +543,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if (isset($_GET['user_id'])) {
-    $userId = $_GET['user_id'];
+if (isset($_GET['id'])) {
+    $userId = $_GET['id'];
 
     $userId = mysqli_real_escape_string($con, $userId);
 

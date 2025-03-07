@@ -98,11 +98,9 @@ include('./includes/sidebar.php');
                                                                                 <i class="bi bi-eye-fill"></i> View
                                                                            </a></li>
                                                                            <!-- Edit Student Action -->
-                                                                           <li><button class="dropdown-item text-success editBtn" data-bs-toggle="modal" data-bs-target="#editAccountModal" data-userid="<?php echo $user['user_id']; ?>"
-                                                                           data-lname="<?php echo $user['lastname']; ?>" data-fname="<?php echo $user['firstname']; ?>"
-                                                                           data-mname="<?php echo $user['middlename']; ?>" data-stuid="<?php echo $user['student_id_no']; ?>">
+                                                                           <li><a href="#" class="dropdown-item text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Student" onclick="loadStudentData('<?=$user['user_id'];?>')">
                                                                                 <i class="bi bi-pencil-fill"></i> Edit
-                                                                           </button></li>
+                                                                           </a></li>
                                                                            <!-- Block/Unblock Student Action -->
                                                                            <?php if($user['status'] == 'approved'): ?>
                                                                                 <li><a href="#" class="dropdown-item text-warning" onclick="confirmBlock('<?=$user['user_id'];?>')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Block Student">
@@ -142,35 +140,41 @@ include('./includes/sidebar.php');
           </div>
      </section>
 </main>
-<!-- Edit Account Modal -->
-<div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editAccountModalLabel">Edit Student</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="user_student_code.php" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editLName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="editLName" name="editLName" required>
-                        <label for="editFName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="editFName" name="editFName" required>
-                        <label for="editMName" class="form-label">Middle Name</label>
-                        <input type="text" class="form-control" id="editMName" name="editMName">
-                        <label for="editStuID" class="form-label">Student ID No.</label>
-                        <input type="text" class="form-control" id="editStuID" name="editStuID">
-                        <input type="hidden" id="user_id" name="user_id">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="update_account" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
+<!-- Edit Student Modal -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editStudentForm" method="POST" action="user_student_code.php">
+          <input type="text" name="edit_student_id" id="editStudentId">
+          <div class="mb-3">
+            <label for="editLName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
+          </div>
+          <div class="mb-3">
+            <label for="editFName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="editFName" name="edit_first_name" style="text-transform:capitalize;" required>
+          </div>
+          <div class="mb-3">
+            <label for="editMName" class="form-label">Middle Name</label>
+            <input type="text" class="form-control" id="editMName" name="edit_middle_name" style="text-transform:capitalize;">
+          </div>
+          <div class="mb-3">
+            <label for="editStudId" class="form-label">Student ID No.</label>
+            <input type="text" class="form-control" id="editStudId" name="edit_student_id" style="text-transform:capitalize;">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Delete Student Modal -->
@@ -210,6 +214,24 @@ function confirmDelete(userId) {
             document.getElementById('deleteStudentId').value = data.user_id;
 
             var myModal = new bootstrap.Modal(document.getElementById('deleteStudentModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching student data:', error);
+        });
+}
+
+function loadStudentData(studentId) {
+    fetch('user_student_code.php?id=' + studentId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editStudentId').value = data.user_id;
+            document.getElementById('editLName').value = data.lastname;
+            document.getElementById('editFName').value = data.firstname;
+            document.getElementById('editMName').value = data.middlename;
+            document.getElementById('editStudId').value = data.student_id_no;
+
+            var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
             myModal.show();
         })
         .catch(error => {
@@ -339,34 +361,6 @@ function confirmUnblock(userId) {
     });
 }
 
-// function confirmDelete(userId) {
-//     Swal.fire({
-//         title: 'Are you sure to delete this?',
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonColor: '#3085d6',
-//         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             // Proceed with the deletion
-//             var form = document.createElement('form');
-//             form.method = 'POST';
-//             form.action = 'user_student_code.php';
-
-//             var input = document.createElement('input');
-//             input.type = 'hidden';
-//             input.name = 'delete_student';
-//             input.value = userId;
-
-//             form.appendChild(input);
-
-//             document.body.appendChild(form);
-//             form.submit();
-//         }
-//     });
-// }
-
 document.addEventListener('DOMContentLoaded', function () {
      // Check if the DataTable is already initialized
     if (!$.fn.DataTable.isDataTable('#example')) {
@@ -377,22 +371,5 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    // Event listener for the Edit button
-    const editButtons = document.querySelectorAll('.editBtn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const user_id = this.getAttribute('data-userid');
-            const lastname = this.getAttribute('data-lname');
-            const firstname = this.getAttribute('data-fname');
-            const middlename = this.getAttribute('data-mname');
-            const student_id_no = this.getAttribute('data-stuid');
-            document.getElementById('user_id').value = user_id;
-            document.getElementById('editLName').value = lastname;
-            document.getElementById('editFName').value = firstname;
-            document.getElementById('editMName').value = middlename;
-            document.getElementById('editStuID').value = student_id_no;
-        });
-    });
 });
 </script>
