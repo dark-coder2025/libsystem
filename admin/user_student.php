@@ -188,6 +188,7 @@ include('./includes/sidebar.php');
       <div class="modal-body">
         <form id="deleteStudentForm" method="POST" action="user_student_code.php">
           <input type="text" value="<?= $user['user_id']; ?>" name="delete_student_id" id="deleteStudentId">
+          <input type="text" value="<?= $user['firstname']; ?>" name="delete_first_name" id="deleteFName">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
           <textarea class="form-control" id="deleteReason" name="delete_reason" rows="4" required></textarea>
@@ -212,6 +213,7 @@ function confirmDelete(userId) {
         .then(response => response.json())
         .then(data => {
             document.getElementById('deleteStudentId').value = data.user_id;
+            document.getElementById('deleteFName').value = data.firstname;
 
             var myModal = new bootstrap.Modal(document.getElementById('deleteStudentModal'));
             myModal.show();
