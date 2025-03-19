@@ -499,7 +499,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
     if (isset($_POST['editLName'], $_POST['editStudId'], $_POST['editFName'])) {
         // Sanitize and validate input to prevent SQL injection
-        $studentId = mysqli_real_escape_string($con, $_POST['user_id']);
+        $studentId = mysqli_real_escape_string($con, $_POST['editStudentId']);
         $lName = mysqli_real_escape_string($con, $_POST['editLName']);
         $fName = mysqli_real_escape_string($con, $_POST['editFName']);
         $mName = mysqli_real_escape_string($con, $_POST['editMName']);
