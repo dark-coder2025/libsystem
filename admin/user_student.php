@@ -112,7 +112,7 @@ include('./includes/sidebar.php');
                                                                                 </a></li>
                                                                            <?php endif; ?>
                                                                            <!-- Delete Student Action -->
-                                                                           <li><a href="#" class="dropdown-item text-danger" onclick="confirmDelete('<?=$user['user_id'];?>')" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Student">
+                                                                           <li><a href="#" class="dropdown-item text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Student" onclick="confirmDelete('<?=$user['user_id'];?>')">
                                                                                 <i class="bi bi-trash-fill"></i> Delete
                                                                            </a></li>
                                                                            <!-- Generate ID Card Action -->
@@ -187,7 +187,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="deleteStudentForm" method="POST" action="user_student_code.php">
-          <input type="hidden" value="<?= $user['user_id']; ?>" name="delete_student_id" id="deleteStudentId">
+          <input type="text" name="delete_student_id" id="deleteStudentId">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
           <textarea class="form-control" id="deleteReason" name="delete_reason" rows="4" required></textarea>
@@ -207,8 +207,8 @@ include('../message.php');
 ?>
 
 <script>
-function confirmDelete(userId) {
-     fetch('user_student_code.php?id=' + userId)
+function confirmDelete(studentId) {
+     fetch('user_student_code.php?id=' + studentId)
         .then(response => response.json())
         .then(data => {
             document.getElementById('deleteStudentId').value = data.user_id;
