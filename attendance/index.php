@@ -1,16 +1,6 @@
 <?php
 session_start();
 
-date_default_timezone_set('Asia/Manila');
-
-$current_hour = (int) date('H');
-$current_day = (int) date('N');
-
-if ($current_hour < 8 || $current_hour >= 17 || $current_day > 6) {
-    header("Location: closed.php");
-    exit();
-}
-
 $request = $_SERVER['REQUEST_URI'];
 
 if (strpos($request, '.php') !== false) {
