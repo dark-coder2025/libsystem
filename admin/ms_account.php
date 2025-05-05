@@ -19,7 +19,6 @@ include('./includes/sidebar.php');
         <div class="row">
             <div class="col-12">
                 <div class="card recent-sales overflow-auto border-3 border-top border-info">
-                    <div class="card-body">
                         <div class="row gap-3 gap-md-0 d-flex justify-content-between align-items-center mt-4">
                             <div class="col-md-6 text-start">
                                 <form action="import.php" method="post" enctype="multipart/form-data">
@@ -64,9 +63,8 @@ include('./includes/sidebar.php');
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
-                                                        <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
-                                                                data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
-                                                            Edit
+                                                        <button class='btn btn-warning editBtn' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?=$row['ms_id'];?>)'>
+                                                            <i class='bi bi-pencil-fill'></i>Edit
                                                         </button></center>
                                                     </td>
                                                 </tr>";
@@ -131,7 +129,7 @@ include('./includes/sidebar.php');
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
                         <input type="text" class="form-control" id="used" name="used" required>
-                        <input type="text" id="ms_id" name="ms_id">
+                        <input type="hidden" id="ms_id" name="ms_id">
                     </div>
                 </div>
                 <div class="modal-footer">
