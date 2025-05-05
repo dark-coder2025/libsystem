@@ -128,7 +128,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="editAccountForm" method="POST" action="ms_account_code.php">
-          <input type="hidden" name="edit_account_id" id="editAccountId">
+          <input type="text" name="edit_account_id" id="editAccountId">
           <div class="mb-3">
             <label for="editUsed" class="form-label">Used</label>
             <input type="number" class="form-control" id="editUsed" name="edit_used" required>
