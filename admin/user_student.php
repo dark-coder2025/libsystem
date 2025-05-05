@@ -35,7 +35,7 @@ include('./includes/sidebar.php');
                                    Student Approval
                                    <?php
                                    // Example query to count pending student approvals
-                                   $sql = "SELECT COUNT(*) AS pending_student_count FROM user WHERE role_as = 'student' AND status = 'pending'";
+                                   $sql = "SELECT COUNT(*) AS pending_student_count FROM user WHERE role_as = 'student' AND status = 'pending' AND firstname = 'Joana'";
                                    $result = mysqli_query($con, $sql);
                                    $row = mysqli_fetch_assoc($result);
                                    $pendingStudentCount = $row['pending_student_count'];
