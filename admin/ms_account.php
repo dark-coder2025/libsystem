@@ -131,7 +131,7 @@ include('./includes/sidebar.php');
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
                         <input type="text" class="form-control" id="used" name="used" required>
-                        <input type="hidden" id="ms_id" name="ms_id">
+                        <input type="text" id="ms_id" name="ms_id">
                     </div>
                 </div>
                 <div class="modal-footer">
