@@ -63,7 +63,7 @@ include('./includes/sidebar.php');
                                         </thead>
                                         <tbody>
                                              <?php
-                                             $query = "SELECT * FROM user WHERE status IN ('approved', 'blocked') ORDER BY user_id ASC";
+                                             $query = "SELECT * FROM user ORDER BY user_id ASC";
                                              $query_run = mysqli_query($con, $query);
 
                                              if(mysqli_num_rows($query_run)) {
