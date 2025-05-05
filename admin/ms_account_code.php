@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_GET['id'])) {
-    $userId = $_GET['id'];
+    $accountId = $_GET['id'];
 
-    $userId = mysqli_real_escape_string($con, $userId);
+    $accountId = mysqli_real_escape_string($con, $accountId);
 
-    $sql = "SELECT * FROM ms_account WHERE ms_id = '$userId'";
+    $sql = "SELECT * FROM ms_account WHERE ms_id = '$accountId'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
