@@ -40,8 +40,8 @@ if (isset($_GET['id'])) {
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        $used = mysqli_fetch_assoc($result);
-        echo json_encode($used);
+        $row = mysqli_fetch_assoc($result);
+        echo json_encode($row);
     } else {
         $_SESSION['status'] = "Account not found";
         $_SESSION['status_code'] = "error";
