@@ -64,7 +64,7 @@ include('./includes/sidebar.php');
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
                                                         <ul class='list-unstyled mb-0'>
-                                                            <li class='text-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' style='cursor:pointer;' onclick='loadAccountData({$row['ms_id']})'>
+                                                            <li class='btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' style='cursor:pointer;' onclick='loadAccountData({$row['ms_id']})'>
                                                                 <i class='bi bi-pencil-fill'></i> Edit
                                                             </li>
                                                         </ul>
