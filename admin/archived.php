@@ -30,6 +30,7 @@ include('./includes/sidebar.php');
                                              <tr>
                                                   <th><center>Student Profile</center></th>
                                                   <th><center>Full Name</center></th>
+                                                  <th><center>Email</center></th>
                                                   <th><center>Student No</center></th>
                                                   <th><center>Course</center></th>
                                                   <th><center>Action</center></th>
@@ -61,6 +62,11 @@ include('./includes/sidebar.php');
                                                   <td style="text-transform: capitalize;">
                                                        <center>
                                                        <?=$user['firstname'].' '.$user['middlename'].' '.$user['lastname']?>
+                                                       </center>
+                                                  </td>
+                                                  <td>
+                                                       <center>
+                                                       <?=$user['email'];?>
                                                        </center>
                                                   </td>
                                                   <td>
