@@ -85,7 +85,7 @@ include('./includes/sidebar.php');
     </section>
 </main>
 
-<!-- Add Account Modal
+Add Account Modal
 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -115,9 +115,9 @@ include('./includes/sidebar.php');
             </form>
         </div>
     </div>
-</div> -->
+</div>
 
-<!-- Edit Account Modal -->
+<!-- Edit Account Modal
 <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -140,7 +140,7 @@ include('./includes/sidebar.php');
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <?php 
 include('./includes/footer.php');
