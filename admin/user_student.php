@@ -55,6 +55,7 @@ include('./includes/sidebar.php');
                                                   <th><center>Full Name</center></th>
                                                   <!-- <th><center>Student Profile</center></th> -->
                                                   <th><center>Student No</center></th>
+                                                  <th><center>Email</center></th>
                                                   <th><center>Gender</center></th>
                                                   <th><center>Course</center></th>
                                                   <th><center>Year Level</center></th>
