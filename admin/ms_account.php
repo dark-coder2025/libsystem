@@ -63,8 +63,9 @@ include('./includes/sidebar.php');
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
-                                                        <button class='btn btn-warning editBtn' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?=$row['ms_id'];?>)'>
-                                                            <i class='bi bi-pencil-fill'></i>Edit
+                                                        <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
+                                                                data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
+                                                            Edit
                                                         </button></center>
                                                     </td>
                                                 </tr>";
