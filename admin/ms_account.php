@@ -151,6 +151,15 @@ include('../message.php');
 <!-- Include SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    new DataTable('#example', {
+        responsive: true,
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        }
+    });
+});
+
 function loadAccountData(accountId) {
     fetch('ms_account_code.php?id=' + accountId)
         .then(response => response.json())
@@ -165,13 +174,4 @@ function loadAccountData(accountId) {
             console.error('Error fetching account data:', error);
         });
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    new DataTable('#example', {
-        responsive: true,
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        }
-    });
-});
 </script>
