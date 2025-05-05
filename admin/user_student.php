@@ -83,6 +83,7 @@ include('./includes/sidebar.php');
                                                                  </center>
                                                             </td> -->
                                                             <td><center><?=$user['student_id_no'];?></center></td>
+                                                            <td><center><?=$user['email'];?></center></td>
                                                             <td><center><?=$user['gender'];?></center></td>
                                                             <td><center><?=$user['course'];?></center></td>
                                                             <td><center><?=$user['year_level'];?></center></td>
