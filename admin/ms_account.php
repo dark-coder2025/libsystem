@@ -64,14 +64,9 @@ include('./includes/sidebar.php');
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
-<<<<<<< HEAD
-                                                        <button class='btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?=$row['ms_id'];?>)'>
-                                                            <i class='bi bi-pencil-fill'></i>Edit
-=======
                                                         <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
                                                                 data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
                                                             Edit
->>>>>>> 9bef2c68bac474b116cb9517bf048a75ba0f5372
                                                         </button></center>
                                                     </td>
                                                 </tr>";
@@ -136,7 +131,7 @@ include('./includes/sidebar.php');
                     <div class="mb-3">
                         <label for="used" class="form-label">Used</label>
                         <input type="text" class="form-control" id="used" name="used" required>
-                        <input type="hidden" id="ms_id" name="ms_id">
+                        <input type="text" id="ms_id" name="ms_id">
                     </div>
                 </div>
                 <div class="modal-footer">
