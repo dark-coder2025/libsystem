@@ -1,7 +1,7 @@
 <?php 
 include('authentication.php');
 include('includes/header.php'); 
-include('./includes/sidebar.php'); 
+include('./includes/sidebar.php');
 ?>
 
 <main id="main" class="main">
@@ -64,9 +64,8 @@ include('./includes/sidebar.php');
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
                                                     <td><center>
-                                                        <button class='btn btn-warning editBtn' data-bs-toggle='modal' data-bs-target='#editAccountModal' 
-                                                                data-msid='{$row['ms_id']}' data-used='{$row['used']}'>
-                                                            Edit
+                                                        <button class='btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?php echo $row['ms_id']; ?>)'>
+                                                            <i class='bi bi-pencil-fill'></i>Edit
                                                         </button></center>
                                                     </td>
                                                 </tr>";
@@ -120,27 +119,27 @@ include('./includes/sidebar.php');
 
 <!-- Edit Account Modal -->
 <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editAccountModalLabel">Edit MS 365 Account</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="update_account.php" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="used" class="form-label">Used</label>
-                        <input type="text" class="form-control" id="used" name="used" required>
-                        <input type="text" id="ms_id" name="ms_id">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="update_account" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAccountModalLabel">Edit MS Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editAccountForm" method="POST" action="ms_account_code.php">
+          <input type="text" name="edit_account_id" id="editAccountId">
+          <div class="mb-3">
+            <label for="editUsed" class="form-label">Used</label>
+            <input type="text" class="form-control" id="editUsed" name="edit_used" style="text-transform:capitalize;" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <?php 
@@ -159,16 +158,20 @@ document.addEventListener('DOMContentLoaded', function () {
             selector: 'td:nth-child(2)'
         }
     });
-
-    // Event listener for the Edit button
-    const editButtons = document.querySelectorAll('.editBtn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const msid = this.getAttribute('data-msid');
-            const used = this.getAttribute('data-used');
-            document.getElementById('ms_id').value = msid;
-            document.getElementById('used').value = used;
-        });
-    });
 });
+
+function loadAccountData(accountId) {
+    fetch('ms_account_code.php?id=' + accountId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editAccountId').value = data.ms_id;
+            document.getElementById('editUsed').value = data.used;
+
+            var myModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching account data:', error);
+        });
+}
 </script>
