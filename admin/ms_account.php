@@ -117,7 +117,7 @@ Add Account Modal
     </div>
 </div>
 
-<!-- Edit Account Modal
+Edit Account Modal
 <div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -140,7 +140,7 @@ Add Account Modal
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <?php 
 include('./includes/footer.php');
@@ -160,18 +160,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function loadAccountData(accountId) {
-    fetch('ms_account_code.php?id=' + accountId)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('editAccountId').value = data.ms_id;
-            document.getElementById('editUsed').value = data.used;
+// function loadAccountData(accountId) {
+//     fetch('ms_account_code.php?id=' + accountId)
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('editAccountId').value = data.ms_id;
+//             document.getElementById('editUsed').value = data.used;
 
-            var myModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
-            myModal.show();
-        })
-        .catch(error => {
-            console.error('Error fetching account data:', error);
-        });
-}
+//             var myModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
+//             myModal.show();
+//         })
+//         .catch(error => {
+//             console.error('Error fetching account data:', error);
+//         });
+// }
 </script>
