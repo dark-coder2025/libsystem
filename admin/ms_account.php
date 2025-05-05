@@ -63,11 +63,11 @@ include('./includes/sidebar.php');
                                                     <td>{$row['lastname']}</td>
                                                     <td>{$row['username']}</td>
                                                     <td><center>{$row['used']}</center></td>
-                                                    <td><center>
-                                                        <button class='btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?=$row['ms_id'];?>)'>
-                                                            <i class='bi bi-pencil-fill'></i>Edit
-                                                        </button></center>
-                                                    </td>
+                                                    // <td><center>
+                                                    //     <button class='btn btn-warning' data-bs-toggle='tooltip' data-bs-placement='bottom' title='Edit MS Account' onclick='loadAccountData(<?=$row['ms_id'];?>)'>
+                                                    //         <i class='bi bi-pencil-fill'></i>Edit
+                                                    //     </button></center>
+                                                    // </td>
                                                 </tr>";
                                         }
                                         $stmt->close();
@@ -160,18 +160,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// function loadAccountData(accountId) {
-//     fetch('ms_account_code.php?id=' + accountId)
-//         .then(response => response.json())
-//         .then(data => {
-//             document.getElementById('editAccountId').value = data.ms_id;
-//             document.getElementById('editUsed').value = data.used;
+function loadAccountData(accountId) {
+    fetch('ms_account_code.php?id=' + accountId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editAccountId').value = data.ms_id;
+            document.getElementById('editUsed').value = data.used;
 
-//             var myModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
-//             myModal.show();
-//         })
-//         .catch(error => {
-//             console.error('Error fetching account data:', error);
-//         });
-// }
+            var myModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching account data:', error);
+        });
+}
 </script>
