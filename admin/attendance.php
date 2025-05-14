@@ -39,8 +39,12 @@ include('./includes/sidebar.php');
 
                                    <div class="card-body">
                                         <div class="row d-flex justify-content-end align-items-center mt-2">
+                                             <ul class="nav nav-pills">
+                                                  <li class="nav-item">
+                                                       <a class="nav-link <?= $page == 'report_monthsta.php' ? 'active' : '' ?>" href="report_monthsta.php">Monthly Statistics</a>
+                                                  </li>
+                                             </ul>
                                              <form action="" method="POST" class="col-12 col-md-5 d-flex ">
-
                                                   <?php date_default_timezone_set('Asia/Manila'); ?>
                                                   <div class="form-group form-group-sm">
                                                        <label for=""> <small>From Date</small></label>
@@ -58,7 +62,6 @@ include('./includes/sidebar.php');
                                                        <button type="submit" name="filter_attendance"
                                                             class="btn text-white fw-semibold btn-info btn-sm d-block">Filter</button>
                                                   </div>
-
                                              </form>
 
                                              <!-- <form action="" method="POST" class="col-12 col-md-3 d-flex justify-content-center">
@@ -173,7 +176,7 @@ include('./includes/sidebar.php');
                         { extend: 'excelHtml5', autoFilter: true, sheetName: 'Exported data' },
                         { extend: 'pdfHtml5' },
                         { extend: 'copyHtml5' },
-                        { extend: 'pageLength' } 
+                        { extend: 'pageLength' },
                     ]
                 }
             },
