@@ -389,13 +389,13 @@ if(isset($_POST['unblock_student'])) {
 // Delete Action
 if (isset($_POST['delete_student_id'])) {
 
-    $student_id = mysqli_real_escape_string($con, $_POST['delete_student_id']);
+    $studentId = mysqli_real_escape_string($con, $_POST['delete_student_id']);
     $delete_reason = mysqli_real_escape_string($con, $_POST['delete_reason']);
 
     // Fetch the user's email
     $email_query = "SELECT email FROM user WHERE user_id=?";
     $stmt = mysqli_prepare($con, $email_query);
-    mysqli_stmt_bind_param($stmt, 'i', $student_id);
+    mysqli_stmt_bind_param($stmt, 'i', $studentId);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $email_row = mysqli_fetch_assoc($result);
@@ -412,7 +412,7 @@ if (isset($_POST['delete_student_id'])) {
         // Delete the user
         $query = "DELETE FROM user WHERE user_id=?";
         $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, 'i', $student_id);
+        mysqli_stmt_bind_param($stmt, 'i', $studentId);
         $query_run = mysqli_stmt_execute($stmt);
 
         if ($query_run) {
