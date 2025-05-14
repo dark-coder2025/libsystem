@@ -1,9 +1,9 @@
 <?php 
 
 $host = "localhost";
-$username = "u510162695_mcclrc";
-$password = "1Mcclrc_pass";
-$database = "u510162695_mcclrc";
+$username = "u510162695_D10v1n";
+$password = "MCc_lRCv3rs!on2";
+$database = "u510162695_D10v1n_mcC_Lrc";
 // $username = "root";
 // $password = "";
 // $database = "mcclrc";
