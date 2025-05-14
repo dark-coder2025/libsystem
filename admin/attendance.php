@@ -155,8 +155,8 @@ include('./includes/sidebar.php');
     <h3>Select a Month</h3>
     <input type="month" id="selectedMonth" />
     <br><br>
-    <button onclick="filterByMonth()">Filter</button>
-    <button onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="filterByMonth()">Filter</button>
+    <button class="btn btn-danger" onclick="closeModal()">Cancel</button>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
