@@ -1,4 +1,4 @@
-<!-- RewriteEngine On
+RewriteEngine On
 
 # Enforce HSTS (HTTP Strict Transport Security)
 <IfModule mod_headers.c>
@@ -43,4 +43,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 
 RewriteRule ^(.*)$ $1.php [L]
-RewriteRule ^$ home.php [L] -->
+RewriteRule ^$ home.php [L]
