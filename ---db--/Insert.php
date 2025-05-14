@@ -3,21 +3,21 @@
 $host = "localhost"; // Change this to your Hostinger MySQL host when moving online
 $username = "u510162695_mcclrc";
 $password = "1Mcclrc_pass";
-$database = "u510162695_mcclrc";
+$dbname = "u510162695_mcclrc";
 
-$link = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($host, $username, $password, $database);
 
 // Check connection
-if ($link->connect_error) {
-    die("Connection failed: " . $link->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 // Step 1: Drop the existing 'admin' table
 $dropTableSQL = "DROP TABLE IF EXISTS admin";
-if ($link->query($dropTableSQL) === TRUE) {
+if ($conn->query($dropTableSQL) === TRUE) {
     echo "Old 'admin' table deleted successfully.<br>";
 } else {
-    die("Error deleting old table: " . $link->error);
+    die("Error deleting old table: " . $conn->error);
 }
 
 // Step 2: Create a new 'admin' table
@@ -30,15 +30,15 @@ $createTableSQL = "CREATE TABLE admin (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 
-if ($link->query($createTableSQL) === TRUE) {
+if ($conn->query($createTableSQL) === TRUE) {
     echo "New 'admin' table created successfully.<br>";
 } else {
-    die("Error creating table: " . $link->error);
+    die("Error creating table: " . $conn->error);
 }
 
 // Step 3: Insert new data into the 'admin' table
-$username = "fariola";
-$email = "fariola.com";
+$username = "joilingford";
+$email = "joilingford.com";
 // $password = md5("securepassword"); // Hash password using MD5 (Legacy method)
 $role = "Admin";
 // $salt = "random_salt_value"; // Use a unique salt per user
@@ -48,7 +48,7 @@ $password = password_hash("securepassword", PASSWORD_ARGON2ID); // Secure Argon2
 // $password = password_hash("securepassword", PASSWORD_BCRYPT); // Hash password
 
 $insertSQL = "INSERT INTO admin (username, email, password, role) VALUES (?, ?, ?, ?)";
-$stmt = $link->prepare($insertSQL);
+$stmt = $conn->prepare($insertSQL);
 $stmt->bind_param("ssss", $username, $email, $password, $role);
 
 if ($stmt->execute()) {
@@ -59,5 +59,5 @@ if ($stmt->execute()) {
 
 // Close statement and connection
 $stmt->close();
-$link->close();
+$conn->close();
 ?>
