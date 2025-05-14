@@ -1,8 +1,8 @@
 <?php
 // Database connection
 $host = "localhost"; // Change this to your Hostinger MySQL host when moving online
-$username = "root";  // Use Hostinger credentials for an online database
-$password = "";
+$username = "u510162695_mcclrc";
+$password = "1Mcclrc_pass";
 $database = "u510162695_mcclrc";
 
 $link = new mysqli($host, $username, $password, $database);
