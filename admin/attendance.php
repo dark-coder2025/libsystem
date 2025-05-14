@@ -39,8 +39,8 @@ include('./includes/sidebar.php');
 
                                    <div class="card-body">
                                         <div class="row d-flex justify-content-end align-items-center mt-2">
-                                             <ul class="nav nav-pills" style="margin-left: 20px;">
-                                                  <li class="nav-item">
+                                             <ul class="nav nav-pills">
+                                                  <li class="nav-item" style="margin-left: 20px;">
                                                        <a class="btn btn-primary" href="report_monthsta.php">Monthly Statistics</a>
                                                   </li>
                                              </ul>
