@@ -161,7 +161,17 @@ include('./includes/sidebar.php');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
 <script>
-     const initDataTable = (selector) => {
+    // Define the custom button first
+    $.fn.dataTable.ext.buttons.monthlyStatistics = {
+        text: 'Monthly Statistics',
+        action: function (e, dt, node, config) {
+            // Your custom action goes here. Example:
+            alert('Monthly statistics feature triggered!');
+        }
+    };
+
+    // Initialize the DataTable
+    const initDataTable = (selector) => {
         new DataTable(selector, {
             order: [[0, 1, 'asc']],
             layout: {
@@ -172,7 +182,7 @@ include('./includes/sidebar.php');
                         { extend: 'pdfHtml5' },
                         { extend: 'copyHtml5' },
                         { extend: 'pageLength' },
-                        { extend: 'monthlyStatistics' }
+                        { extend: 'monthlyStatistics' }  // This will now be recognized
                     ]
                 }
             },
@@ -189,6 +199,7 @@ include('./includes/sidebar.php');
         });
     };
 
+    // Call the function
     initDataTable('#example3');
 </script>
 
