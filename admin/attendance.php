@@ -39,11 +39,6 @@ include('./includes/sidebar.php');
 
                                    <div class="card-body">
                                         <div class="row d-flex justify-content-end align-items-center mt-2">
-                                             <ul class="nav nav-pills">
-                                                  <li class="nav-item" style="margin-left: 20px;">
-                                                       <a class="btn btn-primary" href="report_monthsta.php">Monthly Statistics</a>
-                                                  </li>
-                                             </ul>
                                              <form action="" method="POST" class="col-12 col-md-5 d-flex ">
                                                   <?php date_default_timezone_set('Asia/Manila'); ?>
                                                   <div class="form-group form-group-sm">
@@ -177,6 +172,7 @@ include('./includes/sidebar.php');
                         { extend: 'pdfHtml5' },
                         { extend: 'copyHtml5' },
                         { extend: 'pageLength' },
+                        { extend: 'monthlyStatistics' }
                     ]
                 }
             },
