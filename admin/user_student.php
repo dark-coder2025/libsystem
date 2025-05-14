@@ -214,7 +214,6 @@ function confirmDelete(studentId) {
         .then(response => response.json())
         .then(data => {
             document.getElementById('deleteStudentId').value = data.user_id;
-            document.getElementById('deleteFName').value = data.firstname;
 
             var myModal = new bootstrap.Modal(document.getElementById('deleteStudentModal'));
             myModal.show();
