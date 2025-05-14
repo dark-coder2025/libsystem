@@ -1,12 +1,16 @@
 <?php 
-require_once('authentication.php');
+include('authentication.php');
 include('includes/header.php'); 
-include('./includes/sidebar.php'); 
+include('includes/sidebar.php'); 
 ?>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
 
-<main id="main" class="main" data-aos="fade-down">
+<main id="main" class="main">
+    <?php 
+    $page = basename($_SERVER['SCRIPT_NAME']); 
+    ?>
     <div class="pagetitle">
         <h1>Report</h1>
         <nav>
@@ -22,11 +26,11 @@ include('./includes/sidebar.php');
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-pills">
-                            <li class="nav-item border border-info border-start-0 rounded-end">
-                                <a class="nav-link <?=$page == 'report.php' || $page == 'report_faculty.php' ? 'active': '' ?>" href="report.php">All Transaction</a>
+                            <li class="nav-item border border-info border-end-0 rounded-start">
+                                <a class="nav-link <?= $page == 'report.php' ? 'active' : '' ?>" href="report.php">All Transaction</a>
                             </li>
-                            <li class="nav-item  border border-info border-start-0 rounded-end">
-                                <a class="nav-link <?=$page == 'report_penalty.php' ? 'active': '' ?>" href="report_penalty.php">Penalty Report</a>
+                            <li class="nav-item border border-info border-end-0 rounded-start">
+                                <a class="nav-link <?= $page == 'report_penalty.php' ? 'active' : '' ?>" href="report_penalty.php">Penalty Report</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <?= $page == 'report_monthsta.php' ? 'active' : '' ?>" href="report_monthsta.php">Monthly Statistics</a>
@@ -34,87 +38,91 @@ include('./includes/sidebar.php');
                         </ul>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive mt-3">
-                            <ul class="nav nav-tabs" id="myTab">
-                                <li class="nav-item">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#student-tab-pane">Students</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#faculty-tab-pane">Faculty Staff</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content mt-3" id="myTabContent">
-                                <div class="tab-pane fade show active" id="student-tab-pane">
-                                    <table id="example" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Book Title</th>
-                                                <th>Task</th>
-                                                <th>Person In Charge</th>
-                                                <th>Date Transaction</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $result= mysqli_query($con,"SELECT * from report 
-                                            LEFT JOIN book ON report.book_id = book.book_id 
-                                            LEFT JOIN user ON report.user_id = user.user_id
-                                            order by report.report_id DESC ");
-                                            while ($row= mysqli_fetch_array ($result) ){
-                                                $id=$row['report_id'];
-                                                $book_id=$row['book_id'];
-                                                $user_name=$row['firstname']." ".$row['lastname'];
-                                                $admin =$row['admin_name'];
-                                            ?>
-                                            <?php if(isset($row['user_id'])) :?>
-                                            <tr>
-                                                <td><?php echo $user_name; ?></td>
-                                                <td><?php echo $row['title']; ?></td>
-                                                <td><?php echo $row['detail_action']; ?></td>
-                                                <td><?php echo $row['admin_name']; ?></td>
-                                                <td><?php echo date("M d, Y h:i:s a",strtotime($row['date_transaction'])); ?></td>
-                                            </tr>
-                                            <?php endif; ?>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                        <div class="row d-flex justify-content-end align-items-center mt-2">
+                            <form action="" method="POST" class="col-12 col-md-5 d-flex">
+                                <?php date_default_timezone_set('Asia/Manila'); ?>
+                                <div class="form-group form-group-sm">
+                                    <label for="from_date"> <small>From Date</small></label>
+                                    <input type="date" name="from_date" id="from_date" class="form-control form-control-sm" required>
                                 </div>
-                                <div class="tab-pane fade" id="faculty-tab-pane">
-                                    <table id="example2" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Book Title</th>
-                                                <th>Task</th>
-                                                <th>Person In Charge</th>
-                                                <th>Date Transaction</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $result= mysqli_query($con,"SELECT * from report 
-                                            LEFT JOIN book ON report.book_id = book.book_id 
-                                            LEFT JOIN faculty ON report.faculty_id = faculty.faculty_id
-                                            order by report.report_id DESC ");
-                                            while ($row= mysqli_fetch_array ($result) ){
-                                                $id=$row['report_id'];
-                                                $book_id=$row['book_id'];
-                                                $faculty_name=$row['firstname']." ".$row['lastname'];
-                                                $admin =$row['admin_name'];
-                                            ?>
-                                            <?php if(isset($row['faculty_id'])) :?>
-                                            <tr>
-                                                <td><?php echo $faculty_name; ?></td>
-                                                <td><?php echo $row['title']; ?></td>
-                                                <td><?php echo $row['detail_action']; ?></td>
-                                                <td><?php echo $row['admin_name']; ?></td>
-                                                <td><?php echo date("M d, Y h:i:s a",strtotime($row['date_transaction'])); ?></td>
-                                            </tr>
-                                            <?php endif; ?>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                <div class="form-group form-group-sm mx-1">
+                                    <label for="to_date"> <small>To Date</small></label>
+                                    <input type="date" name="to_date" id="to_date" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <label for="filter_attendance"> <small>Click to Filter</small></label>
+                                    <button type="submit" name="filter_attendance" id="filter_attendance" class="btn text-white fw-semibold btn-info btn-sm d-block">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="data_table">
+                                        <?php
+                                        // Fetch admin name
+                                        $admin_query = mysqli_query($con, "SELECT admin_name FROM report LIMIT 1") or die(mysqli_connect_error());
+                                        $admin_row = mysqli_fetch_array($admin_query);
+                                        $admin = $admin_row['admin_name'] ?? 'Admin';
+
+                                        // Handle date filtering
+                                        if (isset($_POST['from_date']) && isset($_POST['to_date'])) {
+                                            $from_date = $_POST['from_date'];
+                                            $to_date = $_POST['to_date'];
+
+                                            $return_query = mysqli_query($con, "SELECT * FROM return_book 
+                                                LEFT JOIN book ON return_book.book_id = book.book_id 
+                                                LEFT JOIN user ON return_book.user_id = user.user_id
+                                                WHERE book_penalty > 1 AND date_returned BETWEEN '$from_date' AND '$to_date' 
+                                                ORDER BY return_book.return_book_id DESC") or die(mysqli_connect_error());
+                                            
+                                            $count_penalty_query = mysqli_query($con, "SELECT SUM(book_penalty) as total_penalty FROM return_book WHERE book_penalty > 0 AND date_returned BETWEEN '$from_date' AND '$to_date'") or die(mysqli_connect_error());
+                                            $count_penalty_row = mysqli_fetch_array($count_penalty_query);
+                                        } else {
+                                            $return_query = mysqli_query($con, "SELECT * FROM return_book 
+                                                LEFT JOIN book ON return_book.book_id = book.book_id 
+                                                LEFT JOIN user ON return_book.user_id = user.user_id
+                                                WHERE book_penalty > 0 
+                                                ORDER BY return_book.return_book_id DESC") or die(mysqli_connect_error());
+
+                                            $count_penalty_query = mysqli_query($con, "SELECT SUM(book_penalty) as total_penalty FROM return_book WHERE book_penalty > 0") or die(mysqli_connect_error());
+                                            $count_penalty_row = mysqli_fetch_array($count_penalty_query);
+                                        }
+                                        ?>
+                                        
+                                        <div class="pull-left">
+                                                <div class="span">
+                                                    <div class="alert alert-info mt-2 p-1">
+                                                        <i class="icon-credit-card icon-large"></i>&nbsp;Total Amount of Penalty: Php <?= number_format($count_penalty_row['total_penalty'], 2) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <table id="example" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Penalty Amount</th>
+                                                    <th>Received from</th>
+                                                    <th>Person In Charge</th>
+                                                    <th>Due Date</th>
+                                                    <th>Date Returned</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php while ($return_row = mysqli_fetch_array($return_query)) { ?>
+                                                <tr>
+                                                    <td class="<?= ($return_row['book_penalty'] != 'No Penalty') ? 'alert alert-warning' : ''; ?>" style="width:100px;">
+                                                        Php <?= number_format($return_row['book_penalty'], 2) ?>
+                                                    </td>
+                                                    <td style="text-transform: capitalize"><?= htmlspecialchars($return_row['firstname'] . " " . $return_row['lastname']) ?></td>
+                                                    <td><?= htmlspecialchars($admin) ?></td>
+                                                    <td><?= date("M d, Y", strtotime($return_row['due_date'])) ?></td>
+                                                    <td><?= date("M d, Y", strtotime($return_row['date_returned'])) ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +146,7 @@ include('./includes/sidebar.php');
 <script>
     const initDataTable = (selector) => {
         new DataTable(selector, {
-            order: [[4, 'asc']],
+            order: [[3, 'asc']],
             layout: {
                 topStart: {
                     buttons: [
@@ -164,11 +172,10 @@ include('./includes/sidebar.php');
     };
 
     initDataTable('#example');
-    initDataTable('#example2');
 </script>
 
 <?php 
-include('./includes/footer.php');
-include('./includes/script.php');
+include('includes/footer.php');
+include('includes/script.php');
 include('../message.php');   
 ?>
