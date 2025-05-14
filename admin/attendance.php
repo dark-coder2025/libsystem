@@ -150,6 +150,15 @@ include('./includes/sidebar.php');
      </section>
 </main>
 
+<!-- Modal for month selection -->
+<div id="monthModal" style="display:none; position:fixed; top:30%; left:40%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
+    <h3>Select a Month</h3>
+    <input type="month" id="selectedMonth" />
+    <br><br>
+    <button onclick="filterByMonth()">Filter</button>
+    <button onclick="closeModal()">Cancel</button>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
@@ -175,8 +184,7 @@ include('./includes/sidebar.php');
                         {
                             text: 'Monthly Statistics',
                             action: function () {
-                                // Replace the URL below with your actual monthly statistics page
-                                window.open('https://mcc-lrc.com/report_monthsta.php', '_blank');
+                                document.getElementById('monthModal').style.display = 'block';
                             }
                         }
                     ]
@@ -194,6 +202,23 @@ include('./includes/sidebar.php');
             }
         });
     };
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById('monthModal').style.display = 'none';
+    }
+
+    // Function to filter by month and open new tab
+    function filterByMonth() {
+        const month = document.getElementById('selectedMonth').value;
+        if (month) {
+            const url = `monthly_statistics.php?month=${encodeURIComponent(month)}`;
+            window.open(url, '_blank');
+            closeModal();
+        } else {
+            alert('Please select a month.');
+        }
+    }
 
     initDataTable('#example3');
 </script>
