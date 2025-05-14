@@ -22,13 +22,13 @@ include('./includes/sidebar.php');
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-pills">
-                            <li class="nav-item">
+                            <li class="nav-item border border-info border-start-0 rounded-end">
                                 <a class="nav-link <?=$page == 'report.php' || $page == 'report_faculty.php' ? 'active': '' ?>" href="report.php">All Transaction</a>
                             </li>
                             <li class="nav-item  border border-info border-start-0 rounded-end">
                                 <a class="nav-link <?=$page == 'report_penalty.php' ? 'active': '' ?>" href="report_penalty.php">Penalty Report</a>
                             </li>
-                            <li class="nav-item  border border-info border-start-0 rounded-end">
+                            <li class="nav-item ">
                                 <a class="nav-link <?=$page == 'report_penalty.php' ? 'active': '' ?>" href="report_penalty.php">Monthly Statistics</a>
                             </li>
                         </ul>
