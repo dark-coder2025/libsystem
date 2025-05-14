@@ -233,7 +233,7 @@ function loadStudentData(studentId) {
             document.getElementById('editMName').value = data.middlename;
             document.getElementById('editStudId').value = data.student_id_no;
 
-            var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
+            var myModal = new bootstrap.Modal(document.getElementById('deleteStudentModal'));
             myModal.show();
         })
         .catch(error => {
