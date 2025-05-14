@@ -29,7 +29,7 @@ include('./includes/sidebar.php');
                                 <a class="nav-link <?=$page == 'report_penalty.php' ? 'active': '' ?>" href="report_penalty.php">Penalty Report</a>
                             </li>
                             <li class="nav-item  border border-info border-start-0 rounded-end">
-                                <a class="nav-link <?=$page == 'report_monthsta.php' ? 'active': '' ?>" href="report_monthsta.php">Monthly Statistics</a>
+                                <a class="nav-link <?=$page == 'report_penalty.php' ? 'active': '' ?>" href="report_penalty.php">Monthly Statistics</a>
                             </li>
                         </ul>
                     </div>
