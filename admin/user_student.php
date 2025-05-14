@@ -227,13 +227,13 @@ function loadStudentData(studentId) {
     fetch('user_student_code.php?id=' + studentId)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('deleteStudentId').value = data.user_id;
+            document.getElementById('editStudentId').value = data.user_id;
             document.getElementById('editLName').value = data.lastname;
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
             document.getElementById('editStudId').value = data.student_id_no;
 
-            var myModal = new bootstrap.Modal(document.getElementById('deleteStudentModal'));
+            var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
             myModal.show();
         })
         .catch(error => {
