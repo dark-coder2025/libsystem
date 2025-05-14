@@ -227,7 +227,7 @@ function loadStudentData(studentId) {
     fetch('user_student_code.php?id=' + studentId)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('editStudentId').value = data.user_id;
+            document.getElementById('deleteStudentId').value = data.user_id;
             document.getElementById('editLName').value = data.lastname;
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
