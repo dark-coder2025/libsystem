@@ -150,6 +150,25 @@ include('./includes/sidebar.php');
      </section>
 </main>
 
+<!-- Modal for Monthly Statistics -->
+<div class="modal fade" id="monthlyStatsModal" tabindex="-1" aria-labelledby="monthlyStatsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="monthlyStatsModalLabel">Monthly Attendance Statistics</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="monthPicker">Select Month:</label>
+        <input type="month" id="monthPicker" class="form-control mb-3" />
+
+        <canvas id="attendanceChart" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
@@ -161,12 +180,13 @@ include('./includes/sidebar.php');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
 <script>
-    // Define the custom button first
+    // Define the custom button
     $.fn.dataTable.ext.buttons.monthlyStatistics = {
         text: 'Monthly Statistics',
         action: function (e, dt, node, config) {
-            // Your custom action goes here. Example:
-            alert('Monthly statistics feature triggered!');
+            // Show the modal
+            const modal = new bootstrap.Modal(document.getElementById('monthlyStatsModal'));
+            modal.show();
         }
     };
 
