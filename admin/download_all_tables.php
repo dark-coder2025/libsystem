@@ -1,5 +1,5 @@
 <?php
-include('./admin/config/dbcon.php');
+include('authentication.php');
 
 // Set headers for file download
 header('Content-Type: application/sql');
