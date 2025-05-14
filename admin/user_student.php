@@ -189,7 +189,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="deleteStudentForm" method="POST" action="user_student_code.php">
-          <input type="hidden" name="delete_student_id" id="deleteStudentId">
+          <input type="text" name="delete_student_id" id="deleteStudentId">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
           <textarea class="form-control" id="deleteReason" name="delete_reason" rows="4" required></textarea>
