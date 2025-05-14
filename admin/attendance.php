@@ -41,7 +41,7 @@ include('./includes/sidebar.php');
                                         <div class="row d-flex justify-content-end align-items-center mt-2">
                                              <ul class="nav nav-pills">
                                                   <li class="nav-item">
-                                                       <a class="nav-link <?= $page == 'report_monthsta.php' ? 'active' : '' ?>" href="report_monthsta.php">Monthly Statistics</a>
+                                                       <a class="btn btn-primary" href="report_monthsta.php">Monthly Statistics</a>
                                                   </li>
                                              </ul>
                                              <form action="" method="POST" class="col-12 col-md-5 d-flex ">
