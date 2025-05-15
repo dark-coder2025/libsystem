@@ -18,12 +18,18 @@ if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
         mysqli_stmt_bind_param($stmt, "si", $imageName, $user_id);
         mysqli_stmt_execute($stmt);
 
+        $_SESSION['status'] = 'Change Profile Successfully';
+        $_SESSION['status_code'] = "success";
         header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
         exit();
     } else {
-        echo "Error uploading file.";
+        $_SESSION['status'] = 'Error uploading file.';
+        $_SESSION['status_code'] = "error";
+        header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
     }
 } else {
-    echo "Invalid request.";
+    $_SESSION['status'] = 'Invalid request.';
+    $_SESSION['status_code'] = "error";
+    header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
 }
 ?>
