@@ -139,7 +139,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
         position: absolute;
         left: 0;
         top: 25%;
-        width: 100%;
+        width: 50%;
     }
 
     .no-print {
