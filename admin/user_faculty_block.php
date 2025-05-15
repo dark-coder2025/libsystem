@@ -14,11 +14,11 @@ include('./includes/sidebar.php');
 
 <main id="main" class="main">
      <div class="pagetitle">
-          <h1>Manage Faculty Staff</h1>
+          <h1>Block Faculty/Staff</h1>
           <nav>
                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="users.php">Users</a></li>
-                    <li class="breadcrumb-item active">Faculty Staff</li>
+                    <li class="breadcrumb-item"><a href="users_block.php">Block Users</a></li>
+                    <li class="breadcrumb-item active">Block Faculty/Staff</li>
                </ol>
           </nav>
      </div>
@@ -26,22 +26,7 @@ include('./includes/sidebar.php');
           <div class="row">
                <div class="col-lg-12">
                     <div class="card">
-                         <div class="card-header d-flex justify-content-between align-items-center">
-                              <a href="user_faculty_approval.php" class="btn btn-primary position-relative">
-                                   <i class="bi bi-people-fill"></i>
-                                   Faculty Approval
-                                   <?php
-                                   // Example query to count pending faculty approvals
-                                   $sql = "SELECT COUNT(*) AS pending_faculty_count FROM faculty WHERE (role_as = 'faculty' OR role_as = 'staff') AND status = 'pending'";
-                                   $result = mysqli_query($con, $sql);
-                                   $row = mysqli_fetch_assoc($result);
-                                   $pendingfacultyCount = $row['pending_faculty_count'];
-
-                                   if ($pendingfacultyCount > 0) {
-                                        echo '<span class="badge bg-danger" id="facultybadge">' . $pendingfacultyCount . '</span>';
-                                   }
-                                   ?>
-                              </a>
+                         <div class="card-header d-flex justify-content-end">
                               <a href="users_block.php" class="btn btn-primary position-relative">Back</a>
                          </div>
                          <div class="card-body">
