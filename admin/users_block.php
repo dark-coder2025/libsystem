@@ -26,7 +26,7 @@ include('./includes/sidebar.php');
                               <div class="row">
 
                                    <div class="col-12 col-md-6 mt-3">
-                                        <a href="user_student.php">
+                                        <a href="user_student_block.php">
                                              <div class="card bg-danger text-white p-5 d-flex flex-row justify-content-between">
                                                   <div>
                                                        <h2 class="">Students</h2>
@@ -38,7 +38,7 @@ include('./includes/sidebar.php');
 
 
                                    <div class="col-12 col-md-6 mt-3">
-                                        <a href="user_faculty.php">
+                                        <a href="user_faculty_block.php">
                                              <div class="card bg-danger text-white p-5 d-flex flex-row justify-content-between">
                                                   <div>
                                                   <h2>Faculty/Staff</h2>
