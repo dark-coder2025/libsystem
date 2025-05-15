@@ -1,4 +1,4 @@
-mcclearningresourcecenter2.0@gmail.com<?php
+<?php
 include('authentication.php');
 include('includes/url.php');
 header('Content-Type: application/json');
@@ -500,7 +500,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if all required fields are set
     if (isset($_POST['edit_last_name'], $_POST['username'], $_POST['edit_first_name'])) {
         // Sanitize and validate input to prevent SQL injection
-        $studentId = mysqli_real_escape_string($con, $_POST['edit_faculty_id']);
+        $faculty_id = mysqli_real_escape_string($con, $_POST['edit_faculty_id']);
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
@@ -512,7 +512,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     lastname = '$lName', 
                     middlename = '$mName', 
                     username = '$username' 
-                WHERE faculty_id = '$studentId'";
+                WHERE faculty_id = '$faculty_id'";
 
         // Execute the query
         if (mysqli_query($con, $sql)) {
@@ -526,7 +526,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Insert QR code path into database
             $qr_update_query = "UPDATE faculty SET qr_code = ? WHERE faculty_id = ?";
             $stmt_qr_update = mysqli_prepare($con, $qr_update_query);
-            mysqli_stmt_bind_param($stmt_qr_update, 'si', $qrimage, $studentId);
+            mysqli_stmt_bind_param($stmt_qr_update, 'si', $qrimage, $faculty_id);
             mysqli_stmt_execute($stmt_qr_update);
 
             // Set success message in the session and redirect
@@ -545,11 +545,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_GET['id'])) {
-    $userId = $_GET['id'];
+    $faculty_id = $_GET['id'];
 
-    $userId = mysqli_real_escape_string($con, $userId);
+    $faculty_id = mysqli_real_escape_string($con, $faculty_id);
 
-    $sql = "SELECT * FROM faculty WHERE faculty_id = '$userId'";
+    $sql = "SELECT * FROM faculty WHERE faculty_id = '$faculty_id'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
