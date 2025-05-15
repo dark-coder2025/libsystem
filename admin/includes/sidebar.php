@@ -59,7 +59,7 @@
           </li>
 
           <li class="nav-item">
-               <a class="nav-link collapsed<?=$page == 'users_block.php' || $page == 'user_student_block.php'|| $page == 'user_faculty_block.php' ||  ? 'active': '' ?>"
+               <a class="nav-link collapsed<?=$page == 'users_block.php' || $page == 'user_student_block.php'|| $page == 'user_faculty_block.php' ? 'active': '' ?>"
                     href="users_block.php">
                     <i class="bi bi-people"></i><span>Block Users</span>
                </a>
