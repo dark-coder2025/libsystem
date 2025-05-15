@@ -3,17 +3,21 @@ include('authentication.php');
 include('includes/header.php'); 
 include('./includes/sidebar.php'); 
 
-if (isset($_POST['delete_log'])) {
-    $log_id = intval($_POST['delete_log_id']);
-    $delete_query = "DELETE FROM user_log WHERE user_log_id = '$log_id'";
+// Bulk delete handler with SweetAlert
+if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
+    $ids = $_POST['delete_ids'];
+    $ids_str = implode(",", array_map('intval', $ids)); // sanitize IDs
+    $delete_query = "DELETE FROM user_log WHERE user_log_id IN ($ids_str)";
+    
     if (mysqli_query($con, $delete_query)) {
         echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 icon: 'success',
                 title: 'Deleted!',
-                text: 'Log deleted successfully.',
+                text: 'Selected logs have been deleted.',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK'
             }).then(() => {
@@ -24,12 +28,13 @@ if (isset($_POST['delete_log'])) {
     } else {
         $error = mysqli_error($con);
         echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: 'Error deleting log: $error',
+                text: 'Could not delete logs: $error',
                 confirmButtonColor: '#d33',
                 confirmButtonText: 'Close'
             });
@@ -78,6 +83,7 @@ if (isset($_POST['delete_log'])) {
                                              </form>
                                         </div>
 
+                                        <form method="POST" id="bulkDeleteForm">
                                         <div class="container mt-3">
                                              <div class="row">
                                                   <div class="col-12">
@@ -85,12 +91,12 @@ if (isset($_POST['delete_log'])) {
                                                             <table id="example3" class="display" style="width:100%">
                                                                  <thead>
                                                                       <tr>
+                                                                           <th><input type="checkbox" id="select-all"></th>
                                                                            <th>Date</th>
                                                                            <th>Time In</th>
                                                                            <th>Full Name</th>
                                                                            <th>Program</th>
                                                                            <th>Time Out</th>
-                                                                           <th>Action</th>
                                                                       </tr>
                                                                  </thead>
                                                                  <tbody>
@@ -104,37 +110,27 @@ if (isset($_POST['delete_log'])) {
                                                                                 foreach ($query_run as $row) {
                                                                       ?>
                                                                                      <tr>
+                                                                                          <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td>
                                                                                           <td><?= date("M d, Y", strtotime($row['date_log'])); ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_log'])); ?></td>
                                                                                           <td><?= $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname']; ?></td>
                                                                                           <td><?= $row['year_level'] . ' - ' . $row['course']; ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_out'])); ?></td>
-                                                                                          <td>
-                                                                                               <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete this log?');">
-                                                                                                    <input type="hidden" name="delete_log_id" value="<?= $row['user_log_id']; ?>">
-                                                                                                    <button type="submit" name="delete_log" class="btn btn-sm btn-danger">Delete</button>
-                                                                                               </form>
-                                                                                          </td>
                                                                                      </tr>
                                                                       <?php
                                                                                 }
                                                                            }
                                                                       } else {
-                                                                           $result = mysqli_query($con, "SELECT * FROM user_log WHERE course = ''");
+                                                                           $result = mysqli_query($con, "SELECT * FROM user_log ORDER BY date_log DESC, time_log DESC");
                                                                            while ($row = mysqli_fetch_array($result)) {
                                                                       ?>
                                                                                      <tr>
+                                                                                          <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td>
                                                                                           <td><?= date("M d, Y", strtotime($row['date_log'])); ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_log'])); ?></td>
                                                                                           <td><?= $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname']; ?></td>
                                                                                           <td><?= $row['year_level'] . ' - ' . $row['course']; ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_out'])); ?></td>
-                                                                                          <td>
-                                                                                               <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete this log?');">
-                                                                                                    <input type="hidden" name="delete_log_id" value="<?= $row['user_log_id']; ?>">
-                                                                                                    <button type="submit" name="delete_log" class="btn btn-sm btn-danger">Delete</button>
-                                                                                               </form>
-                                                                                          </td>
                                                                                      </tr>
                                                                       <?php
                                                                            }
@@ -143,9 +139,11 @@ if (isset($_POST['delete_log'])) {
                                                                  </tbody>
                                                             </table>
                                                        </div>
+                                                       <button type="submit" name="bulk_delete" class="btn btn-danger mt-3">Delete Selected</button>
                                                   </div>
                                              </div>
                                         </div>
+                                        </form>
                                    </div>
                               </div>
                          </div>
@@ -173,11 +171,12 @@ if (isset($_POST['delete_log'])) {
 <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     const initDataTable = (selector) => {
         new DataTable(selector, {
-            order: [[0, 1, 'asc']],
+            order: [[1, 'asc']],
             layout: {
                 topStart: {
                     buttons: [
@@ -198,7 +197,7 @@ if (isset($_POST['delete_log'])) {
             language: {
                 buttons: {
                     copyTitle: 'Added to clipboard',
-                    copyKeys: 'Press <i>ctrl</i> or <i>⌘</i> + <i>C</i> to copy. Press Esc to cancel.',
+                    copyKeys: 'Press <i>ctrl</i> or <i>⌘</i> + <i>C</i> to copy the table data. <br><br>To cancel, press Esc.',
                     copySuccess: {
                         _: '%d rows copied',
                         1: '1 row copied'
@@ -219,9 +218,14 @@ if (isset($_POST['delete_log'])) {
             window.open(url, '_blank');
             closeModal();
         } else {
-            alert('Please select a month.');
+            Swal.fire('Please select a month.');
         }
     }
+
+    document.getElementById('select-all').addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('input[name="delete_ids[]"]');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
 
     initDataTable('#example3');
 </script>
