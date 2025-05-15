@@ -7,7 +7,7 @@ if (isset($_POST['user_id']) && isset($_FILES['profile_image'])) {
     $image = $_FILES['profile_image'];
 
     // Validate image size (max 2MB)
-    if ($image['size'] > 2097152) { // 2 * 1024 * 1024
+    if ($image['size'] > 5097152) { // 2 * 1024 * 1024
         $_SESSION['status'] = 'Image size should not exceed 2MB.';
         $_SESSION['status_code'] = "error";
         header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
