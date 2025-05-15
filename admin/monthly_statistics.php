@@ -112,6 +112,9 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                             const card = document.getElementById('printArea');
                                             const canvas = document.getElementById('barChart');
 
+                                            // Create image from canvas
+                                            const canvasImage = canvas.toDataURL("image/png");
+
                                             
 
                                             // Append chart image
