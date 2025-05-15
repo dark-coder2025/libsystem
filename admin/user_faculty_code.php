@@ -508,8 +508,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Prepare the SQL UPDATE query
         $sql = "UPDATE faculty 
-                SET firstname = '$fName', 
-                    lastname = '$lName', 
+                SET lastname = '$lName', 
+                    firstname = '$fName',
                     middlename = '$mName', 
                     username = '$username' 
                 WHERE faculty_id = '$faculty_id'";
