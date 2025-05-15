@@ -66,8 +66,10 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 <?php if (!empty($courses)): ?>
                                     <canvas id="barChart" style="max-height: 400px;"></canvas>
                                     <script>
+                                        let chartInstance;
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            new Chart(document.querySelector('#barChart'), {
+                                            const ctx = document.getElementById('barChart').getContext('2d');
+                                            chartInstance = new Chart(ctx, {
                                                 type: 'bar',
                                                 data: {
                                                     labels: <?= json_encode($labels) ?>,
@@ -107,13 +109,31 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                         });
 
                                         function printMonthlyStatistics() {
-                                            const printContent = document.getElementById('printArea').innerHTML;
-                                            const originalContent = document.body.innerHTML;
+                                            const card = document.getElementById('printArea');
+                                            const canvas = document.getElementById('barChart');
 
-                                            document.body.innerHTML = printContent;
-                                            window.print();
-                                            document.body.innerHTML = originalContent;
-                                            location.reload(); // restore the page
+                                            // Create image from canvas
+                                            const canvasImage = canvas.toDataURL("image/png");
+
+                                            // Clone the card to a new div
+                                            const printWindow = window.open('', '', 'width=800,height=600');
+                                            printWindow.document.write('<html><head><title>Print</title>');
+                                            printWindow.document.write('<style>body{font-family:sans-serif;padding:20px;} h5{text-align:center;} img{display:block;margin:0 auto;max-width:100%;height:auto;}</style>');
+                                            printWindow.document.write('</head><body>');
+
+                                            printWindow.document.write('<h5>Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?></h5>');
+
+                                            // Append chart image
+                                            printWindow.document.write('<img src="' + canvasImage + '" />');
+
+                                            // You can also append other textual stats here if needed
+                                            printWindow.document.write(card.innerHTML); // You can refine this if needed
+
+                                            printWindow.document.write('</body></html>');
+                                            printWindow.document.close();
+                                            printWindow.focus();
+                                            printWindow.print();
+                                            printWindow.close();
                                         }
                                     </script>
                                 <?php else: ?>
