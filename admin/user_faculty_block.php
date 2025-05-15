@@ -27,7 +27,7 @@ include('./includes/sidebar.php');
                <div class="col-lg-12">
                     <div class="card">
                          <div class="card-header d-flex justify-content-between align-items-center">
-                              <a href="user_faculty_approval.php" class="btn btn-primary position-relative hidden">
+                              <a href="user_faculty_approval.php" class="btn btn-primary position-relative">
                                    <i class="bi bi-people-fill"></i>
                                    Faculty Approval
                                    <?php
