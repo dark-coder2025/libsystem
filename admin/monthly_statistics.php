@@ -22,8 +22,8 @@ $endDate = date('Y-m-t', strtotime($startDate));
 // Prepare and execute the query
 $courses = [];
 $total_student_course = [];
-$query = "SELECT course, COUNT(course) FROM  `user_log` GROUP BY course";
-$result = mysqli_query($con, $query);
+$query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
+$query_run = mysqli_query($con, $query);
 
 foreach ($query_run as $course) {
     $courses[] = $course['course'];
