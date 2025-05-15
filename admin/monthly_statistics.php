@@ -112,16 +112,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                             const card = document.getElementById('printArea');
                                             const canvas = document.getElementById('barChart');
 
-                                            // Create image from canvas
-                                            const canvasImage = canvas.toDataURL("image/png");
-
-                                            // Clone the card to a new div
-                                            const printWindow = window.open('', '', 'width=800,height=600');
-                                            printWindow.document.write('<html><head><title>Print</title>');
-                                            printWindow.document.write('<style>body{font-family:sans-serif;padding:20px;} h5{text-align:center;} img{display:block;margin:0 auto;max-width:100%;height:auto;}</style>');
-                                            printWindow.document.write('</head><body>');
-
-                                            printWindow.document.write('<h5>Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?></h5>');
+                                            
 
                                             // Append chart image
                                             printWindow.document.write('<img src="' + canvasImage + '" />');
