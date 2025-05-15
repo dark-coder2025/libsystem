@@ -146,6 +146,10 @@ include('./includes/sidebar.php');
             <label for="editUName" class="form-label">Username</label>
             <input type="text" class="form-control" id="editUName" name="edit_user_name" style="text-transform:capitalize;">
           </div>
+          <div class="mb-3">
+            <label for="editStaff" class="form-label">Staff</label>
+            <input type="text" class="form-control" id="editStaff" name="edit_staff" style="text-transform:capitalize;">
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -196,6 +200,7 @@ function loadFacultyData(faculty_id) {
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
             document.getElementById('editUName').value = data.username;
+            document.getElementById('editStaff').value = data.course;
 
             var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
             myModal.show();
