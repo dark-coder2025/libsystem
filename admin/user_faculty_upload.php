@@ -31,7 +31,7 @@ if (isset($_POST['faculty_id']) && isset($_FILES['profile_image'])) {
 
     if (move_uploaded_file($image["tmp_name"], $targetFile)) {
         // Update the image name in the database
-        $query = "UPDATE user SET profile_image = ? WHERE faculty_id = ?";
+        $query = "UPDATE faculty SET profile_image = ? WHERE faculty_id = ?";
         $stmt = mysqli_prepare($con, $query);
         mysqli_stmt_bind_param($stmt, "si", $imageName, $faculty_id);
         mysqli_stmt_execute($stmt);
