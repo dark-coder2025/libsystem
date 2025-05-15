@@ -28,10 +28,14 @@ $query_run = mysqli_query($con, $query);
 
 if ($query_run && mysqli_num_rows($query_run) > 0) {
     foreach ($query_run as $course) {
-        $courses[] = $course['course'];
-        $total_student_course[] = $course['count'];
+        $courseName = $course['course'];
+        $studentCount = $course['count'];
+        
+        $labels[] = "{$courseName} : {$studentCount}";
 
-        $labels[] = "{$courses} : {$total_student_course}";
+        // Still keeping these separately if you need raw values
+        $courses[] = $courseName;
+        $total_student_course[] = $studentCount;
     }
 }
 ?>
