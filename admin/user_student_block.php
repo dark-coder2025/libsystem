@@ -29,24 +29,6 @@ include('./includes/sidebar.php');
           <div class="row">
                <div class="col-lg-12">
                     <div class="card">
-                         <div class="card-header d-flex justify-content-between align-items-center">
-                              <a href="user_student_approval.php" class="btn btn-primary position-relative">
-                                   <i class="bi bi-people-fill"></i>
-                                   Student Approval
-                                   <?php
-                                   // Example query to count pending student approvals
-                                   $sql = "SELECT COUNT(*) AS pending_student_count FROM user WHERE role_as = 'student' AND status = 'pending'";
-                                   $result = mysqli_query($con, $sql);
-                                   $row = mysqli_fetch_assoc($result);
-                                   $pendingStudentCount = $row['pending_student_count'];
-
-                                   if ($pendingStudentCount > 0) {
-                                        echo '<span class="badge bg-danger" id="studbadge">' . $pendingStudentCount . '</span>';
-                                   }
-                                   ?>
-                              </a>
-                              <a href="users.php" class="btn btn-primary position-relative">Back</a>
-                         </div>
                          <div class="card-body">
                               <div class="table-responsive mt-3">
                               <table id="example" class="display nowrap" style="width:100%">
@@ -64,7 +46,7 @@ include('./includes/sidebar.php');
                                         </thead>
                                         <tbody>
                                              <?php
-                                             $query = "SELECT * FROM user WHERE status IN ('approved', 'blocked') AND role_as = 'student' ORDER BY user_id ASC";
+                                             $query = "SELECT * FROM user WHERE status IN ('blocked') AND role_as = 'student' ORDER BY user_id ASC";
                                              $query_run = mysqli_query($con, $query);
 
                                              if(mysqli_num_rows($query_run)) {
