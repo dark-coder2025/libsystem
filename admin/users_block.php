@@ -53,7 +53,7 @@ include('./includes/sidebar.php');
 
                                         <div class="row row-cols-1 row-cols-md-3 g-4">
                                              <div class="col">
-                                                  <div class="card h-100  border-top border-4 border-primary">
+                                                  <div class="card h-100  border-top border-4 border-danger">
 
                                                        <div class="card-body pb-0">
                                                             <h5 class="card-title  my-0 pb-0">BSIT</h5>
@@ -64,11 +64,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsit = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsit.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsit.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -77,7 +77,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSBA</h5>
@@ -88,11 +88,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsba = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsba.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsba.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -101,7 +101,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSHM</h5>
@@ -112,11 +112,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bshm = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bshm.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bshm.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -125,7 +125,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col-md-6">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSED</h5>
@@ -136,11 +136,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsed = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsed.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsed.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -149,7 +149,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col-md-6">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BEED</h5>
@@ -160,11 +160,11 @@ include('./includes/sidebar.php');
                                                                  if($total_beed = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_beed.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_beed.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -181,7 +181,7 @@ include('./includes/sidebar.php');
 
                                         <div class="row row-cols-1 row-cols-md-3 g-4">
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSIT</h5>
@@ -192,11 +192,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsit = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsit.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsit.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -205,7 +205,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSBA</h5>
@@ -216,11 +216,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsba = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsba.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsba.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -229,7 +229,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSHM</h5>
@@ -240,11 +240,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bshm = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bshm.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bshm.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -253,7 +253,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSED</h5>
@@ -264,11 +264,11 @@ include('./includes/sidebar.php');
                                                                  if($total_bsed = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_bsed.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_bsed.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -277,7 +277,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BEED</h5>
@@ -288,11 +288,11 @@ include('./includes/sidebar.php');
                                                                  if($total_beed = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_beed.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_beed.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
@@ -301,7 +301,7 @@ include('./includes/sidebar.php');
                                                   </div>
                                              </div>
                                              <div class="col">
-                                                  <div class="card h-100 border-top border-4 border-primary">
+                                                  <div class="card h-100 border-top border-4 border-danger">
 
                                                        <div class="card-body">
                                                             <h6 style="font-size:15px;" class="card-title  my-0 pb-0">General Education</h6>
@@ -312,11 +312,11 @@ include('./includes/sidebar.php');
                                                                  if($total_ge = mysqli_num_rows($query_run))
                                                                  {
                                                                       
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">'.$total_ge.'</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">'.$total_ge.'</p>';
                                                                  }
                                                                  else
                                                                  {
-                                                                      echo '<p class="h4 card-text text-primary text-center pt-2">0</p>';
+                                                                      echo '<p class="h4 card-text text-danger text-center pt-2">0</p>';
                                                                  }
                                                             ?>
                                                             <p class="card-text text-center"><small>Total
