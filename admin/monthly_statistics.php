@@ -71,10 +71,6 @@ if ($totalLogsResult && mysqli_num_rows($totalLogsResult) > 0) {
                                     Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?>
                                 </h5>
 
-                                <p style="text-align: center; margin-bottom: 20px;">
-                                    <strong>Total User Logs for <?= htmlspecialchars($monthDisplay) ?>:</strong> <?= $totalLogs ?>
-                                </p>
-
                                 <button onclick="printMonthlyStatistics()" class="btn btn-primary mb-3 float-end no-print">
                                     Print Monthly Statistics
                                 </button>
@@ -128,6 +124,10 @@ if ($totalLogsResult && mysqli_num_rows($totalLogsResult) > 0) {
                                             window.print();
                                         }
                                     </script>
+
+                                    <p style="text-align: center; margin-bottom: 20px;">
+                                        <strong>Total User Logs for <?= htmlspecialchars($monthDisplay) ?>:</strong> <?= $totalLogs ?>
+                                    </p>
                                 <?php else: ?>
                                     <p style="text-align: center; margin-top: 20px;">
                                         No data found for <?= htmlspecialchars($monthDisplay) ?>.
