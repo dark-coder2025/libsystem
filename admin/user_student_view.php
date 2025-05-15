@@ -42,19 +42,16 @@ include('includes/sidebar.php');
                          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
 
-                              <!-- Profile Image Display -->
                               <center>
-                              <label for="profileImageInput" style="cursor:pointer;">
                                    <?php if($user['profile_image'] != ""): ?>
-                                   <img id="profileImagePreview" src="../uploads/profile_images/<?php echo $user['profile_image']; ?>" 
-                                        alt="Profile Image" width="150px" height="120px" style="border-radius: 5px;">
+                                   <img src="../uploads/profile_images/<?php echo $user['profile_image']; ?>" alt=""
+                                        width="150px" height="120px" style="border-radius: 5px;">
                                    <?php else: ?>
-                                   <img id="profileImagePreview" src="assets/img/admin.png" 
-                                        class="rounded-circle" alt="" width="250px" height="250px">
+                                   <img src="assets/img/admin.png" class="rounded-circle" alt="" width="250px"
+                                        height="250px">
                                    <?php endif; ?>
-                              </label>
-                              <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
                               </center>
+
 
                               <h2 class="mb-2"><?=$user['firstname'].' '.$user['lastname'];?></h2>
                               <h3 style="text-transform:uppercase;"><?=$user['role_as'];?></h3>
@@ -182,64 +179,7 @@ include('includes/sidebar.php');
                          ?>
      </section>
 </main>
-
-<!-- Modal for cropping -->
-<div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-          background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-     <div style="background:#fff; padding:20px; border-radius:5px; max-width:500px;">
-          <img id="cropImage" style="max-width:100%;">
-          <button id="cropAndUploadBtn">Crop & Upload</button>
-          <button onclick="document.getElementById('cropModal').style.display='none'">Cancel</button>
-     </div>
-</div>
 <?php
 include('includes/footer.php');
 include('./includes/script.php');
 ?>
-
-<script>
-    let cropper;
-    const imageInput = document.getElementById('profileImageInput');
-    const cropImage = document.getElementById('cropImage');
-    const cropModal = document.getElementById('cropModal');
-
-    imageInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file && /^image\//.test(file.type)) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                cropImage.src = e.target.result;
-                cropModal.style.display = 'flex';
-                if (cropper) cropper.destroy();
-                cropper = new Cropper(cropImage, {
-                    aspectRatio: 1,
-                    viewMode: 1
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    document.getElementById('cropAndUploadBtn').addEventListener('click', () => {
-        if (cropper) {
-            cropper.getCroppedCanvas().toBlob((blob) => {
-                const formData = new FormData();
-                formData.append('cropped_image', blob);
-                
-                // AJAX to upload.php
-                fetch('user_student_upload.php', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => response.json())
-                  .then(data => {
-                      if (data.status === 'success') {
-                          document.getElementById('profileImagePreview').src = data.image_url;
-                      } else {
-                          alert('Upload failed');
-                      }
-                      cropModal.style.display = 'none';
-                  });
-            }, 'image/jpeg');
-        }
-    });
-</script>
