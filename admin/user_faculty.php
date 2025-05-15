@@ -299,27 +299,55 @@ document.getElementById('deleteReason').addEventListener('input', function () {
         this.classList.toggle('is-invalid', !isValid);
     });
 
-function confirmBlock(facultyId, status) {
-    let action = status === 'approved' ? 'block' : 'unblock';
+function confirmBlock(faculty_id) {
     Swal.fire({
         title: 'Are you sure?',
-        text: `You are about to ${action} this faculty/staff!`,
+        text: "You are about to block this faculty!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: `Yes`
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Proceed with the block/unblock
+            // Proceed with the blocking
             var form = document.createElement('form');
             form.method = 'POST';
             form.action = 'user_faculty_code.php';
 
             var input = document.createElement('input');
             input.type = 'hidden';
-            input.name = status === 'approved' ? 'block_faculty' : 'unblock_faculty';
-            input.value = facultyId;
+            input.name = 'block_faculty';
+            input.value = faculty_id;
+
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function confirmUnblock(faculty_id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to unblock this faculty!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Proceed with the unblocking
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'user_faculty_code.php';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'unblock_faculty';
+            input.value = faculty_id;
 
             form.appendChild(input);
 
