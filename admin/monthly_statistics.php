@@ -14,19 +14,6 @@ $dateObj = DateTime::createFromFormat('Y-m', $month);
 
 // Format month and year for display
 $monthDisplay = $dateObj ? $dateObj->format('F Y') : 'Invalid month';
-
-// Calculate start and end of the month
-$startDate = $month . '-01';
-$endDate = date('Y-m-t', strtotime($startDate));
-
-// Prepare and execute the query
-$query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
-$query_run = mysqli_query($con, $query);
-
-foreach ($query_run as $course) {
-    $courses[] = $course['course'];
-    $total_student_course[] = $course['COUNT(course)'];
-}
 ?>
 
 <main id="main" class="main">
@@ -45,6 +32,20 @@ foreach ($query_run as $course) {
 <div data-aos="fade-down" class="col-lg-12">
     <div class="card">
         <div class="card-body">
+            <?php
+                // Calculate start and end of the month
+                $startDate = $month . '-01';
+                $endDate = date('Y-m-t', strtotime($startDate));
+
+                // Prepare and execute the query
+                $query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
+                $query_run = mysqli_query($con, $query);
+
+                foreach ($query_run as $course) {
+                    $courses[] = $course['course'];
+                    $total_student_course[] = $course['COUNT(course)'];
+                }
+            ?>
             <h5 style="text-align: center;margin-top: 10px;">Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?></h5>
             <canvas id="barChart" style="max-height: 400px;"></canvas>
 
