@@ -41,7 +41,7 @@ include('./includes/sidebar.php');
                                         <a href="user_faculty.php">
                                              <div class="card bg-danger text-white p-5 d-flex flex-row justify-content-between">
                                                   <div>
-                                                  <h2>Faculty Staff</h2>
+                                                  <h2>Faculty/Staff</h2>
                                                   </div>
                                                   <i class="bi bi-people-fill fs-1"></i>
                                              </div>
