@@ -14,54 +14,57 @@ $startDate = $month . '-01';
 $endDate = date("Y-m-t", strtotime($startDate)); // gets last day of the month
 
 // Prepare and execute the query
-$query = "SELECT course, COUNT(*) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
+$query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
 $result = mysqli_query($con, $query);
 
-$courses = [];
-$counts = [];
-
-if ($result && mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $courses[] = $row['course'];
-        $counts[] = $row['count'];
-    }
-} else {
-    echo "No data found for selected month.";
-    exit;
+foreach ($query_run as $course) {
+    $courses[] = $course['course'];
+    $total_student_course[] = $course['COUNT(course)'];
 }
-
-mysqli_close($con);
-
-// JSON encode for Chart.js
-$jsonCourses = json_encode($courses);
-$jsonCounts = json_encode($counts);
 ?>
 
-    <h2>Monthly Course Statistics for <?= htmlspecialchars($month) ?></h2>
-    <canvas id="barChart" width="600" height="300"></canvas>
+    <h5>Monthly Course Statistics for <?= htmlspecialchars($month) ?></h5>
+    <canvas id="barChart" style="max-height: 400px;"></canvas>
 
     <script>
-        const courses = <?= $jsonCourses ?>;
-        const counts = <?= $jsonCounts ?>;
-
-        new Chart(document.getElementById('barChart'), {
-            type: 'bar',
-            data: {
-                labels: courses,
-                datasets: [{
-                    label: 'User count by course',
-                    data: counts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        precision: 0
+        document.addEventListener("DOMContentLoaded", () => {
+            new Chart(document.querySelector('#barChart'), {
+                type: 'bar',
+                data: {
+                    labels: <?php echo json_encode($courses)?>,
+                    datasets: [{
+                        label: 'Program',
+                        data: <?php echo json_encode($total_student_course)?>,
+                        backgroundColor: [
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                        }
                     }
                 }
-            }
+            });
         });
     </script>
 
