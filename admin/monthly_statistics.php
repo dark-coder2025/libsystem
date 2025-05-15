@@ -136,7 +136,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
     #printArea {
         position: absolute;
         left: 0;
-        top: 100%;
+        top: 50%;
         width: 100%;
     }
 
