@@ -3,14 +3,38 @@ include('authentication.php');
 include('includes/header.php'); 
 include('./includes/sidebar.php'); 
 
-// Handle individual delete
 if (isset($_POST['delete_log'])) {
-    $log_id = intval($_POST['delete_log_id']); // sanitize input
+    $log_id = intval($_POST['delete_log_id']);
     $delete_query = "DELETE FROM user_log WHERE user_log_id = '$log_id'";
     if (mysqli_query($con, $delete_query)) {
-        echo "<script>alert('Log deleted successfully.'); window.location.href=window.location.href;</script>";
+        echo "
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Log deleted successfully.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = window.location.href;
+            });
+        });
+        </script>";
     } else {
-        echo "<script>alert('Error deleting log: " . mysqli_error($con) . "');</script>";
+        $error = mysqli_error($con);
+        echo "
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Error deleting log: $error',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+        });
+        </script>";
     }
 }
 ?>
