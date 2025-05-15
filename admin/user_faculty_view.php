@@ -40,16 +40,22 @@ include('includes/sidebar.php');
                <div class="col-xl-4">
                     <div class="card">
                          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                         <center>
-                                   <?php if($user['qr_code'] != ""): ?>
-                                   <img src="../uploads/profile_images/<?php echo $user['profile_image']; ?>" alt=""
-                                        width="150px" height="150px">
-                                   <?php else: ?>
-                                   <img src="assets/img/admin.png" class="rounded-circle" alt="" width="250px"
-                                        height="250px">
-                                   <?php endif; ?>
-                              </center>
+                              
+                              <form action="user_faculty_upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
+                                   <input type="hidden" name="faculty_id" value="<?= $user['faculty_id']; ?>">
+                                   <input type="file" name="profile_image" id="profileImageInput" style="display: none;" onchange="document.getElementById('uploadForm').submit();">
+                                   <center>
+                                        <label for="profileImageInput" style="cursor: pointer;">
+                                             <?php if($user['profile_image'] != ""): ?>
+                                             <img src="../uploads/profile_images/<?php echo $user['profile_image']; ?>" alt=""
+                                                  width="150px" height="120px" style="border-radius: 5px;" title="Click to change image">
+                                             <?php else: ?>
+                                             <img src="assets/img/admin.png" class="rounded-circle" alt="" width="250px"
+                                                  height="250px" title="Click to change image">
+                                             <?php endif; ?>
+                                        </label>
+                                   </center>
+                              </form>
 
                               <h2><?=$user['firstname'].' '.$user['lastname'];?></h2>
                               <h3 style="text-transform: uppercase;"><?=$user['role_as'];?></h3>
