@@ -57,7 +57,7 @@ include('includes/sidebar.php');
                               </center>
 
                               <!-- Modal for cropping -->
-                              <div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                              <div id="cropModal" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%;
                               background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
                               <div style="background:#fff; padding:20px; border-radius:5px; max-width:500px;">
                                    <img id="cropImage" style="max-width:100%;">
