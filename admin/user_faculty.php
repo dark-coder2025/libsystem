@@ -66,7 +66,7 @@ include('./includes/sidebar.php');
                                                        <tr>
                                                             <td style="text-transform:capitalize;"><?=$user['lastname'].',  '.$user['firstname'].' '.$user['middlename'];?></td>
                                                             <td><?=$user['gender'];?></td>
-                                                            <td><?=$user['course'];?></td>
+                                                            <td style="text-transform:capitalize;"><?=$user['course'];?></td>
                                                             <td class="justify-content-center">
                                                                  <div class="btn-group" style="background: #DFF6FF;">
                                                                       <button type="button" class="btn btn-sm border dropdown-toggle text-primary" data-bs-toggle="dropdown" aria-expanded="false">
