@@ -463,7 +463,8 @@ if (strpos($request, '.php') !== false) {
                             <option value="BEED">BEED</option>
                             <option value="BSBA">BSBA</option>
                             <option value="BSHM">BSHM</option>
-                            <option value="GENERAL EDUCATION">GENERAL EDUCATION</option>
+                            <option value="FACULTY">FACULTY</option>
+                            <option value="NON-TEACHING">NON-TEACHING</option>
                         </select>
                     </div>
 
@@ -877,6 +878,15 @@ nextBtnThird.addEventListener("click", async function (event) {
             });
             return;
         }
+    } else if (role === 'staff') {
+        if (!course) {
+            Swal.fire({
+            title: "Please select department.",
+            icon: "error",
+            confirmButtonText: "OK"
+            });
+            return;
+        }
     }
 
     slidePage.style.marginLeft = "-75%";
@@ -1248,6 +1258,12 @@ prevBtnFifth.addEventListener("click", function (event) {
                 optionLabel.textContent = '--Select Course--';
                 studentIDInput.value = '';
             } else if(selectedRole === 'faculty') {
+                yearLevelField.style.display = 'none';
+                stud_idLabel.textContent = 'Username';
+                courseLabel.textContent = 'Department';
+                optionLabel.textContent = '--Select Department--';
+                studentIDInput.value = '';
+            } else if(selectedRole === 'staff') {
                 yearLevelField.style.display = 'none';
                 stud_idLabel.textContent = 'Username';
                 courseLabel.textContent = 'Department';
