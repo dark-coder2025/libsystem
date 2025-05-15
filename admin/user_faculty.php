@@ -129,7 +129,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="editFacultyForm" method="POST" action="user_faculty_code.php">
-          <input type="hidden" name="edit_faculty_id" id="editFacultyId">
+          <input type="text" name="edit_faculty_id" id="editFacultyId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
             <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
@@ -141,6 +141,10 @@ include('./includes/sidebar.php');
           <div class="mb-3">
             <label for="editMName" class="form-label">Middle Name</label>
             <input type="text" class="form-control" id="editMName" name="edit_middle_name" style="text-transform:capitalize;">
+          </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" style="text-transform:capitalize;">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -182,6 +186,24 @@ include('../message.php');
 ?>
 
 <script>
+
+function loadFacultyData(facultyId) {
+    fetch('user_faculty_code.php?id=' + facultyId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editFacultyId').value = data.faculty_id;
+            document.getElementById('editLName').value = data.lastname;
+            document.getElementById('editFName').value = data.firstname;
+            document.getElementById('editMName').value = data.middlename;
+            document.getElementById('username').value = data.username;
+
+            var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching faculty data:', error);
+        });
+}
 
 document.getElementById('editLName').addEventListener('input', function () {
      var editLName = this.value.trim(); // Remove any leading or trailing spaces
@@ -266,23 +288,6 @@ function confirmDelete(facultyId) {
             document.getElementById('deleteFacultyId').value = data.faculty_id;
 
             var myModal = new bootstrap.Modal(document.getElementById('deleteFacultyModal'));
-            myModal.show();
-        })
-        .catch(error => {
-            console.error('Error fetching faculty data:', error);
-        });
-}
-
-function loadFacultyData(facultyId) {
-    fetch('user_faculty_code.php?id=' + facultyId)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('editFacultyId').value = data.faculty_id;
-            document.getElementById('editLName').value = data.lastname;
-            document.getElementById('editFName').value = data.firstname;
-            document.getElementById('editMName').value = data.middlename;
-
-            var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
             myModal.show();
         })
         .catch(error => {

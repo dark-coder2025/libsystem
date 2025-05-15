@@ -497,33 +497,74 @@ if (isset($_POST['delete_faculty_id'])) {
 
 // Edit Faculty
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['edit_faculty_id'])) {
-        $facultyId = mysqli_real_escape_string($con, $_POST['edit_faculty_id']);
+    // Check if all required fields are set
+    if (isset($_POST['edit_last_name'], $_POST['username'], $_POST['edit_first_name'])) {
+        // Sanitize and validate input to prevent SQL injection
+        $studentId = mysqli_real_escape_string($con, $_POST['edit_faculty_id']);
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
+        $username = mysqli_real_escape_string($con, $_POST['username']); // Corrected variable name for student ID no.
 
-        $sql = "UPDATE faculty SET firstname='$fName', lastname='$lName', middlename='$mName' WHERE faculty_id='$facultyId'";
+        // Prepare the SQL UPDATE query
+        $sql = "UPDATE faculty 
+                SET firstname = '$fName', 
+                    lastname = '$lName', 
+                    middlename = '$mName', 
+                    username = '$username' 
+                WHERE faculty_id = '$studentId'";
+
+        // Execute the query
         if (mysqli_query($con, $sql)) {
+            // Generate QR Code
+            $identifier = $username; // Adjust username if needed for faculty
+            $qrdata = "$identifier"; // Example data to encode in QR code
+            $qrfile = "../qrcodes/$identifier.png"; // Path to save QR code image
+            $qrimage = "$identifier.png";
+            QRcode::png($qrdata, $qrfile); // Generate QR code
+
+            // Insert QR code path into database
+            $qr_update_query = "UPDATE faculty SET qr_code = ? WHERE faculty_id = ?";
+            $stmt_qr_update = mysqli_prepare($con, $qr_update_query);
+            mysqli_stmt_bind_param($stmt_qr_update, 'si', $qrimage, $studentId);
+            mysqli_stmt_execute($stmt_qr_update);
+
+            // Set success message in the session and redirect
             $_SESSION['status'] = "Updated successfully.";
             $_SESSION['status_code'] = "success";
             header('Location: user_faculty.php');
             exit();
         } else {
+            // Handle SQL execution errors
             echo "Error updating record: " . mysqli_error($con);
         }
+    } else {
+        // Handle missing form data
+        echo "Error: Missing required fields.";
     }
 }
 
 if (isset($_GET['id'])) {
-    $facultyId = $_GET['id'];
-    $sql = "SELECT * FROM faculty WHERE faculty_id = '$facultyId'";
+    $userId = $_GET['id'];
+
+    $userId = mysqli_real_escape_string($con, $userId);
+
+    $sql = "SELECT * FROM faculty WHERE faculty_id = '$userId'";
     $result = mysqli_query($con, $sql);
 
-    if ($row = mysqli_fetch_assoc($result)) {
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
         echo json_encode($row);
     } else {
-        echo json_encode(['error' => 'Student not found']);
+        $_SESSION['status'] = "Faculty not found";
+        $_SESSION['status_code'] = "error";
+        header('Location: user_faculty.php');
+        exit();
     }
+} else {
+    $_SESSION['status'] = "Invalid request: No ID provided";
+    $_SESSION['status_code'] = "error";
+    header('Location: user_faculty.php');
+    exit();
 }
 ?>
