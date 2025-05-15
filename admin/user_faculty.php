@@ -195,7 +195,7 @@ function loadFacultyData(faculty_id) {
             document.getElementById('editLName').value = data.lastname;
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
-            document.getElementById('username').value = data.username;
+            document.getElementById('userName').value = data.username;
 
             var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
             myModal.show();
