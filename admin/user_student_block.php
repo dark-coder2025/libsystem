@@ -15,11 +15,11 @@ include('./includes/sidebar.php');
 <main id="main" class="main">
      <div class="pagetitle d-flex justify-content-between">
           <div>
-               <h1>Manage Students</h1>
+               <h1>Block Students</h1>
                <nav>
                     <ol class="breadcrumb">
-                         <li class="breadcrumb-item"><a href="users.php">Users</a></li>
-                         <li class="breadcrumb-item active">Students</li>
+                         <li class="breadcrumb-item"><a href="users_block.php">Block Users</a></li>
+                         <li class="breadcrumb-item active">Block Students</li>
                     </ol>
                </nav>
           </div>
