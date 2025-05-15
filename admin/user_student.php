@@ -152,7 +152,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="editStudentForm" method="POST" action="user_student_code.php">
-          <input type="text" name="edit_student_id" id="editStudentId">
+          <input type="hidden" name="edit_student_id" id="editStudentId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
             <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
@@ -189,7 +189,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="deleteStudentForm" method="POST" action="user_student_code.php">
-          <input type="text" name="delete_student_id" id="deleteStudentId">
+          <input type="hidden" name="delete_student_id" id="deleteStudentId">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
           <textarea class="form-control" id="deleteReason" name="delete_reason" rows="4" required></textarea>
