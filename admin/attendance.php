@@ -113,7 +113,7 @@ include('./includes/sidebar.php');
                        else
                        {
                        
-                            $result= mysqli_query($con,"SELECT * FROM user_log WHERE course = ''");
+                            $result= mysqli_query($con,"SELECT * FROM user_log ORDER BY date_log DESC, time_log DESC");
                             while ($row= mysqli_fetch_array ($result) ){
                            
                                                   ?>
