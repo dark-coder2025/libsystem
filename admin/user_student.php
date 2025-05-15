@@ -171,7 +171,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <div class="form-label" for="gender">Gender</div>
-            <select class="form-control" name="gender" id="gender" required>
+            <select class="form-select" name="gender" id="gender" required>
                 <option value="" disabled selected>--Select Gender--</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -179,7 +179,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <div class="form-label" for="year_level">Year Level</div>
-            <select class="form-control" name="year_level" id="year_level">
+            <select class="form-select" name="year_level" id="year_level">
                 <option value="" disabled selected>--Select Year Level--</option>
                 <option value="4th year">4th year</option>
                 <option value="3rd year">3rd year</option>
@@ -189,7 +189,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <div class="form-label" for="course" id="courseLabel">Course</div>
-            <select class="form-control" name="course" id="course">
+            <select class="form-select" name="course" id="course">
                 <option value="" id="optionLabel" disabled selected>--Select Course--</option>
                 <option value="BSIT">BSIT</option>
                 <option value="BSED">BSED</option>
