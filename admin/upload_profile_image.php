@@ -17,7 +17,7 @@ if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
         mysqli_stmt_bind_param($stmt, "si", $imageName, $user_id);
         mysqli_stmt_execute($stmt);
 
-        header("Location: view_student.php?b=" . urlencode(encryptor('encrypt', $user_id)));
+        header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
         exit();
     } else {
         echo "Error uploading file.";
