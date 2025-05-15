@@ -169,6 +169,37 @@ include('./includes/sidebar.php');
             <label for="editStudId" class="form-label">Student ID No.</label>
             <input type="text" class="form-control" id="editStudId" name="edit_student_id_no" style="text-transform:capitalize;">
           </div>
+          <div class="mb-3">
+            <div class="label" for="gender">Gender</div>
+            <select name="gender" id="gender" required>
+                <option value="" disabled selected>--Select Gender--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="label" for="year_level">Year Level</div>
+            <select name="year_level" id="year_level">
+                <option value="" disabled selected>--Select Year Level--</option>
+                <option value="4th year">4th year</option>
+                <option value="3rd year">3rd year</option>
+                <option value="2nd year">2nd year</option>
+                <option value="1st year">1st year</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="label" for="course" id="courseLabel">Course</div>
+            <select name="course" id="course">
+                <option value="" id="optionLabel" disabled selected>--Select Course--</option>
+                <option value="BSIT">BSIT</option>
+                <option value="BSED">BSED</option>
+                <option value="BEED">BEED</option>
+                <option value="BSBA">BSBA</option>
+                <option value="BSHM">BSHM</option>
+                <option value="FACULTY">FACULTY</option>
+                <option value="NON-TEACHING">NON-TEACHING</option>
+            </select>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
