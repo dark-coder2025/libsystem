@@ -58,7 +58,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body pb-0">
                                                             <h5 class="card-title  my-0 pb-0">BSIT</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM user WHERE status='approved' AND role_as='student' AND course='BSIT'";
+                                                                 $query = "SELECT * FROM user WHERE status='blocked' AND role_as='student' AND course='BSIT'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsit = mysqli_num_rows($query_run))
@@ -82,7 +82,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSBA</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM user WHERE status='approved' AND role_as='student' AND course='BSBA'";
+                                                                 $query = "SELECT * FROM user WHERE status='blocked' AND role_as='student' AND course='BSBA'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsba = mysqli_num_rows($query_run))
@@ -106,7 +106,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSHM</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM user WHERE status='approved' AND role_as='student' AND course='BSHM'";
+                                                                 $query = "SELECT * FROM user WHERE status='blocked' AND role_as='student' AND course='BSHM'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bshm = mysqli_num_rows($query_run))
@@ -130,7 +130,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSED</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM user WHERE status='approved' AND role_as='student' AND course='BSED'";
+                                                                 $query = "SELECT * FROM user WHERE status='blocked' AND role_as='student' AND course='BSED'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsed = mysqli_num_rows($query_run))
@@ -154,7 +154,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BEED</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM user WHERE status='approved' AND role_as='student' AND course='BEED'";
+                                                                 $query = "SELECT * FROM user WHERE status='blocked' AND role_as='student' AND course='BEED'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_beed = mysqli_num_rows($query_run))
@@ -186,7 +186,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title my-0 pb-0">BSIT</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSIT'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSIT'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsit = mysqli_num_rows($query_run))
@@ -210,7 +210,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSBA</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSBA'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSBA'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsba = mysqli_num_rows($query_run))
@@ -234,7 +234,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSHM</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSHM'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSHM'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bshm = mysqli_num_rows($query_run))
@@ -258,7 +258,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BSED</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSED'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BSED'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_bsed = mysqli_num_rows($query_run))
@@ -282,7 +282,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h5 class="card-title  my-0 pb-0">BEED</h5>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BEED'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='BEED'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_beed = mysqli_num_rows($query_run))
@@ -306,7 +306,7 @@ include('./includes/sidebar.php');
                                                        <div class="card-body">
                                                             <h6 style="font-size:15px;" class="card-title  my-0 pb-0">General Education</h6>
                                                             <?php
-                                                                 $query = "SELECT * FROM faculty WHERE status='approved' AND (role_as = 'faculty' OR role_as = 'staff') AND course='GENERAL EDUCATION'";
+                                                                 $query = "SELECT * FROM faculty WHERE status='blocked' AND (role_as = 'faculty' OR role_as = 'staff') AND course='GENERAL EDUCATION'";
                                                                  $query_run = mysqli_query($con, $query); 
                                                                  
                                                                  if($total_ge = mysqli_num_rows($query_run))
