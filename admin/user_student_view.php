@@ -42,7 +42,7 @@ include('includes/sidebar.php');
                          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
 
-                              <form action="upload_profile_image.php" method="POST" enctype="multipart/form-data" id="uploadForm">
+                              <form action="user_student_upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
                                    <input type="hidden" name="user_id" value="<?= $user['user_id']; ?>">
                                    <input type="file" name="profile_image" id="profileImageInput" style="display: none;" onchange="document.getElementById('uploadForm').submit();">
                                    <center>
