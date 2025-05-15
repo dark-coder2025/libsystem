@@ -1,6 +1,7 @@
 <?php
 include('authentication.php');
 include('includes/url.php');
+require_once('../qrcode/qrlib.php');
 header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -493,7 +494,6 @@ if (isset($_POST['delete_faculty_id'])) {
         exit(0);
     }
 }
-
 
 // Edit Faculty
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
