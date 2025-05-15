@@ -170,7 +170,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="deleteFacultyForm" method="POST" action="user_faculty_code.php">
-          <input type="hidden" name="delete_faculty_id" id="deleteFacultyId">
+          <input type="text" name="delete_faculty_id" id="deleteFacultyId">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
           <textarea class="form-control" id="deleteReason" name="delete_reason" rows="4" required></textarea>
@@ -190,6 +190,19 @@ include('../message.php');
 ?>
 
 <script>
+function confirmDelete(faculty_id) {
+     fetch('user_faculty_code.php?id=' + faculty_id)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('deleteFacultyId').value = data.faculty_id;
+
+            var myModal = new bootstrap.Modal(document.getElementById('deleteFacultyModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching faculty data:', error);
+        });
+}
 
 function loadFacultyData(faculty_id) {
     fetch('user_faculty_code.php?id=' + faculty_id)
@@ -285,20 +298,6 @@ document.getElementById('deleteReason').addEventListener('input', function () {
         var isValid = deleteReason !== "" && this.value === deleteReason && !dangerousCharsPattern.test(deleteReason);
         this.classList.toggle('is-invalid', !isValid);
     });
-
-function confirmDelete(facultyId) {
-     fetch('user_faculty_code.php?id=' + facultyId)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('deleteFacultyId').value = data.faculty_id;
-
-            var myModal = new bootstrap.Modal(document.getElementById('deleteFacultyModal'));
-            myModal.show();
-        })
-        .catch(error => {
-            console.error('Error fetching faculty data:', error);
-        });
-}
 
 function confirmBlock(facultyId, status) {
     let action = status === 'approved' ? 'block' : 'unblock';
