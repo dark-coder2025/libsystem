@@ -192,27 +192,36 @@ $total_volumes = $row_volumes['total_volumes'];
                                    <div class="card">
                                         <div class="card-body">
                                              <?php
+                                             $currentMonth = date('Y-m');
                                              $students = [];
                                              $total_student_attendance = [];
-                                             $query = "SELECT *, COUNT(student_id) as total FROM `user_log` WHERE role = 'student' GROUP BY student_id ORDER BY COUNT(student_id) DESC LIMIT 5";
-                                             $query_run = mysqli_query($con, $query); 
+
+                                             $query = "SELECT firstname, lastname, student_id, COUNT(*) as total 
+                                                       FROM `user_log` 
+                                                       WHERE role = 'student' 
+                                                       AND DATE_FORMAT(date_log, '%Y-%m') = '$currentMonth' 
+                                                       GROUP BY student_id 
+                                                       ORDER BY total DESC 
+                                                       LIMIT 5";
+
+                                             $query_run = mysqli_query($con, $query);
 
                                              foreach ($query_run as $student) {
-                                                 $students[] = $student['firstname'] . ' ' . $student['lastname'];
-                                                 $total_student_attendance[] = $student['total'];
+                                             $students[] = $student['firstname'] . ' ' . $student['lastname'];
+                                             $total_student_attendance[] = $student['total'];
                                              }
                                              ?>
-                                             <h5 class="card-title">TOP STUDENTS LIBRARY USER</h5>
+                                             <h5 class="card-title">TOP STUDENTS LIBRARY USER - <?php echo date('F Y'); ?></h5>
                                              <canvas id="pieChartStudents" style="max-height: 220px;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#pieChartStudents'), {
                                                        type: 'pie',
                                                        data: {
-                                                            labels: <?php echo json_encode($students)?>,
+                                                            labels: <?php echo json_encode($students); ?>,
                                                             datasets: [{
-                                                                 label: 'My First Dataset',
-                                                                 data: <?php echo json_encode($total_student_attendance)?>,
+                                                                 label: 'Attendance Count',
+                                                                 data: <?php echo json_encode($total_student_attendance); ?>,
                                                                  backgroundColor: [
                                                                       'rgb(255, 99, 132)',
                                                                       'rgb(242, 146, 29)',
@@ -234,27 +243,36 @@ $total_volumes = $row_volumes['total_volumes'];
                                    <div class="card">
                                         <div class="card-body">
                                              <?php
+                                             $currentMonth = date('Y-m');
                                              $faculty = [];
                                              $total_faculty_attendance = [];
-                                             $query = "SELECT *, COUNT(student_id) as total FROM `user_log` WHERE role = 'faculty' OR role = 'staff' GROUP BY student_id ORDER BY COUNT(student_id) DESC LIMIT 5";
-                                             $query_run = mysqli_query($con, $query); 
 
-                                             foreach ($query_run as $student) {
-                                                 $faculty[] = $student['firstname'] . ' ' . $student['lastname'];
-                                                 $total_faculty_attendance[] = $student['total'];
+                                             $query = "SELECT firstname, lastname, student_id, COUNT(*) as total 
+                                                       FROM `user_log` 
+                                                       WHERE (role = 'faculty' OR role = 'staff') 
+                                                       AND DATE_FORMAT(date_log, '%Y-%m') = '$currentMonth' 
+                                                       GROUP BY student_id 
+                                                       ORDER BY total DESC 
+                                                       LIMIT 5";
+
+                                             $query_run = mysqli_query($con, $query);
+
+                                             foreach ($query_run as $person) {
+                                             $faculty[] = $person['firstname'] . ' ' . $person['lastname'];
+                                             $total_faculty_attendance[] = $person['total'];
                                              }
                                              ?>
-                                             <h5 class="card-title">TOP FACULTY/STAFF LIBRARY USER</h5>
+                                             <h5 class="card-title">TOP FACULTY/STAFF LIBRARY USER - <?php echo date('F Y'); ?></h5>
                                              <canvas id="pieChartFaculty" style="max-height: 220px;"></canvas>
                                              <script>
                                              document.addEventListener("DOMContentLoaded", () => {
                                                   new Chart(document.querySelector('#pieChartFaculty'), {
                                                        type: 'pie',
                                                        data: {
-                                                            labels: <?php echo json_encode($faculty)?>,
+                                                            labels: <?php echo json_encode($faculty); ?>,
                                                             datasets: [{
-                                                                 label: 'My First Dataset',
-                                                                 data: <?php echo json_encode($total_faculty_attendance)?>,
+                                                                 label: 'Attendance Count',
+                                                                 data: <?php echo json_encode($total_faculty_attendance); ?>,
                                                                  backgroundColor: [
                                                                       'rgb(255, 99, 132)',
                                                                       'rgb(242, 146, 29)',
