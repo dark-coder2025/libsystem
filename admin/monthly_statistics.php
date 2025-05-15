@@ -20,6 +20,7 @@ $labels = [];
 $startDate = $month . '-01';
 $endDate = date('Y-m-t', strtotime($startDate));
 
+// Query for course-wise count
 $query = "SELECT course, COUNT(course) as count FROM user_log 
           WHERE date_log BETWEEN '$startDate' AND '$endDate' 
           GROUP BY course";
@@ -35,6 +36,17 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
         $courses[] = $courseName;
         $total_student_course[] = $studentCount;
     }
+}
+
+// Query for total logs in the month
+$totalLogsQuery = "SELECT COUNT(*) as total_logs FROM user_log 
+                   WHERE date_log BETWEEN '$startDate' AND '$endDate'";
+$totalLogsResult = mysqli_query($con, $totalLogsQuery);
+$totalLogs = 0;
+
+if ($totalLogsResult && mysqli_num_rows($totalLogsResult) > 0) {
+    $row = mysqli_fetch_assoc($totalLogsResult);
+    $totalLogs = $row['total_logs'];
 }
 ?>
 
@@ -58,6 +70,10 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 <h5 style="text-align: center; margin-top: 10px;">
                                     Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?>
                                 </h5>
+
+                                <p style="text-align: center; margin-bottom: 20px;">
+                                    <strong>Total User Logs for <?= htmlspecialchars($monthDisplay) ?>:</strong> <?= $totalLogs ?>
+                                </p>
 
                                 <button onclick="printMonthlyStatistics()" class="btn btn-primary mb-3 float-end no-print">
                                     Print Monthly Statistics
@@ -113,7 +129,9 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                         }
                                     </script>
                                 <?php else: ?>
-                                    <p style="text-align: center; margin-top: 20px;">No data found for <?= htmlspecialchars($monthDisplay) ?>.</p>
+                                    <p style="text-align: center; margin-top: 20px;">
+                                        No data found for <?= htmlspecialchars($monthDisplay) ?>.
+                                    </p>
                                 <?php endif; ?>
                             </div>
                         </div>
