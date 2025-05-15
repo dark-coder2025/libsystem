@@ -39,6 +39,7 @@ foreach ($query_run as $course) {
 <div data-aos="fade-down" class="col-lg-12">
     <div class="card">
         <div class="card-body">
+            <br>
             <h5 style="text-align: center;">Monthly Course Statistics for <?= htmlspecialchars($month) ?></h5>
             <canvas id="barChart" style="max-height: 400px;"></canvas>
 
