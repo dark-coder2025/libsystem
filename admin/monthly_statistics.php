@@ -9,9 +9,15 @@ if (!$month) {
     exit;
 }
 
-// Format: 2025-04 → 2025-04-01 to 2025-04-30
+// Convert to DateTime object
+$dateObj = DateTime::createFromFormat('Y-m', $month);
+
+// Format month and year for display
+$monthDisplay = $dateObj ? $dateObj->format('F Y') : 'Invalid month';
+
+// Calculate start and end of the month
 $startDate = $month . '-01';
-$endDate = date("Y-m-t", strtotime($startDate)); // gets last day of the month
+$endDate = date('Y-m-t', strtotime($startDate));
 
 // Prepare and execute the query
 $query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
@@ -39,7 +45,7 @@ foreach ($query_run as $course) {
 <div data-aos="fade-down" class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h5 style="text-align: center;margin-top: 10px;">Monthly Course Statistics for <?= htmlspecialchars($month) ?></h5>
+            <h5 style="text-align: center;margin-top: 10px;">Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?></h5>
             <canvas id="barChart" style="max-height: 400px;"></canvas>
 
             <script>
