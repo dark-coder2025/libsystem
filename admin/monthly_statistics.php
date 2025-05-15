@@ -59,17 +59,15 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                     Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?>
                                 </h5>
 
-                                <button onclick="printMonthlyStatistics()" class="btn btn-primary mb-3 float-end">
+                                <button onclick="printMonthlyStatistics()" class="btn btn-primary mb-3 float-end no-print">
                                     Print Monthly Statistics
                                 </button>
 
                                 <?php if (!empty($courses)): ?>
                                     <canvas id="barChart" style="max-height: 400px;"></canvas>
                                     <script>
-                                        let chartInstance;
                                         document.addEventListener("DOMContentLoaded", () => {
-                                            const ctx = document.getElementById('barChart').getContext('2d');
-                                            chartInstance = new Chart(ctx, {
+                                            new Chart(document.querySelector('#barChart'), {
                                                 type: 'bar',
                                                 data: {
                                                     labels: <?= json_encode($labels) ?>,
@@ -109,25 +107,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                         });
 
                                         function printMonthlyStatistics() {
-                                            const card = document.getElementById('printArea');
-                                            const canvas = document.getElementById('barChart');
-
-                                            // Create image from canvas
-                                            const canvasImage = canvas.toDataURL("image/png");
-
-                                            
-
-                                            // Append chart image
-                                            printWindow.document.write('<img src="' + canvasImage + '" />');
-
-                                            // You can also append other textual stats here if needed
-                                            printWindow.document.write(card.innerHTML); // You can refine this if needed
-
-                                            printWindow.document.write('</body></html>');
-                                            printWindow.document.close();
-                                            printWindow.focus();
-                                            printWindow.print();
-                                            printWindow.close();
+                                            window.print();
                                         }
                                     </script>
                                 <?php else: ?>
@@ -141,6 +121,30 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
         </div>
     </section>
 </main>
+
+<!-- Hide everything but printArea during print -->
+<style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #printArea, #printArea * {
+        visibility: visible;
+    }
+
+    #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .no-print {
+        display: none;
+    }
+}
+</style>
 
 <?php 
 include('./includes/footer.php');
