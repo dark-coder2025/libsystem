@@ -70,6 +70,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                             new Chart(document.querySelector('#barChart'), {
                                                 type: 'bar',
                                                 data: {
+                                                    labels: <?= json_encode($labels) ?>,
                                                     datasets: [{
                                                         label: 'Program',
                                                         data: <?= json_encode($total_student_course) ?>,
