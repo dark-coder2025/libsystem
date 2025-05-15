@@ -7,11 +7,11 @@ include('./includes/sidebar.php');
 
 <main id="main" class="main" data-aos="fade-down">
      <div class="pagetitle">
-          <h1>Manage Users</h1>
+          <h1>Block Users</h1>
           <nav>
                <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href=".">Home</a></li>
-                    <li class="breadcrumb-item active">Users</li>
+                    <li class="breadcrumb-item active">Block Users</li>
                </ol>
           </nav>
      </div>
@@ -27,7 +27,7 @@ include('./includes/sidebar.php');
 
                                    <div class="col-12 col-md-6 mt-3">
                                         <a href="user_student.php">
-                                             <div class="card bg-primary text-white p-5 d-flex flex-row justify-content-between">
+                                             <div class="card bg-danger text-white p-5 d-flex flex-row justify-content-between">
                                                   <div>
                                                        <h2 class="">Students</h2>
                                                   </div>
@@ -39,7 +39,7 @@ include('./includes/sidebar.php');
 
                                    <div class="col-12 col-md-6 mt-3">
                                         <a href="user_faculty.php">
-                                             <div class="card bg-primary text-white p-5 d-flex flex-row justify-content-between">
+                                             <div class="card bg-danger text-white p-5 d-flex flex-row justify-content-between">
                                                   <div>
                                                   <h2>Faculty Staff</h2>
                                                   </div>
