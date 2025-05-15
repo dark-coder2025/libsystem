@@ -15,6 +15,7 @@ $monthDisplay = $dateObj ? $dateObj->format('F Y') : 'Invalid month';
 
 $courses = [];
 $total_student_course = [];
+$labels = [];
 
 $startDate = $month . '-01';
 $endDate = date('Y-m-t', strtotime($startDate));
@@ -29,6 +30,8 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
     foreach ($query_run as $course) {
         $courses[] = $course['course'];
         $total_student_course[] = $course['count'];
+
+        $labels[] = "{$courses} : {$total_student_course}";
     }
 }
 ?>
@@ -61,7 +64,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                             new Chart(document.querySelector('#barChart'), {
                                                 type: 'bar',
                                                 data: {
-                                                    labels: <?= json_encode($courses) ?>,
+                                                    labels: <?= json_encode($labels) ?>,
                                                     datasets: [{
                                                         label: 'Program',
                                                         data: <?= json_encode($total_student_course) ?>,
