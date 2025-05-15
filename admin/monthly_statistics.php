@@ -22,51 +22,56 @@ foreach ($query_run as $course) {
     $total_student_course[] = $course['COUNT(course)'];
 }
 ?>
+<div data-aos="fade-down" class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h5>Monthly Course Statistics for <?= htmlspecialchars($month) ?></h5>
+            <canvas id="barChart" style="max-height: 400px;"></canvas>
 
-    <h5>Monthly Course Statistics for <?= htmlspecialchars($month) ?></h5>
-    <canvas id="barChart" style="max-height: 400px;"></canvas>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            new Chart(document.querySelector('#barChart'), {
-                type: 'bar',
-                data: {
-                    labels: <?php echo json_encode($courses)?>,
-                    datasets: [{
-                        label: 'Program',
-                        data: <?php echo json_encode($total_student_course)?>,
-                        backgroundColor: [
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(201, 203, 207)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    new Chart(document.querySelector('#barChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: <?php echo json_encode($courses)?>,
+                            datasets: [{
+                                label: 'Program',
+                                data: <?php echo json_encode($total_student_course)?>,
+                                backgroundColor: [
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(255, 205, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(255, 159, 64)',
+                                    'rgb(255, 205, 86)',
+                                    'rgb(75, 192, 192)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(153, 102, 255)',
+                                    'rgb(201, 203, 207)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                        ticks: {
+                                            stepSize: 1
+                                        }
                                 }
+                            }
                         }
-                    }
-                }
-            });
-        });
-    </script>
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>    
 
 <?php 
 include('./includes/footer.php');
