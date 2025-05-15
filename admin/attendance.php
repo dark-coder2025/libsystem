@@ -121,7 +121,7 @@ if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
                                                                                 }
                                                                            }
                                                                       } else {
-                                                                           $result = mysqli_query($con, "SELECT * FROM user_log ORDER BY date_log DESC, time_log DESC");
+                                                                           $result = mysqli_query($con, "SELECT * FROM user_log WHERE course = ''");
                                                                            while ($row = mysqli_fetch_array($result)) {
                                                                       ?>
                                                                                      <tr>
