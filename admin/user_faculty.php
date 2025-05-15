@@ -187,8 +187,8 @@ include('../message.php');
 
 <script>
 
-function loadFacultyData(facultyId) {
-    fetch('user_faculty_code.php?id=' + facultyId)
+function loadFacultyData(faculty_id) {
+    fetch('user_faculty_code.php?id=' + faculty_id)
         .then(response => response.json())
         .then(data => {
             document.getElementById('editFacultyId').value = data.faculty_id;
