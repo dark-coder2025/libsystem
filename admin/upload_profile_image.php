@@ -5,8 +5,16 @@ include('includes/url.php');
 if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
 {
     $user_id = filter_var($_POST['user_id'], FILTER_VALIDATE_INT);
-
     $image = $_FILES['profile_image'];
+
+    // Validate image size (max 5MB)
+    if ($image['size'] > 5242880) { // 5 * 1024 * 1024
+        $_SESSION['status'] = 'Image size should not exceed 5MB.';
+        $_SESSION['status_code'] = "error";
+        header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
+        exit();
+    }
+
     $imageName = time() . '_' . basename($image['name']);
     $targetDirectory = "../uploads/profile_images/";
     $targetFile = $targetDirectory . $imageName;
@@ -26,10 +34,12 @@ if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
         $_SESSION['status'] = 'Error uploading file.';
         $_SESSION['status_code'] = "error";
         header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
+        exit();
     }
 } else {
     $_SESSION['status'] = 'Invalid request.';
     $_SESSION['status_code'] = "error";
     header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
+    exit();
 }
 ?>
