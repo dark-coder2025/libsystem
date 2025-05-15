@@ -64,7 +64,7 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 </button>
 
                                 <?php if (!empty($courses)): ?>
-                                    <canvas id="barChart" style="max-height: 400px;max-width: 97%;"></canvas>
+                                    <canvas id="barChart" style="max-height: 400px;max-width: 99%;"></canvas>
                                     <script>
                                         document.addEventListener("DOMContentLoaded", () => {
                                             new Chart(document.querySelector('#barChart'), {
