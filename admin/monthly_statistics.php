@@ -32,8 +32,6 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
         $studentCount = $course['count'];
         
         $labels[] = "{$courseName} : {$studentCount}";
-
-        // Still keeping these separately if you need raw values
         $courses[] = $courseName;
         $total_student_course[] = $studentCount;
     }
@@ -55,11 +53,15 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
             <div class="col-lg-12">
                 <div class="row">
                     <div data-aos="fade-down" class="col-lg-12">
-                        <div class="card">
+                        <div class="card" id="printArea">
                             <div class="card-body">
-                                <h5 style="text-align: center;margin-top: 10px;">
+                                <h5 style="text-align: center; margin-top: 10px;">
                                     Monthly Statistics for <?= htmlspecialchars($monthDisplay) ?>
                                 </h5>
+
+                                <button onclick="printMonthlyStatistics()" class="btn btn-primary mb-3 float-end">
+                                    Print Monthly Statistics
+                                </button>
 
                                 <?php if (!empty($courses)): ?>
                                     <canvas id="barChart" style="max-height: 400px;"></canvas>
@@ -103,6 +105,16 @@ if ($query_run && mysqli_num_rows($query_run) > 0) {
                                                 }
                                             });
                                         });
+
+                                        function printMonthlyStatistics() {
+                                            const printContent = document.getElementById('printArea').innerHTML;
+                                            const originalContent = document.body.innerHTML;
+
+                                            document.body.innerHTML = printContent;
+                                            window.print();
+                                            document.body.innerHTML = originalContent;
+                                            location.reload(); // restore the page
+                                        }
                                     </script>
                                 <?php else: ?>
                                     <p style="text-align: center; margin-top: 20px;">No data found for <?= htmlspecialchars($monthDisplay) ?>.</p>
