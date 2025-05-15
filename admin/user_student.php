@@ -263,6 +263,9 @@ function loadStudentData(studentId) {
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
             document.getElementById('editStudId').value = data.student_id_no;
+            document.getElementById('gender').value = data.gender;
+            document.getElementById('year_level').value = data.year_level;
+            document.getElementById('course').value = data.course;
 
             var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
             myModal.show();

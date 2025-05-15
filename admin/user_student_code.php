@@ -504,13 +504,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
         $stuIdNo = mysqli_real_escape_string($con, $_POST['edit_student_id_no']); // Corrected variable name for student ID no.
+        $gender = mysqli_real_escape_string($con, $_POST['gender']);
+        $year_level = mysqli_real_escape_string($con, $_POST['year_level']);
+        $course = mysqli_real_escape_string($con, $_POST['course']);
 
         // Prepare the SQL UPDATE query
         $sql = "UPDATE user 
                 SET firstname = '$fName', 
                     lastname = '$lName', 
                     middlename = '$mName', 
-                    student_id_no = '$stuIdNo' 
+                    student_id_no = '$stuIdNo',
+                    gender = '$gender', 
+                    year_level = '$year_level', 
+                    course = '$course'
                 WHERE user_id = '$studentId'";
 
         // Execute the query
