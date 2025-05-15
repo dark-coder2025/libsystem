@@ -56,17 +56,6 @@ include('includes/sidebar.php');
                               <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
                               </center>
 
-                              <!-- Modal for cropping -->
-                              <div id="cropModal" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%;
-                              background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-                              <div style="background:#fff; padding:20px; border-radius:5px; max-width:500px;">
-                                   <img id="cropImage" style="max-width:100%;">
-                                   <button id="cropAndUploadBtn">Crop & Upload</button>
-                                   <button onclick="document.getElementById('cropModal').style.display='none'">Cancel</button>
-                              </div>
-                              </div>
-
-
                               <h2 class="mb-2"><?=$user['firstname'].' '.$user['lastname'];?></h2>
                               <h3 style="text-transform:uppercase;"><?=$user['role_as'];?></h3>
 
@@ -193,6 +182,16 @@ include('includes/sidebar.php');
                          ?>
      </section>
 </main>
+
+<!-- Modal for cropping -->
+<div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+          background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+     <div style="background:#fff; padding:20px; border-radius:5px; max-width:500px;">
+          <img id="cropImage" style="max-width:100%;">
+          <button id="cropAndUploadBtn">Crop & Upload</button>
+          <button onclick="document.getElementById('cropModal').style.display='none'">Cancel</button>
+     </div>
+</div>
 <?php
 include('includes/footer.php');
 include('./includes/script.php');
