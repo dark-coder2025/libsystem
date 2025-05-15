@@ -38,7 +38,7 @@ $monthDisplay = $dateObj ? $dateObj->format('F Y') : 'Invalid month';
                 $endDate = date('Y-m-t', strtotime($startDate));
 
                 // Prepare and execute the query
-                $query = "SELECT course, COUNT(course) as count FROM user_log WHERE date_log BETWEEN '$startDate' AND '$endDate' GROUP BY course";
+                $query = "SELECT course, COUNT(course) as count FROM user_log GROUP BY course";
                 $query_run = mysqli_query($con, $query);
 
                 foreach ($query_run as $course) {
