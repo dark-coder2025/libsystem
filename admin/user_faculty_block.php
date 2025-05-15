@@ -26,8 +26,8 @@ include('./includes/sidebar.php');
           <div class="row">
                <div class="col-lg-12">
                     <div class="card">
-                         <div class="card-header d-flex justify-content-between align-items-end">
-                              <a href="users_block.php" class="btn btn-primary position-relative">Back</a>
+                         <div class="card-header d-flex justify-content-between align-items-center">
+                              <a href="users_block.php" class="btn btn-primary ml-auto">Back</a>
                          </div>
                          <div class="card-body">
                               <div class="table-responsive mt-3">
