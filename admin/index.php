@@ -295,6 +295,7 @@ $total_volumes = $row_volumes['total_volumes'];
                                                        data: {
                                                             labels: <?php echo json_encode($courses)?>,
                                                             datasets: [{
+                                                                 label: 'Program',
                                                                  data: <?php echo json_encode($total_student_course)?>,
                                                                  backgroundColor: [
                                                                       'rgba(255, 242, 64, 0.2)',
