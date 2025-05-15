@@ -22,6 +22,20 @@ foreach ($query_run as $course) {
     $total_student_course[] = $course['COUNT(course)'];
 }
 ?>
+
+<main id="main" class="main">
+    <div class="pagetitle" data-aos="fade-down">
+          <h1>Monthly Statistics</h1>
+          <nav>
+               <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">Monthly Statistics</li>
+               </ol>
+          </nav>
+     </div>
+     <section class="section dashboard">
+          <div class="row">
+               <div class="col-lg-12">
+                    <div class="row">
 <div data-aos="fade-down" class="col-lg-12">
     <div class="card">
         <div class="card-body">
@@ -71,7 +85,13 @@ foreach ($query_run as $course) {
             </script>
         </div>
     </div>
-</div>    
+</div>
+</div>
+               </div>
+          </div>
+     </section>
+
+</main>
 
 <?php 
 include('./includes/footer.php');
