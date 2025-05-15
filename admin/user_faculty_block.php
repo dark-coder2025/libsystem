@@ -27,7 +27,22 @@ include('./includes/sidebar.php');
                <div class="col-lg-12">
                     <div class="card">
                          <div class="card-header d-flex justify-content-between align-items-center">
-                              <a href="users_block.php" class="btn btn-primary ml-auto">Back</a>
+                              <a href="user_faculty_approval.php" class="btn btn-primary position-relative hidden">
+                                   <i class="bi bi-people-fill"></i>
+                                   Faculty Approval
+                                   <?php
+                                   // Example query to count pending faculty approvals
+                                   $sql = "SELECT COUNT(*) AS pending_faculty_count FROM faculty WHERE (role_as = 'faculty' OR role_as = 'staff') AND status = 'pending'";
+                                   $result = mysqli_query($con, $sql);
+                                   $row = mysqli_fetch_assoc($result);
+                                   $pendingfacultyCount = $row['pending_faculty_count'];
+
+                                   if ($pendingfacultyCount > 0) {
+                                        echo '<span class="badge bg-danger" id="facultybadge">' . $pendingfacultyCount . '</span>';
+                                   }
+                                   ?>
+                              </a>
+                              <a href="users_block.php" class="btn btn-primary position-relative">Back</a>
                          </div>
                          <div class="card-body">
                               <div class="table-responsive mt-3">
