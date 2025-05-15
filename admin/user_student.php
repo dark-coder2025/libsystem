@@ -170,7 +170,7 @@ include('./includes/sidebar.php');
             <input type="text" class="form-control" id="editStudId" name="edit_student_id_no" style="text-transform:capitalize;">
           </div>
           <div class="mb-3">
-            <div class="label" for="gender">Gender</div>
+            <div class="form-label" for="gender">Gender</div>
             <select name="gender" id="gender" required>
                 <option value="" disabled selected>--Select Gender--</option>
                 <option value="Male">Male</option>
@@ -178,7 +178,7 @@ include('./includes/sidebar.php');
             </select>
           </div>
           <div class="mb-3">
-            <div class="label" for="year_level">Year Level</div>
+            <div class="form-label" for="year_level">Year Level</div>
             <select name="year_level" id="year_level">
                 <option value="" disabled selected>--Select Year Level--</option>
                 <option value="4th year">4th year</option>
@@ -188,7 +188,7 @@ include('./includes/sidebar.php');
             </select>
           </div>
           <div class="mb-3">
-            <div class="label" for="course" id="courseLabel">Course</div>
+            <div class="form-label" for="course" id="courseLabel">Course</div>
             <select name="course" id="course">
                 <option value="" id="optionLabel" disabled selected>--Select Course--</option>
                 <option value="BSIT">BSIT</option>
