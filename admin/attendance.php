@@ -3,45 +3,45 @@ include('authentication.php');
 include('includes/header.php'); 
 include('./includes/sidebar.php'); 
 
-// Bulk delete handler with SweetAlert
-if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
-    $ids = $_POST['delete_ids'];
-    $ids_str = implode(",", array_map('intval', $ids)); // sanitize IDs
-    $delete_query = "DELETE FROM user_log WHERE user_log_id IN ($ids_str)";
+// // Bulk delete handler with SweetAlert
+// if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
+//     $ids = $_POST['delete_ids'];
+//     $ids_str = implode(",", array_map('intval', $ids)); // sanitize IDs
+//     $delete_query = "DELETE FROM user_log WHERE user_log_id IN ($ids_str)";
     
-    if (mysqli_query($con, $delete_query)) {
-        echo "
-        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Selected logs have been deleted.',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                window.location.href = window.location.href;
-            });
-        });
-        </script>";
-    } else {
-        $error = mysqli_error($con);
-        echo "
-        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Could not delete logs: $error',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Close'
-            });
-        });
-        </script>";
-    }
-}
+//     if (mysqli_query($con, $delete_query)) {
+//         echo "
+//         <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+//         <script>
+//         document.addEventListener('DOMContentLoaded', function() {
+//             Swal.fire({
+//                 icon: 'success',
+//                 title: 'Deleted!',
+//                 text: 'Selected logs have been deleted.',
+//                 confirmButtonColor: '#3085d6',
+//                 confirmButtonText: 'OK'
+//             }).then(() => {
+//                 window.location.href = window.location.href;
+//             });
+//         });
+//         </script>";
+//     } else {
+//         $error = mysqli_error($con);
+//         echo "
+//         <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+//         <script>
+//         document.addEventListener('DOMContentLoaded', function() {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Error!',
+//                 text: 'Could not delete logs: $error',
+//                 confirmButtonColor: '#d33',
+//                 confirmButtonText: 'Close'
+//             });
+//         });
+//         </script>";
+//     }
+// }
 ?>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
@@ -91,7 +91,7 @@ if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
                                                             <table id="example3" class="display" style="width:100%">
                                                                  <thead>
                                                                       <tr>
-                                                                           <th><input type="checkbox" id="select-all"></th>
+                                                                           <!-- <th><input type="checkbox" id="select-all"></th> -->
                                                                            <th>Date</th>
                                                                            <th>Time In</th>
                                                                            <th>Full Name</th>
@@ -110,7 +110,7 @@ if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
                                                                                 foreach ($query_run as $row) {
                                                                       ?>
                                                                                      <tr>
-                                                                                          <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td>
+                                                                                          <!-- <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td> -->
                                                                                           <td><?= date("M d, Y", strtotime($row['date_log'])); ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_log'])); ?></td>
                                                                                           <td><?= $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname']; ?></td>
@@ -125,7 +125,7 @@ if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
                                                                            while ($row = mysqli_fetch_array($result)) {
                                                                       ?>
                                                                                      <tr>
-                                                                                          <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td>
+                                                                                          <!-- <td><input type="checkbox" name="delete_ids[]" value="<?= $row['user_log_id']; ?>"></td> -->
                                                                                           <td><?= date("M d, Y", strtotime($row['date_log'])); ?></td>
                                                                                           <td><?= date("h:i a", strtotime($row['time_log'])); ?></td>
                                                                                           <td><?= $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname']; ?></td>
@@ -139,7 +139,7 @@ if (isset($_POST['bulk_delete']) && isset($_POST['delete_ids'])) {
                                                                  </tbody>
                                                             </table>
                                                        </div>
-                                                       <button type="submit" name="bulk_delete" class="btn btn-danger mt-3">Delete Selected</button>
+                                                       <!-- <button type="submit" name="bulk_delete" class="btn btn-danger mt-3">Delete Selected</button> -->
                                                   </div>
                                              </div>
                                         </div>
