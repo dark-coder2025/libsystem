@@ -186,6 +186,25 @@ include('../message.php');
 ?>
 
 <script>
+
+function loadFacultyData(facultyId) {
+    fetch('user_faculty_code.php?id=' + facultyId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editFacultyId').value = data.faculty_id;
+            document.getElementById('editLName').value = data.lastname;
+            document.getElementById('editFName').value = data.firstname;
+            document.getElementById('editMName').value = data.middlename;
+            document.getElementById('username').value = data.username;
+
+            var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
+            myModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching faculty data:', error);
+        });
+}
+
 document.getElementById('editLName').addEventListener('input', function () {
      var editLName = this.value.trim(); // Remove any leading or trailing spaces
           
@@ -304,24 +323,6 @@ function confirmBlock(facultyId, status) {
             form.submit();
         }
     });
-}
-
-function loadFacultyData(facultyId) {
-    fetch('user_faculty_code.php?id=' + facultyId)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('editFacultyId').value = data.faculty_id;
-            document.getElementById('editLName').value = data.lastname;
-            document.getElementById('editFName').value = data.firstname;
-            document.getElementById('editMName').value = data.middlename;
-            document.getElementById('username').value = data.username;
-
-            var myModal = new bootstrap.Modal(document.getElementById('editFacultyModal'));
-            myModal.show();
-        })
-        .catch(error => {
-            console.error('Error fetching faculty data:', error);
-        });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
