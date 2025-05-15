@@ -50,7 +50,7 @@ include('includes/sidebar.php');
                                         alt="Profile Image" width="150px" height="120px" style="border-radius: 5px;">
                                    <?php else: ?>
                                    <img id="profileImagePreview" src="assets/img/admin.png" 
-                                        class="rounded-circle" alt="" width="150px" height="120px">
+                                        class="rounded-circle" alt="" width="250px" height="250px">
                                    <?php endif; ?>
                               </label>
                               <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
