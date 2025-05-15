@@ -107,7 +107,7 @@ if (isset($_POST['delete_log'])) {
                                                                                           <td><?= date("h:i a", strtotime($row['time_out'])); ?></td>
                                                                                           <td>
                                                                                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete this log?');">
-                                                                                                    <input type="text" name="delete_log_id" value="<?= $row['user_log_id']; ?>">
+                                                                                                    <input type="hidden" name="delete_log_id" value="<?= $row['user_log_id']; ?>">
                                                                                                     <button type="submit" name="delete_log" class="btn btn-sm btn-danger">Delete</button>
                                                                                                </form>
                                                                                           </td>
