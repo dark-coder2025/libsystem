@@ -89,7 +89,7 @@ include('./includes/sidebar.php');
                                       $from_date = $_POST['from_date'];
                                       $to_date = $_POST['to_date'];
 
-                                      $query = "SELECT * FROM user_log WHERE course = "" ORDER BY date_log DESC, time_log DESC";
+                                      $query = "SELECT * FROM user_log WHERE course = '' ORDER BY date_log DESC, time_log DESC";
                                       $query_run = mysqli_query($con, $query);
 
                                       if(mysqli_num_rows($query_run) > 0 )
