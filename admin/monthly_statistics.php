@@ -125,7 +125,7 @@ if ($totalLogsResult && mysqli_num_rows($totalLogsResult) > 0) {
                                         }
                                     </script>
 
-                                    <p style="text-align: center; margin-bottom: 20px;">
+                                    <p style="text-align: right; margin-bottom: 20px;">
                                         <strong>Total User Logs for <?= htmlspecialchars($monthDisplay) ?>:</strong> <?= $totalLogs ?>
                                     </p>
                                 <?php else: ?>
