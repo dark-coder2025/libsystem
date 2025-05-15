@@ -2,14 +2,24 @@
 include('authentication.php');
 include('includes/url.php');
 
-if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
-{
+if (isset($_POST['user_id']) && isset($_FILES['profile_image'])) {
     $user_id = filter_var($_POST['user_id'], FILTER_VALIDATE_INT);
     $image = $_FILES['profile_image'];
 
-    // Validate image size (max 5MB)
-    if ($image['size'] > 5242880) { // 5 * 1024 * 1024
-        $_SESSION['status'] = 'Image size should not exceed 5MB.';
+    // Validate image size (max 2MB)
+    if ($image['size'] > 2097152) { // 2 * 1024 * 1024
+        $_SESSION['status'] = 'Image size should not exceed 2MB.';
+        $_SESSION['status_code'] = "error";
+        header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
+        exit();
+    }
+
+    // Validate file type
+    $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    $imageMimeType = mime_content_type($image['tmp_name']);
+
+    if (!in_array($imageMimeType, $allowedTypes)) {
+        $_SESSION['status'] = 'Only JPG, JPEG, and PNG files are allowed.';
         $_SESSION['status_code'] = "error";
         header("Location: user_student_view.php?b=" . urlencode(encryptor('encrypt', $user_id)));
         exit();
@@ -19,7 +29,7 @@ if(isset($_POST['user_id']) && isset($_FILES['profile_image']))
     $targetDirectory = "../uploads/profile_images/";
     $targetFile = $targetDirectory . $imageName;
 
-    if(move_uploaded_file($image["tmp_name"], $targetFile)) {
+    if (move_uploaded_file($image["tmp_name"], $targetFile)) {
         // Update the image name in the database
         $query = "UPDATE user SET profile_image = ? WHERE user_id = ?";
         $stmt = mysqli_prepare($con, $query);
