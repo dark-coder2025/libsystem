@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $lName = mysqli_real_escape_string($con, $_POST['edit_last_name']);
         $fName = mysqli_real_escape_string($con, $_POST['edit_first_name']);
         $mName = mysqli_real_escape_string($con, $_POST['edit_middle_name']);
-        $username = mysqli_real_escape_string($con, $_POST['username']); // Corrected variable name for student ID no.
+        $username = mysqli_real_escape_string($con, $_POST['user_name']); // Corrected variable name for student ID no.
 
         // Prepare the SQL UPDATE query
         $sql = "UPDATE faculty 

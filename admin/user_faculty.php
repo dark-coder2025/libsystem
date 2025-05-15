@@ -144,7 +144,7 @@ include('./includes/sidebar.php');
           </div>
           <div class="mb-3">
             <label for="userName" class="form-label">Username</label>
-            <input type="text" class="form-control" id="userName" name="username" style="text-transform:capitalize;">
+            <input type="text" class="form-control" id="userName" name="user_name" style="text-transform:capitalize;">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
