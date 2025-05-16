@@ -11,14 +11,14 @@ if (isset($_POST['text'])) {
     $qr_code = $_POST['text'];
 
     // Query to select student based on student_id_no
-    $student_query = "SELECT * FROM user WHERE student_id_no = ? AND status = 'approved'";
+    $student_query = "SELECT * FROM user WHERE student_id_no = ?";
     $student_query_stmt = $con->prepare($student_query);
     $student_query_stmt->bind_param("s", $qr_code);
     $student_query_stmt->execute();
     $student_query_result = $student_query_stmt->get_result();
 
     // Query to select faculty based on username
-    $faculty_query = "SELECT * FROM faculty WHERE username = ? AND status = 'approved'";
+    $faculty_query = "SELECT * FROM faculty WHERE username = ?";
     $faculty_query_stmt = $con->prepare($faculty_query);
     $faculty_query_stmt->bind_param("s", $qr_code);
     $faculty_query_stmt->execute();
