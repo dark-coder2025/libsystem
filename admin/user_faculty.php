@@ -128,7 +128,7 @@ include('./includes/sidebar.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editFacultyForm" method="POST" action="user_faculty_code.php">
+        <form id="editFacultyForm" method="POST" action="user_faculty_code_block.php">
           <input type="hidden" name="edit_faculty_id" id="editFacultyId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
@@ -169,7 +169,7 @@ include('./includes/sidebar.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="deleteFacultyForm" method="POST" action="user_faculty_code.php">
+        <form id="deleteFacultyForm" method="POST" action="user_faculty_code_block.php">
           <input type="text" name="delete_faculty_id" id="deleteFacultyId">
           <div class="mb-3">
           <label for="deleteReason" class="form-label">Reason for Delete</label>
@@ -191,7 +191,7 @@ include('../message.php');
 
 <script>
 function confirmDelete(faculty_id) {
-     fetch('user_faculty_code.php?id=' + faculty_id)
+     fetch('user_faculty_code_block.php?id=' + faculty_id)
         .then(response => response.json())
         .then(data => {
             document.getElementById('deleteFacultyId').value = data.faculty_id;
@@ -205,7 +205,7 @@ function confirmDelete(faculty_id) {
 }
 
 function loadFacultyData(faculty_id) {
-    fetch('user_faculty_code.php?id=' + faculty_id)
+    fetch('user_faculty_code_block.php?id=' + faculty_id)
         .then(response => response.json())
         .then(data => {
             document.getElementById('editFacultyId').value = data.faculty_id;
@@ -313,7 +313,7 @@ function confirmBlock(faculty_id) {
             // Proceed with the blocking
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'user_faculty_code.php';
+            form.action = 'user_faculty_code_block.php';
 
             var input = document.createElement('input');
             input.type = 'hidden';
@@ -342,7 +342,7 @@ function confirmUnblock(faculty_id) {
             // Proceed with the unblocking
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'user_faculty_code.php';
+            form.action = 'user_faculty_code_block.php';
 
             var input = document.createElement('input');
             input.type = 'hidden';
