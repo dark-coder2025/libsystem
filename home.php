@@ -92,6 +92,19 @@ include('includes/navbar.php');
         transform: scale(1.2); /* Slightly enlarge on hover */
         text-shadow: 0px 0px 15px rgba(13, 76, 146, 0.8); /* Stronger glow on hover */
     }
+
+    /* Footer Styling */
+    footer {
+        background-color: #1A3D61;
+    }
+
+    footer .btn {
+        background-color: #0D4C92;
+    }
+
+    footer p {
+        font-size: 1rem;
+    }
 </style>
 
 <!-- End of .container -->
