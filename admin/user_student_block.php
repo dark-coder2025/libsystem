@@ -136,7 +136,7 @@ include('./includes/sidebar.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editStudentForm" method="POST" action="user_student_code.php">
+        <form id="editStudentForm" method="POST" action="user_student_code_block.php">
           <input type="hidden" name="edit_student_id" id="editStudentId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
@@ -240,7 +240,7 @@ function confirmDelete(studentId) {
 }
 
 function loadStudentData(studentId) {
-    fetch('user_student_code.php?id=' + studentId)
+    fetch('user_student_code_block.php?id=' + studentId)
         .then(response => response.json())
         .then(data => {
             document.getElementById('editStudentId').value = data.user_id;
