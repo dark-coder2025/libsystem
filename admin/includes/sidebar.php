@@ -3,7 +3,7 @@
      <?php  $page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/")+ 1); ?>
      <ul class="sidebar-nav" id="sidebar-nav">
           <li class="nav-item">
-               <a class="nav-link collapsed<?=$page == '.'  ? 'active': '' ?>" 
+               <a class="nav-link collapsed<?=$page == 'index.php'  ? 'active': '' ?>" 
                     href=".">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
