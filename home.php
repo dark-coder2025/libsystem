@@ -46,7 +46,7 @@ include('includes/navbar.php');
         </div>
         <!-- Image Column -->
         <div class="col-12 col-md-6 text-center">
-            <img src="assets/img/library-animated.gif" class="img-fluid rounded-circle shadow-lg" alt="Library GIF">
+            <img src="assets/img/A.gif" class="img-fluid rounded-circle shadow-lg" alt="Library GIF">
         </div>
     </div>
 </div>
