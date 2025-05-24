@@ -136,8 +136,8 @@ include('./includes/sidebar.php');
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editStudentForm" method="POST" action="user_student_code_block.php">
-          <input type="text" name="edit_student_id" id="editStudentId">
+        <form id="editStudentForm" method="POST" action="user_student_code.php">
+          <input type="hidden" name="edit_student_id" id="editStudentId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
             <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
@@ -153,6 +153,37 @@ include('./includes/sidebar.php');
           <div class="mb-3">
             <label for="editStudId" class="form-label">Student ID No.</label>
             <input type="text" class="form-control" id="editStudId" name="edit_student_id_no" style="text-transform:capitalize;">
+          </div>
+          <div class="mb-3">
+            <div class="form-label" for="gender">Gender</div>
+            <select class="form-select" name="gender" id="gender" required>
+                <option value="" disabled selected>--Select Gender--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="form-label" for="year_level">Year Level</div>
+            <select class="form-select" name="year_level" id="year_level">
+                <option value="" disabled selected>--Select Year Level--</option>
+                <option value="4th year">4th year</option>
+                <option value="3rd year">3rd year</option>
+                <option value="2nd year">2nd year</option>
+                <option value="1st year">1st year</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <div class="form-label" for="course" id="courseLabel">Course</div>
+            <select class="form-select" name="course" id="course">
+                <option value="" id="optionLabel" disabled selected>--Select Course--</option>
+                <option value="BSIT">BSIT</option>
+                <option value="BSED">BSED</option>
+                <option value="BEED">BEED</option>
+                <option value="BSBA">BSBA</option>
+                <option value="BSHM">BSHM</option>
+                <option value="FACULTY">FACULTY</option>
+                <option value="NON-TEACHING">NON-TEACHING</option>
+            </select>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -209,7 +240,7 @@ function confirmDelete(studentId) {
 }
 
 function loadStudentData(studentId) {
-    fetch('user_student_code_block.php?id=' + studentId)
+    fetch('user_student_code.php?id=' + studentId)
         .then(response => response.json())
         .then(data => {
             document.getElementById('editStudentId').value = data.user_id;
@@ -217,6 +248,9 @@ function loadStudentData(studentId) {
             document.getElementById('editFName').value = data.firstname;
             document.getElementById('editMName').value = data.middlename;
             document.getElementById('editStudId').value = data.student_id_no;
+            document.getElementById('gender').value = data.gender;
+            document.getElementById('year_level').value = data.year_level;
+            document.getElementById('course').value = data.course;
 
             var myModal = new bootstrap.Modal(document.getElementById('editStudentModal'));
             myModal.show();
