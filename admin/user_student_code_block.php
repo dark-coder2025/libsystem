@@ -550,11 +550,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($_GET['id'])) {
-    $userId = $_GET['id'];
+    $studentId = $_GET['id'];
 
-    $userId = mysqli_real_escape_string($con, $userId);
+    $studentId = mysqli_real_escape_string($con, $studentId);
 
-    $sql = "SELECT * FROM user WHERE user_id = '$userId'";
+    $sql = "SELECT * FROM user WHERE user_id = '$studentId'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
