@@ -46,7 +46,7 @@ include('includes/navbar.php');
         </div>
         <!-- Image Column -->
         <div class="col-12 col-md-6 text-center">
-            <img src="assets/img/A.gif" class="img-fluid rounded-circle shadow-lg" alt="Library GIF">
+            <img src="assets/img/A.gif" class="img-fluid book-style shadow-lg" alt="Library GIF">
         </div>
     </div>
 </div>
@@ -110,6 +110,23 @@ include('includes/navbar.php');
     .container.bg-light {
         border-radius: 15px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Book-style Image */
+    .book-style {
+        width: 100%; /* Full width of its container */
+        max-width: 300px; /* Adjust this to control the max width of the 'book' */
+        height: auto;
+        border: 10px solid #5A3D36; /* Book edge color, brown to resemble a book cover */
+        border-radius: 10px; /* Slightly rounded corners */
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        position: relative;
+        transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+    }
+
+    .book-style:hover {
+        transform: rotateY(10deg); /* Slight 3D rotation effect on hover */
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
     }
 
     /* Footer Styling */
