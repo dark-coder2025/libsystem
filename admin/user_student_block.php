@@ -137,7 +137,7 @@ include('./includes/sidebar.php');
       </div>
       <div class="modal-body">
         <form id="editStudentForm" method="POST" action="user_student_code_block.php">
-          <input type="hidden" name="edit_student_id" id="editStudentId">
+          <input type="text" name="edit_student_id" id="editStudentId">
           <div class="mb-3">
             <label for="editLName" class="form-label">Last Name</label>
             <input type="text" class="form-control" id="editLName" name="edit_last_name" style="text-transform:capitalize;" required>
