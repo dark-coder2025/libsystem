@@ -1315,24 +1315,28 @@ prevBtnFifth.addEventListener("click", function (event) {
         });
 
 
-        // Format Student ID if necessary (you can adjust this function)
+        // Debounce Timer
+        let debounceTimer;
+        
+        // Format and Check Student ID
         function formatStudentID() {
-            let studentId = document.getElementById('student_id_no').value;
-            // You can add any formatting logic here if required
-            studentId = studentId.trim();
+            const studentId = document.getElementById('student_id_no').value.trim();
 
-            // Call function to check if the Student ID exists
-            checkStudentIdExistence(studentId);
+            if (studentId) {
+                // Clear the previous debounce timer if any
+                clearTimeout(debounceTimer);
+
+                // Set a new debounce timer (500ms delay after the last keypress)
+                debounceTimer = setTimeout(function() {
+                    // Call function to check if the Student ID exists
+                    checkStudentIdExistence(studentId);
+                }, 500);  // You can adjust the debounce delay (e.g., 500ms)
+            }
         }
 
         // Function to fetch and check if the Student ID exists
         function checkStudentIdExistence(studentId) {
-            if (!studentId) {
-                // If the field is empty, do nothing
-                return;
-            }
-
-            fetch('signup_student_id.php', {
+            fetch('check_student_id.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1344,12 +1348,14 @@ prevBtnFifth.addEventListener("click", function (event) {
                 // Using SweetAlert based on the response
                 if (data.exists) {
                     Swal.fire({
+                        title: 'Success!',
                         text: 'Student ID exists.',
-                        icon: 'error',
+                        icon: 'success',
                         confirmButtonText: 'OK'
                     });
                 } else {
                     Swal.fire({
+                        title: 'Not Found!',
                         text: 'Student ID does not exist.',
                         icon: 'error',
                         confirmButtonText: 'OK'
@@ -1366,6 +1372,9 @@ prevBtnFifth.addEventListener("click", function (event) {
                 });
             });
         }
+
+        // Attach the formatStudentID function to the input field's input event
+        document.getElementById('student_id_no').addEventListener('input', formatStudentID);
     </script>
 
     <?php
