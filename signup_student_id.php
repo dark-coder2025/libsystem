@@ -34,12 +34,10 @@ if (isset($data['student_id'])) {
             
         }
     } else {
-        // Handle SQL preparation failure
-        echo json_encode(['error' => 'Failed to prepare the SQL query']);
+        
     }
 } else {
-    // If student_id is not provided
-    echo json_encode(['error' => 'Student ID not provided']);
+   
 }
 
 // Close the database connection
