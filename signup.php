@@ -1336,7 +1336,7 @@ prevBtnFifth.addEventListener("click", function (event) {
 
         // Function to fetch and check if the Student ID exists
         function checkStudentIdExistence(studentId) {
-            fetch('check_student_id.php', {
+            fetch('signup_student_id.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
