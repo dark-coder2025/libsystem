@@ -1330,7 +1330,7 @@ prevBtnFifth.addEventListener("click", function (event) {
                 debounceTimer = setTimeout(function() {
                     // Call function to check if the Student ID exists
                     checkStudentIdExistence(studentId);
-                }, 1000);  // You can adjust the debounce delay (e.g., 500ms)
+                }, 500);  // You can adjust the debounce delay (e.g., 500ms)
             }
         }
 
@@ -1352,6 +1352,9 @@ prevBtnFifth.addEventListener("click", function (event) {
                         text: 'Student ID exists.',
                         icon: 'success',
                         confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Clear the input field after the alert is closed
+                        document.getElementById('student_id_no').value = '';
                     });
                 } else {
                     Swal.fire({
@@ -1359,6 +1362,9 @@ prevBtnFifth.addEventListener("click", function (event) {
                         text: 'Student ID does not exist.',
                         icon: 'error',
                         confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Clear the input field after the alert is closed
+                        document.getElementById('student_id_no').value = '';
                     });
                 }
             })
@@ -1369,6 +1375,9 @@ prevBtnFifth.addEventListener("click", function (event) {
                     text: 'An error occurred while checking the student ID.',
                     icon: 'error',
                     confirmButtonText: 'OK'
+                }).then(() => {
+                    // Clear the input field after the alert is closed
+                    document.getElementById('student_id_no').value = '';
                 });
             });
         }
