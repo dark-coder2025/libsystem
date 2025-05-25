@@ -1313,6 +1313,59 @@ prevBtnFifth.addEventListener("click", function (event) {
         imageModalLink.addEventListener("click", function(){
             imageModal.style.display = "block";
         });
+
+
+        // Format Student ID if necessary (you can adjust this function)
+        function formatStudentID() {
+            let studentId = document.getElementById('student_id_no').value;
+            // You can add any formatting logic here if required
+            studentId = studentId.trim();
+
+            // Call function to check if the Student ID exists
+            checkStudentIdExistence(studentId);
+        }
+
+        // Function to fetch and check if the Student ID exists
+        function checkStudentIdExistence(studentId) {
+            if (!studentId) {
+                // If the field is empty, do nothing
+                return;
+            }
+
+            fetch('signup_student_id.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ student_id: studentId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Using SweetAlert based on the response
+                if (data.exists) {
+                    Swal.fire({
+                        text: 'Student ID exists.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        text: 'Student ID does not exist.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error checking student ID:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while checking the student ID.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
     </script>
 
     <?php
