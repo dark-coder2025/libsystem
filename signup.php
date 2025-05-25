@@ -1348,18 +1348,7 @@ prevBtnFifth.addEventListener("click", function (event) {
                 // Using SweetAlert based on the response
                 if (data.exists) {
                     Swal.fire({
-                        title: 'Success!',
                         text: 'Student ID exists.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        // Clear the input field after the alert is closed
-                        document.getElementById('student_id_no').value = '';
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Not Found!',
-                        text: 'Student ID does not exist.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     }).then(() => {

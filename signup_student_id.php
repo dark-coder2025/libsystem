@@ -31,7 +31,7 @@ if (isset($data['student_id'])) {
         if ($count > 0) {
             echo json_encode(['exists' => true]);
         } else {
-            echo json_encode(['exists' => false]);
+            
         }
     } else {
         // Handle SQL preparation failure
