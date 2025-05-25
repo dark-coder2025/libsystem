@@ -1358,16 +1358,7 @@ prevBtnFifth.addEventListener("click", function (event) {
                 }
             })
             .catch(error => {
-                console.error('Error checking student ID:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred while checking the student ID.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    // Clear the input field after the alert is closed
-                    document.getElementById('student_id_no').value = '';
-                });
+                
             });
         }
 
