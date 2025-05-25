@@ -133,89 +133,133 @@ if (isset($_POST['deny'])) {
         }
 }
 
-// Student Approval
-if(isset($_POST['approved'])) {
+// Check if the form was submitted and the 'approved' button was clicked
+if (isset($_POST['approved'])) {
+    // Get the student ID from the form input
     $student_id = $_POST['user_id'];
 
-    // Fetch student email
-    $email_query = "SELECT email FROM user WHERE user_id='$student_id'";
-    $email_result = mysqli_query($con, $email_query);
-    $email_row = mysqli_fetch_assoc($email_result);
+    // Prepare and execute query to fetch student's email
+    $email_query = "SELECT email FROM user WHERE user_id=?";
+    $stmt = mysqli_prepare($con, $email_query);
+    mysqli_stmt_bind_param($stmt, 'i', $student_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $email_row = mysqli_fetch_assoc($result);
     $student_email = $email_row['email'];
 
-    $query = "UPDATE user SET status = 'approved' WHERE user_id = '$student_id'";
-    $query_run = mysqli_query($con, $query);
+    // Prepare and execute query to update the student's status to 'approved'
+    $query = "UPDATE user SET status = 'approved' WHERE user_id = ?";
+    $stmt_update = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt_update, 'i', $student_id);
+    $query_run = mysqli_stmt_execute($stmt_update);
 
-    if($query_run) {
-        // Send email notification
-        $subject = "Account Approved Notification";
-        $message = " <html>
-            <head>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f4;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .container {
-                        width: 80%;
-                        margin: 20px auto;
-                        padding: 20px;
-                        background-color: #fff;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    }
-                    .header {
-                        text-align: center;
-                        padding-bottom: 20px;
-                        border-bottom: 1px solid #ddd;
-                    }
-                    .logo {
-                        max-width: 150px;
-                        height: auto;
-                    }
-                    .content {
-                        padding: 20px 0;
-                    }
-                    .button {
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #007bff;
-                        text-decoration: none;
-                        color: white;
-                        border-radius: 4px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <div class='header'>
-                        <img src='https://mcc-lrc.com/images/mcc-lrc.png' alt='Logo'>
+    if ($query_run) {
+        // Check if the email is valid before sending
+        if (filter_var($student_email, FILTER_VALIDATE_EMAIL)) {
+            $subject = "Account Approved Notification";
+            $message = " <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+                        .container { width: 80%; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                        .header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
+                        .logo { max-width: 150px; height: auto; }
+                        .content { padding: 20px 0; }
+                        .button { display: inline-block; padding: 10px 20px; background-color: #007bff; text-decoration: none; color: white; border-radius: 4px; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <img src='https://mcc-lrc.com/images/mcc-lrc.png' alt='Logo'>
+                        </div>
+                        <div class='content'>
+                            <h1 style='color:#198754;text-align:center;'>Your Account has been Approved.</h1>
+                            <p>Dear Student,</p>
+                            <p>Your MCC-LRC account registration has been approved. You can now log in to your account.</p>
+                            <p><a style='color: white;' href='http://mcc-lrc.com/login.php' class='button'>Login</a></p>
+                            <p>Thank you.</p>
+                        </div>
                     </div>
-                    <div class='content'>
-                        <h1 style='color:#198754;text-align:center;'>Your Account has been Approved.</h1>
-                        <p>Dear Student,</p>
-                        <p>Your MCC-LRC account registration has been approved. You can now log in to your account.</p>
-                        <p><a  style='color: white;' href='http://mcc-lrc.com/login.php' class='button'>Login</a></p>
-                        <p>Thank you.</p>
-                    </div>
-                </div>
-            </body>
-        </html>
-        ";
-        sendEmail($student_email, $subject, $message);
+                </body>
+            </html>
+            ";
+            sendEmail($student_email, $subject, $message);  // Call the function to send the email
 
-        $_SESSION['status'] = 'Student approved successfully';
-        $_SESSION['status_code'] = "success";
-        header("Location: user_student_approval.php");
-        exit(0);
+            // Set session status for success
+            $_SESSION['status'] = 'Student approved successfully';
+            $_SESSION['status_code'] = "success";
+
+            // Database Backup Logic (for generating backup file as SQL)
+            backupDatabase($con); // Call the backup function
+
+            // Close the database connection
+            mysqli_close($con);
+
+            // Redirect to the approval page
+            header("Location: user_student_approval.php");
+            exit(0);
+        } else {
+            // Invalid email format
+            $_SESSION['status'] = 'Invalid email address.';
+            $_SESSION['status_code'] = "error";
+            header("Location: user_student_approval.php");
+            exit(0);
+        }
     } else {
+        // Query failed, student not approved
         $_SESSION['status'] = 'Student not approved';
         $_SESSION['status_code'] = "error";
         header("Location: user_student_approval.php");
         exit(0);
     }
+}
+
+// Function to generate database backup and output it
+function backupDatabase($con) {
+    // Set headers for file download (as SQL file)
+    header('Content-Type: application/sql');
+    header('Content-Disposition: attachment; filename="database_backup_' . date('Y-m-d_H-i-s') . '.sql"');
+
+    // Fetch all table names
+    $tables = [];
+    $result = mysqli_query($con, "SHOW TABLES");
+    while ($row = mysqli_fetch_array($result)) {
+        $tables[] = $row[0];
+    }
+
+    // Start the backup SQL string
+    $backupSql = "-- Database Backup\n";
+    $backupSql .= "-- Created: " . date('Y-m-d H:i:s') . "\n\n";
+    $backupSql .= "SET FOREIGN_KEY_CHECKS = 0;\n\n";
+
+    foreach ($tables as $table) {
+        // Drop table if exists
+        $backupSql .= "DROP TABLE IF EXISTS `$table`;\n";
+
+        // Get CREATE TABLE statement
+        $createTableResult = mysqli_query($con, "SHOW CREATE TABLE `$table`");
+        $createTableRow = mysqli_fetch_assoc($createTableResult);
+        $backupSql .= $createTableRow['Create Table'] . ";\n\n";
+
+        // Get data from table and insert it into backup SQL
+        $dataResult = mysqli_query($con, "SELECT * FROM `$table`");
+        while ($row = mysqli_fetch_assoc($dataResult)) {
+            $values = array_map([$con, 'real_escape_string'], array_values($row));
+            $values = array_map(function($val) {
+                return "'" . $val . "'"; // Escape string values for SQL
+            }, $values);
+
+            $backupSql .= "INSERT INTO `$table` VALUES (" . implode(", ", $values) . ");\n";
+        }
+
+        $backupSql .= "\n\n";
+    }
+
+    $backupSql .= "SET FOREIGN_KEY_CHECKS = 1;\n";
+
+    // Output the .sql content
+    echo $backupSql;
 }
 
 // Block student
