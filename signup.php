@@ -1330,7 +1330,7 @@ prevBtnFifth.addEventListener("click", function (event) {
                 debounceTimer = setTimeout(function() {
                     // Call function to check if the Student ID exists
                     checkStudentIdExistence(studentId);
-                }, 500);  // You can adjust the debounce delay (e.g., 500ms)
+                }, 1000);  // You can adjust the debounce delay (e.g., 500ms)
             }
         }
 
