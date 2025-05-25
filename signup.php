@@ -1348,7 +1348,7 @@ prevBtnFifth.addEventListener("click", function (event) {
                 // Using SweetAlert based on the response
                 if (data.exists) {
                     Swal.fire({
-                        text: 'Student ID exists.',
+                        text: 'Student ID Number exists.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     }).then(() => {
