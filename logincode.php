@@ -85,7 +85,7 @@ if (isset($_POST['login_btn'])) {
                         'email' => $user_email,
                     ];
 
-                    $_SESSION['login_successes'] = true;
+                    $_SESSION['login_success'] = true;
                     header("Location: login.php");
                     exit(0);
                 } elseif ($status == 'pending') {
