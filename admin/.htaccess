@@ -1,12 +1,9 @@
 RewriteEngine On
 
-# Skip existing files and folders
-RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
 
-# Route extensionless URLs to PHP files
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^/.]+)$ $1.php [L]
-
-# Homepage
+RewriteRule ^(.*)$ $1.php [L]
 RewriteRule ^$ index.php [L]
+
