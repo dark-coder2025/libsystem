@@ -1,8 +1,4 @@
 <?php
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-
 ini_set('session.cookie_httponly', 1);
 session_start();
 include('config/dbcon.php');
