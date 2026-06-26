@@ -1,0 +1,13 @@
+schema_version: 1
+module_path: configuration_system
+title: Hardcoded Configuration and Manual Dependency Management
+scope: []
+source_files:
+    - admin/config/dbcon.php
+    - includes/url.php
+    - admin/includes/url.php
+    - attendance/url.php
+    - composer.json
+    - admin/authentication.php
+depends_on: []
+related_to: []

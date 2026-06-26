@@ -1,0 +1,17 @@
+schema_version: 1
+module_path: dependency_management
+title: 'Hybrid Dependency Management: Composer with Manual Vendoring'
+scope: []
+source_files:
+    - composer.json
+    - composer.lock
+    - admin/composer.json
+    - admin/composer.lock
+    - phpmailer/composer.json
+    - admin/tcpdf/tcpdf.php
+    - qrcode/qrlib.php
+    - admin/books_code.php
+    - admin/circulation_return_print.php
+    - admin/user_faculty_code.php
+depends_on: []
+related_to: []

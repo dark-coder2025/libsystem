@@ -1,0 +1,1 @@
+Bootstrap 5 for layout and components, jQuery 3.6 for DOM manipulation, SweetAlert2 and Alertify for user notifications, AOS for scroll animations.

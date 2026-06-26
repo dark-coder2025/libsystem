@@ -1,0 +1,16 @@
+schema_version: 1
+module_path: frontend_style
+title: Bootstrap-Based Multi-Theme Styling System
+scope: []
+source_files:
+    - admin/assets/css/style.css
+    - assets/css/style.css
+    - assets/css/login.css
+    - assets/css/signup.css
+    - attendance/assets/css/style.css
+    - includes/header.php
+    - admin/includes/header.php
+    - includes/script.php
+    - admin/includes/script.php
+depends_on: []
+related_to: []

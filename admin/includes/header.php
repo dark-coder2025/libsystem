@@ -19,6 +19,10 @@ if (strpos($request, '.php') !== false) {
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
      <meta name="robots" content="noindex, nofollow" />
+     <!-- Prevent browser from caching admin pages (defense-in-depth against auto-login via back button) -->
+     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+     <meta http-equiv="Pragma" content="no-cache" />
+     <meta http-equiv="Expires" content="0" />
      <link rel="icon" href="./images/mcc-lrc.png">
      <title>MCC Learning Resource Center</title>
      <link href="https://fonts.gstatic.com" rel="preconnect" />
@@ -68,6 +72,14 @@ if (strpos($request, '.php') !== false) {
 </head>
 
 <body>
+
+<script>
+// Prevent back-button from showing cached admin pages after logout
+window.history.pushState(null, null, window.location.href);
+window.addEventListener('popstate', function() {
+    window.history.pushState(null, null, window.location.href);
+});
+</script>
 
 
      <?php include('./includes/topnav.php'); ?>

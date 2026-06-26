@@ -1,0 +1,1 @@
+Provides third-party dependencies for email transmission via PHPMailer and QR code generation using PHP QR Code.

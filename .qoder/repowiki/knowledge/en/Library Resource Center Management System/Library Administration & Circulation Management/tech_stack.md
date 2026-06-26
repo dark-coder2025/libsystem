@@ -1,0 +1,4 @@
+- PHP with procedural MySQLi for database interactions.
+- PhpSpreadsheet for Excel file processing.
+- TCPDF for server-side PDF rendering.
+- Bootstrap 5 and DataTables for the frontend UI.

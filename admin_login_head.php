@@ -1,5 +1,8 @@
 <?php
+// Ensure session cookie expires when the browser closes (prevents auto-login after browser restart)
+ini_set('session.cookie_lifetime', 0);
 ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
 session_start();
 
 // Prevent browser/proxy caching of login page (security: prevents stale cached login forms)
@@ -9,6 +12,33 @@ header("Expires: Wed, 11 Jan 1984 05:00:00 GMT");
 
 include('admin/config/dbcon.php');
 
+// --- Session timeout: destroy session after 30 minutes of inactivity ---
+$session_timeout = 1800; // 30 minutes in seconds
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $session_timeout)) {
+    $_SESSION = array();
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+    session_destroy();
+    session_start();
+    session_regenerate_id(true);
+    $_SESSION['message_error'] = "Your session has expired. Please log in again.";
+    header("Location: admin_login.php");
+    exit(0);
+}
+if (isset($_SESSION['auth'])) {
+    $_SESSION['LAST_ACTIVITY'] = time();
+}
+
+// --- If already authenticated as Admin/Staff, redirect to dashboard ---
+if (isset($_SESSION['auth']) && $_SESSION['auth'] === true &&
+    ($_SESSION['auth_role'] === 'Admin' || $_SESSION['auth_role'] === 'Staff')) {
+    // Don't redirect if we just set login_success (needed for the JS progress bar flow)
+    if (!isset($_SESSION['login_success']) || !$_SESSION['login_success']) {
+        header("Location: admin/");
+        exit(0);
+    }
+}
 
 $request = $_SERVER['REQUEST_URI'];
 

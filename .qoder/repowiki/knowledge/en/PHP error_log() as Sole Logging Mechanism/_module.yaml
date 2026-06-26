@@ -1,0 +1,15 @@
+schema_version: 1
+module_path: logging_system
+title: PHP error_log() as Sole Logging Mechanism
+scope: []
+source_files:
+    - admin/config/dbcon.php
+    - admin/archived_code.php
+    - ms_verify_code.php
+    - admin/circulation_borrow.php
+    - admin/user_faculty_code.php
+    - admin/user_student_code.php
+    - password-reset-code.php
+    - admin-forgot-code.php
+depends_on: []
+related_to: []

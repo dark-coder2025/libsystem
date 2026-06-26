@@ -1,0 +1,1 @@
+AES-256-CBC encryption via PHP OpenSSL for URL parameter obfuscation

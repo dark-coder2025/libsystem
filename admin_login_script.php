@@ -1,4 +1,10 @@
 <script>
+    // Prevent back-button from showing cached admin pages after logout
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function() {
+        window.history.pushState(null, null, window.location.href);
+    });
+
     document.getElementById('togglePassword').addEventListener('click', function (e) {
         const password = document.getElementById('password');
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';

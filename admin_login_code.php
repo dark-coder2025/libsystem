@@ -1,5 +1,8 @@
 <?php
+// Ensure session cookie expires when the browser closes (prevents auto-login after browser restart)
+ini_set('session.cookie_lifetime', 0);
 ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
 session_start();
 include('./admin/config/dbcon.php');
 
@@ -63,6 +66,10 @@ if (isset($_POST['admin_login_btn'])) {
                     'admin_name' => $admin_name,
                     'email' => $admin_email,
                 ];
+
+                // Record login time for session timeout tracking
+                $_SESSION['LAST_ACTIVITY'] = time();
+                $_SESSION['CREATED'] = time();
 
                 $_SESSION['login_success'] = true;
                 header("Location: admin_login.php");

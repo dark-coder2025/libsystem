@@ -1,0 +1,5 @@
+- Entry Point: `index.php` serves as the dashboard, protected by `authentication.php` which enforces session-based role checks (Admin/Staff).
+- Layout Composition: Uses a classic PHP include pattern (`header.php`, `sidebar.php`, `footer.php`, `script.php`) to assemble the UI from reusable fragments in `includes/`.
+- Data Access: Direct `mysqli` procedural calls are embedded within page scripts, connecting via `config/dbcon.php`.
+- External Libraries: Integrates third-party tools for specific outputs: `tcpdf/` for PDF generation, `phpmailer/` for email, and `PhpSpreadsheet` (via Composer) for Excel imports/exports.
+- Asset Management: Static assets (CSS/JS) are organized in `assets/` with a mix of local libraries (Bootstrap, DataTables) and CDN references.

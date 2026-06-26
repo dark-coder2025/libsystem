@@ -1,0 +1,3 @@
+- PHP include files (`header.php`, `navbar.php`) start with PHP logic blocks for security checks or session handling before emitting HTML markup.
+- JavaScript event handlers in custom scripts (e.g., `login.js`) use jQuery's `$(document).ready()` to ensure DOM availability before binding events.
+- CSS and JS libraries are loaded from both local `assets/` directories and CDNs, with local copies often taking precedence or serving as fallbacks.

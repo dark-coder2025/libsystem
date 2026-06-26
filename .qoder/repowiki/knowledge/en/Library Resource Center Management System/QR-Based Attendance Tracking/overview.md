@@ -1,0 +1,1 @@
+Handles student and faculty attendance logging via QR code scanning, managing time-in/time-out records and displaying user verification.

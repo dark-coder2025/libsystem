@@ -1,0 +1,1 @@
+Orchestrates a monolithic PHP application for library administration, attendance tracking, and public access by sharing core infrastructure and duplicated utility logic across isolated sub-modules.

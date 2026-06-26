@@ -1,0 +1,19 @@
+schema_version: 1
+module_path: error_handling
+title: Session-Based Error Messaging with Inline Validation and Minimal Exception Handling
+scope: []
+source_files:
+    - admin/config/dbcon.php
+    - admin/authentication.php
+    - admin/includes/script.php
+    - includes/script.php
+    - logincode.php
+    - admin_login_code.php
+    - admin/admin_code.php
+    - admin/add_account.php
+    - admin/archived_code.php
+    - admin/circulation_borrow.php
+    - allcode.php
+    - 404.php
+depends_on: []
+related_to: []

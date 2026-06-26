@@ -1,0 +1,4 @@
+- Entry point `index.php` serves as the QR scanner interface using `instascan.js` and submits scanned data to `process_qr.php`.
+- `process_qr.php` contains the core business logic: it identifies users (students or faculty) from the database, checks for existing daily logs to determine time-in vs. time-out actions, and updates the `user_log` table accordingly.
+- `view.php` and `view_faculty.php` act as post-scan verification screens, displaying user details fetched via encrypted IDs handled by `url.php`.
+- The module relies on a shared database connection from `../admin/config/dbcon.php` and uses simple PHP session management for state feedback (e.g., scan errors, timeouts).

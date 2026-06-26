@@ -1,0 +1,3 @@
+- Page-level scripts combine authentication checks, business logic, and HTML rendering in a single file.
+- Database queries are executed directly within page scripts using global `$con` connection variables.
+- User feedback and redirection are handled via `$_SESSION` status messages followed by `header('Location: ...')`.

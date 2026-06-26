@@ -1,0 +1,4 @@
+- The system is structured as a set of semi-isolated sub-modules (`admin`, `attendance`, and root-level public pages) that share a single MySQL database via hardcoded credentials in `admin/config/dbcon.php`.
+- Cross-cutting concerns like URL parameter encryption are implemented by duplicating the `encryptor` function in `includes/url.php`, `admin/includes/url.php`, and `attendance/url.php`, rather than using a shared require path.
+- Dependency management is fragmented, with a root `composer.json` for PHPMailer and a separate `admin/composer.json` for PhpSpreadsheet, indicating a lack of unified vendor autoloading across the entire application scope.
+- Shared UI components (headers, footers, navbars) are maintained in both `includes/` and `admin/includes/` directories, reinforcing a copy-paste architectural pattern over true modular reuse.

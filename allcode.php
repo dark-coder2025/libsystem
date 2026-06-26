@@ -1,4 +1,8 @@
 <?php
+// Ensure session cookie expires when the browser closes
+ini_set('session.cookie_lifetime', 0);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
 session_start();
 
 include('admin/config/dbcon.php');
@@ -44,7 +48,7 @@ if (isset($_POST['save_changes'])) {
 }
 
 if (isset($_POST['logout_btn'])) {
-    // Clear all session data
+    // Clear all session data including timeout tracking
     $_SESSION = array();
 
     // Clear the session cookie
@@ -57,6 +61,7 @@ if (isset($_POST['logout_btn'])) {
 
     // Start a new session to carry the success message
     session_start();
+    session_regenerate_id(true);
     $_SESSION['message_success'] = "Logout Successfully";
     header("Location: .");
     exit(0);

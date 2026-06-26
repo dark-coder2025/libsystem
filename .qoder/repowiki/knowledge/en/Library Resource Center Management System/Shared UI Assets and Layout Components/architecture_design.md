@@ -1,0 +1,5 @@
+- Static assets are organized into `assets/css`, `assets/js`, `assets/font`, and `assets/img` directories, serving as the central repository for frontend resources.
+- Reusable PHP layout fragments (`header.php`, `navbar.php`, `footer.php`, `script.php`) in `includes/` define the standard HTML shell, navigation, and script loading order.
+- `header.php` enforces security policies (HTTPS redirection, CSP headers) and loads core CSS libraries (Bootstrap, SweetAlert2, Alertify).
+- `script.php` manages the sequential loading of JavaScript dependencies (jQuery, Bootstrap Bundle, custom validation scripts) and initializes UI components like AOS and SweetAlert2.
+- `url.php` provides a shared AES-256-CBC encryption utility for secure parameter handling across the application.

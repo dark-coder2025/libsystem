@@ -1,0 +1,1 @@
+Uses `instascan.js` for client-side QR code detection and `SweetAlert2` for user feedback notifications.

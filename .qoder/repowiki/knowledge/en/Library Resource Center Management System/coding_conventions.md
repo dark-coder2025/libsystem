@@ -1,0 +1,3 @@
+- Duplicated AES-256-CBC encryption utility (`encryptor`) across `includes/`, `admin/includes/`, and `attendance/` directories.
+- Paired file structure for features, using a `.php` file for the view and a corresponding `_code.php` file for backend logic.
+- Redundant maintenance of layout includes (header, footer, url) in both root and admin-specific directories.

@@ -1,0 +1,1 @@
+PHP (mysqli), MySQL, Bootstrap 5, jQuery, DataTables, TCPDF, PHPMailer, PhpSpreadsheet, PHP QR Code
