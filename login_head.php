@@ -1,6 +1,12 @@
 <?php
 ini_set('session.cookie_httponly', 1);
 session_start();
+
+// Prevent browser/proxy caching of login page (security: prevents stale cached login forms)
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Wed, 11 Jan 1984 05:00:00 GMT");
+
 include('./admin/config/dbcon.php');
 
 $request = $_SERVER['REQUEST_URI'];

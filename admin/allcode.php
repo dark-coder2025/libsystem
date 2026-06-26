@@ -41,18 +41,21 @@ if (isset($_SESSION['auth_stud']['stud_id']))
  
  // Logout
 if (isset($_POST['logout_btn'])) {
-    // Unset session variables
-    unset($_SESSION['auth']);
-    unset($_SESSION['auth_role']);
-    unset($_SESSION['auth_stud']);
-    session_destroy();
-    if (isset($_COOKIE[session_name()])) {
-        setcookie(session_name(), '', time() - 20, '/'); 
-    }
+    // Clear all session data
     $_SESSION = array();
-    
+
+    // Clear the session cookie
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+
+    // Destroy the session completely
+    session_destroy();
+
+    // Start a new session to carry the success message
+    session_start();
     $_SESSION['message_success'] = "Logout Successfully";
-    
+
     // Redirect to the login page
     header("Location: ../admin_login.php");
     exit(0);

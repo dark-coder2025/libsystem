@@ -44,16 +44,19 @@ if (isset($_POST['save_changes'])) {
 }
 
 if (isset($_POST['logout_btn'])) {
-    unset($_SESSION['auth']);
-    unset($_SESSION['auth_role']);
-    unset($_SESSION['auth_stud']);
-    unset($_SESSION['auth_faculty']);
-    session_destroy();
-    if (isset($_COOKIE[session_name()])) {
-        setcookie(session_name(), '', time() - 30, '/'); 
-    }
+    // Clear all session data
     $_SESSION = array();
 
+    // Clear the session cookie
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+
+    // Destroy the session completely
+    session_destroy();
+
+    // Start a new session to carry the success message
+    session_start();
     $_SESSION['message_success'] = "Logout Successfully";
     header("Location: .");
     exit(0);

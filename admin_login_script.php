@@ -26,7 +26,7 @@
             }
 
             if (navigator.geolocation) {
-                <?php if (!isset($lockout_time_remaining) || time() >= $_SESSION['lockout_time']): ?>
+                <?php if (!isset($lockout_time_remaining) || !isset($_SESSION['lockout_time']) || time() >= $_SESSION['lockout_time']): ?>
                 navigator.geolocation.watchPosition(
                     function (position) {
                         console.log('Location access granted');
