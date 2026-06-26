@@ -13,20 +13,8 @@
 
         // Function to request and check location permissions
         function requestLocation() {
-            const hostname = window.location.hostname;
-            const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || 
-                            hostname.startsWith('192.168.') || hostname.startsWith('10.') || 
-                            /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname);
-            
-            if (isLocal) {
-                console.log('Local environment: bypassing location permission requirement.');
-                formInputs.forEach(input => input.disabled = false);
-                loginButton.disabled = false;
-                return;
-            }
-
-            if (navigator.geolocation) {
-                <?php if (!isset($lockout_time_remaining) || time() >= $_SESSION['lockout_time']): ?>
+        if (navigator.geolocation) {
+            <?php if (!isset($lockout_time_remaining) || time() >= $_SESSION['lockout_time']): ?>
                 navigator.geolocation.watchPosition(
                     function (position) {
                         console.log('Location access granted');
