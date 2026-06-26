@@ -19,7 +19,7 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
-header("Location: admin_login.php");
+header("Location:admin_login.php");
 exit();
 session_start();
 include('./admin/config/dbcon.php');
