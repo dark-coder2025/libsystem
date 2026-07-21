@@ -52,4 +52,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 
 RewriteRule ^(.*)$ $1.php [L]
-RewriteRule ^$ home.php [L]
+RewriteRule ^$ 404.php [L]
