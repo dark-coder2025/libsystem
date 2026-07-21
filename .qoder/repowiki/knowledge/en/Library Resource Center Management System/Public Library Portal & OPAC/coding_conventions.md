@@ -1,3 +1,0 @@
-- POST-Redirect-GET pattern: Form submissions are processed in separate 'code' files (e.g., `logincode.php`) which then redirect back to the UI page with session-based status messages.
-- Session-based state management: Authentication status and user roles are stored in $_SESSION arrays (e.g., $_SESSION['auth_stud']) and checked at the top of protected pages.
-- Inline input sanitization: SQL inputs are sanitized using mysqli_real_escape_string or prepared statements directly within the page logic before query execution.

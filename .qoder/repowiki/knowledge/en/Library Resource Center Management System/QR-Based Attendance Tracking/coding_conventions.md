@@ -1,3 +1,0 @@
-- Prepared statements with `bind_param` are used for all database queries to prevent SQL injection.
-- AES-256-CBC encryption via `openssl_encrypt` in `url.php` is used to obscure user identifiers in URL parameters.
-- PHP sessions are used to pass transient status messages (e.g., `scan_error`, `timeout`) between requests instead of direct query parameters.

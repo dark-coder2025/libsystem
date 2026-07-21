@@ -65,5 +65,12 @@
                     <i class="bi bi-people"></i><span>Block Users</span>
                </a>
           </li>
+
+          <li class="nav-item">
+               <a class="nav-link collapsed<?=$page == 'error_logs.php'  ? 'active': '' ?>"
+                    href="error_logs.php">
+                    <i class="bi bi-bug"></i><span>Error Logs</span>
+               </a>
+          </li>
      </ul>
 </aside>

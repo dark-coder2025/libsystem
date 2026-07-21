@@ -1,1 +1,0 @@
-Provides a web-based administrative interface for managing library resources, user accounts, circulation workflows, and statistical reporting.

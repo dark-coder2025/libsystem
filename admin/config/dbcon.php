@@ -15,4 +15,7 @@ if (!$con) {
 } else {
   // echo "Connected Successfully";
 }
+
+// Load centralized error logging system (after DB connection is ready)
+include_once(__DIR__ . '/error_handler.php');
 ?>

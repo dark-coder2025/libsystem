@@ -1,1 +1,0 @@
-PHPMailer v6.9+ via Composer; PHP QR Code v1.1.4 (merged standalone build).

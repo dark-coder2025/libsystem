@@ -1,0 +1,1 @@
+A PHP-based web interface for managing library resources, user accounts, circulation workflows, and statistical reporting with role-based access control.

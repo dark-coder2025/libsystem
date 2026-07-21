@@ -3,11 +3,11 @@ schema_version: 1
 locale: en-US
 branch: main
 nodes_managed: true
-exported_at: "2026-06-26T12:14:05Z"
+exported_at: "2026-06-26T13:58:51Z"
 modules:
     "":
-        dir_name: Library Resource Center Management System
-        title: Library Resource Center Management System
+        dir_name: Library Management System
+        title: Library Management System
         scope:
             - .htaccess
             - composer.json
@@ -1569,8 +1569,8 @@ modules:
         depends_on: []
         related_to: []
     admin_panel:
-        dir_name: Library Administration & Circulation Management
-        title: Library Administration & Circulation Management
+        dir_name: Library Administration & Circulation System
+        title: Library Administration & Circulation System
         scope:
             - admin/
         source_files: []

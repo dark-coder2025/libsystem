@@ -1,4 +1,0 @@
-- The module consists of two isolated vendor directories: `phpmailer/` and `phpqrcode/` (with a duplicate `qrcode/`).
-- `phpmailer/` is managed via Composer (`composer.json`), requiring `phpmailer/phpmailer ^6.9`, with dependencies installed in `vendor/`.
-- `phpqrcode/` and `qrcode/` contain identical, self-contained merged versions of the PHP QR Code library (v1.1.4), where all classes are concatenated into single entry files (`phpqrcode.php`) or included via `qrlib.php`.
-- The QR code libraries use a flat, procedural-inclusive architecture, relying on global constants and static methods, with pre-computed mask data stored in `cache/` for performance.

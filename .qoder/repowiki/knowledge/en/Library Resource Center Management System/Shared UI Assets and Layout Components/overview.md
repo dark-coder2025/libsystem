@@ -1,1 +1,0 @@
-Provides centralized static assets (CSS, JS, fonts, images) and reusable PHP layout includes for consistent page structure and styling.

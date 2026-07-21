@@ -1,1 +1,0 @@
-Provides public-facing library services including user authentication, multi-step registration, and an Online Public Access Catalog (OPAC) for browsing and holding books.

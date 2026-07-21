@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: admin_panel
-title: Library Administration & Circulation Management
+title: Library Administration & Circulation System
 scope:
     - admin/
 source_files: []

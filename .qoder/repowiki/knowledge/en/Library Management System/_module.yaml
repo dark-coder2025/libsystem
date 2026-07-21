@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: ""
-title: Library Resource Center Management System
+title: Library Management System
 scope:
     - .htaccess
     - composer.json

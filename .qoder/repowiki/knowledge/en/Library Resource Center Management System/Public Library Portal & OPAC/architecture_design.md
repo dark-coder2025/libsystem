@@ -1,4 +1,0 @@
-- **Page-Controller Architecture**: The module uses a flat structure where each `.php` file acts as both the view and controller (e.g., `login.php` handles UI, `logincode.php` handles logic).
-- **Shared Logic via Includes**: Common functionality like database connections (`admin/config/dbcon.php`) and custom encryption (`includes/url.php`) is injected via `include` statements.
-- **Security Layer**: Implements AES-256-CBC encryption for URL parameters to obscure resource IDs and titles in the OPAC.
-- **Authentication Flow**: Uses session-based auth with role differentiation (student, faculty, staff) and includes account lockout mechanisms after failed attempts.

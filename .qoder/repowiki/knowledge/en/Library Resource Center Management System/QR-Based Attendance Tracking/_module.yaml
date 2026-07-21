@@ -1,9 +1,0 @@
-schema_version: 1
-module_path: attendance
-title: QR-Based Attendance Tracking
-scope:
-    - attendance/
-source_files: []
-depends_on: []
-related_to:
-    - path: admin_panel

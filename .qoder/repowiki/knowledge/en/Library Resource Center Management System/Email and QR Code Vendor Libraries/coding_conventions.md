@@ -1,2 +1,0 @@
-- QR code libraries utilize static classes and global constants for configuration and state management instead of object instantiation.
-- The merged QR code distribution concatenates multiple source files into a single PHP file to eliminate external file dependencies.
